@@ -105,7 +105,6 @@
     <ClCompile Include="engine\base\PostEffect.cpp" />
     <ClCompile Include="engine\base\WinApp.cpp" />
     <ClCompile Include="engine\gameScene\GameScene.cpp" />
-    <ClCompile Include="gameCode\hud\Hud.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,7 +181,6 @@
     <ClInclude Include="engine\base\RandCreate.h" />
     <ClInclude Include="engine\base\WinApp.h" />
     <ClInclude Include="engine\gameScene\GameScene.h" />
-    <ClInclude Include="gameCode\hud\Hud.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

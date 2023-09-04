@@ -49,17 +49,13 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	assert(input_);
 	EngineIns(winApp_, dxCommon_, input_);
 
-	test = Model::LoadFromOBJ("world2");
-	insObj = InsObj::Create();
-	insObj->SetModel(test);
-	insObj->SetPosition({ 10,0,10 });
+	
 	
 }
 
 void GameScene::Update()
 {
 
-	insObj->Update();
 }
 
 
@@ -71,11 +67,7 @@ void GameScene::Draw()
 	
 	Object3d::PostDraw();
 	
-	InsObj::PreDraw(dxCommon->GetCmdList());
-
-	insObj->Draw();
-
-	InsObj::PostDraw();
+	
 
 
 	spriteCommon->PreDraw();
