@@ -1,4 +1,5 @@
 #include "Animation2D.h"
+#include "../base/XMFLOAT_Helper.h"
 
 Animation2D::Animation2D(SpriteCommon* spriteCommon, int texNumber, XMFLOAT2 TexSize, int widthNum)
 {
@@ -20,7 +21,7 @@ Animation2D::Animation2D(SpriteCommon* spriteCommon, int texNumber, XMFLOAT2 Tex
 	sprite->SetPosition(XMFLOAT3(position.x, position.y, 0.0f));
 	sprite->SetTexLeftTop({ 0.0f, 0.0f });
 	sprite->SetTexSize(texSize);
-	sprite->SetSize(XMFLOAT2(texSize.x * size, texSize.y * size));
+	sprite->SetSize(texSize * size);
 	sprite->Update();
 }
 
@@ -38,7 +39,7 @@ void Animation2D::Initialize()
 	sprite->SetPosition(XMFLOAT3(position.x, position.y, 0.0f));
 	sprite->SetTexLeftTop({ 0.0f, 0.0f });
 	sprite->SetTexSize(texSize);
-	sprite->SetSize(XMFLOAT2(texSize.x * size, texSize.y * size));
+	sprite->SetSize(texSize * size);
 	sprite->Update();
 }
 
@@ -59,7 +60,7 @@ void Animation2D::Update()
 	sprite->SetTexLeftTop({ spriteNumbers[spriteIndex] % widthNum * texSize.x
 		, spriteNumbers[spriteIndex] / widthNum * texSize.y});
 	sprite->SetTexSize(texSize);
-	sprite->SetSize(XMFLOAT2(texSize.x * size, texSize.y * size));
+	sprite->SetSize(texSize * size);
 	sprite->Update();
 	count++;
 }

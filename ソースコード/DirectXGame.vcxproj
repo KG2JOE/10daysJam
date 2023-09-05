@@ -182,6 +182,7 @@
     <ClInclude Include="engine\base\PostEffect.h" />
     <ClInclude Include="engine\base\RandCreate.h" />
     <ClInclude Include="engine\base\WinApp.h" />
+    <ClInclude Include="engine\base\XMFLOAT_Helper.h" />
     <ClInclude Include="engine\gameScene\GameScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

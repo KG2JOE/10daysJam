@@ -35,7 +35,6 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 
 	debTxt = new DebugText;
 	debTxt->Initialize(spriteCommon, 0);
-
 }
 
 
@@ -55,7 +54,6 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 void GameScene::Update()
 {
-
 }
 
 
@@ -66,8 +64,6 @@ void GameScene::Draw()
 	Object3d::PreDraw(dxCommon->GetCmdList());
 	
 	Object3d::PostDraw();
-	
-	
 
 
 	spriteCommon->PreDraw();
