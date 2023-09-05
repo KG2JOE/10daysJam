@@ -88,6 +88,10 @@ public:
 
 	void SetAnchorpoint(XMFLOAT2 anchorpoint) { anchorpoint_ = anchorpoint; }
 
+	void SetIsFlipX(bool isFlipX) { isFlipX_ = isFlipX; }
+
+	void SetIsFlipY(bool isFlipY) { isFlipY_ = isFlipY; }
+
 	void Draw();
 
 };
