@@ -87,6 +87,9 @@
     <ClCompile Include="engine\2d\Animation2D.cpp">
       <Filter>ソース ファイル\2D</Filter>
     </ClCompile>
+    <ClCompile Include="engine\2d\AddParticle2dManager.cpp">
+      <Filter>ソース ファイル\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -101,6 +104,7 @@
     <None Include="Resources\shaders\InstancingOBJShaderHeader.hlsli">
       <Filter>シェーダーファイル</Filter>
     </None>
+    <None Include="Resources\shaders\Particle2d.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BasicPS.hlsl">
@@ -127,6 +131,9 @@
     <FxCompile Include="Resources\shaders\InstancingOBJPS.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle2dGS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle2dPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle2dVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\base\PipelineSet.h">
@@ -181,6 +188,12 @@
       <Filter>ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\2d\Animation2D.h">
+      <Filter>ヘッダー ファイル\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\base\XMFLOAT_Helper.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\2d\AddParticle2dManager.h">
       <Filter>ヘッダー ファイル\2D</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "AddParticle2dManager.h"
 
 void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* input_)
 {
@@ -64,7 +65,6 @@ void GameScene::Draw()
 	Object3d::PreDraw(dxCommon->GetCmdList());
 	
 	Object3d::PostDraw();
-
 
 	spriteCommon->PreDraw();
 
