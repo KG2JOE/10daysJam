@@ -17,6 +17,8 @@
 #include"DebugText.h"
 
 #include"InstancingObject3d.h"
+
+#include"Employee.h"
 using namespace DirectX;
 class GameScene
 {
@@ -52,11 +54,13 @@ private://ƒGƒ“ƒWƒ“
 	Input* input = nullptr;
 	DebugCamera* camera = nullptr;
 	SpriteCommon* spriteCommon = new SpriteCommon();
+	SpriteCommon* spCom = new SpriteCommon();
 	DebugText* debTxt = new DebugText;
 	Audio* audio = Audio::GetInstance();
 	
 	int scene = 0;
 
+	Employee* employee{};
 
 	//test
 

@@ -1,5 +1,25 @@
 #include "collision.h"
 
+
+
+bool Collision::HitBox(XMFLOAT2 box, int boxSize, XMFLOAT2 point, int pointSize)
+{
+	bool flag = 0;
+	if (box.x - boxSize < point.x + pointSize &&
+		box.x + boxSize > point.x - pointSize)
+	{
+		if (box.y - boxSize < point.y + pointSize &&
+			box.y + boxSize > point.y - pointSize)
+		{
+			flag = true;
+		}
+	}
+
+
+	return flag;
+}
+
+
 bool Collision::HitSphere(XMFLOAT3 playerPos, float playerRad, XMFLOAT3 enemyPos, float enemyRad)
 {
 	float temp[4]{};

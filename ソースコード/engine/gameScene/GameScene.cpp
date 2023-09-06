@@ -21,9 +21,15 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	camera->SetDistance(3.0f);
 	camera->SetEye({ 0, 10, 0 });
 	spriteCommon->initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
-	spriteCommon->LoadTexture(0, L"Resources/sprite/debugfont.png");
+	
+	employee = new Employee();
+	employee->Ins(spriteCommon, input);
+
+	spriteCommon->LoadTexture(5, L"Resources/sprite/debugfont.png");
 	//spriteCommon->LoadTexture(0, L"Resources/sprite/drawNumber.png");
 
+	spCom->initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
+	
 	audio->Initialize();
 	audio->LoadWave("thunder.wav");
 	audio->LoadWave("ice1.wav");
@@ -35,6 +41,8 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 
 	debTxt = new DebugText;
 	debTxt->Initialize(spriteCommon, 0);
+
+
 
 }
 
@@ -55,7 +63,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 void GameScene::Update()
 {
-
+	employee->Update();
 }
 
 
@@ -68,7 +76,7 @@ void GameScene::Draw()
 	Object3d::PostDraw();
 	
 	
-
+	employee->Draw();
 
 	spriteCommon->PreDraw();
 
