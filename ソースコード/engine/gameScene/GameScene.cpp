@@ -1,5 +1,4 @@
 #include "GameScene.h"
-#include "AddParticle2dManager.h"
 
 void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* input_)
 {
@@ -36,6 +35,9 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 
 	debTxt = new DebugText;
 	debTxt->Initialize(spriteCommon, 0);
+
+	particleManager = ParticleManager2d::Create();
+	particleManager->SetSpriteCommon(spriteCommon);
 }
 
 
@@ -55,6 +57,8 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 void GameScene::Update()
 {
+	particleManager->Add(0, 10, { 100.0f, 100.0f }, { 0.0f, 10.0f }, { 0.0f, 10.0f }, {100.0f, 100.0f});
+	particleManager->Update();
 }
 
 
@@ -67,7 +71,7 @@ void GameScene::Draw()
 	Object3d::PostDraw();
 
 	spriteCommon->PreDraw();
-
+	particleManager->Draw();
 	// ４．描画コマンドここまで
 
 
