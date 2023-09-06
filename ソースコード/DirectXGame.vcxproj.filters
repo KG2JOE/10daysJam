@@ -104,7 +104,9 @@
     <None Include="Resources\shaders\InstancingOBJShaderHeader.hlsli">
       <Filter>シェーダーファイル</Filter>
     </None>
-    <None Include="Resources\shaders\Particle2d.hlsli" />
+    <None Include="Resources\shaders\Particle2d.hlsli">
+      <Filter>シェーダーファイル</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BasicPS.hlsl">
@@ -131,9 +133,15 @@
     <FxCompile Include="Resources\shaders\InstancingOBJPS.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\Particle2dGS.hlsl" />
-    <FxCompile Include="Resources\shaders\Particle2dPS.hlsl" />
-    <FxCompile Include="Resources\shaders\Particle2dVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle2dGS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle2dPS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle2dVS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\base\PipelineSet.h">
