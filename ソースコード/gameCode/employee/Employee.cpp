@@ -7,26 +7,31 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	assert(input_);
 	spCom = spCom_;
 	input = input_;
-
+	
 	spCom->LoadTexture(NONE, L"Resources/sprite/humanBack.png");
-	//spCom->LoadTexture(NONE, L"Resources/sprite/bg(2).png");
-	/*spCom->LoadTexture(Stress, L"Resources/sprite/coraRe.png");
-	spCom->LoadTexture(Dead, L"Resources/sprite/coraRe.png");
-	spCom->LoadTexture(Grab, L"Resources/sprite/coraRe.png");
-	spCom->LoadTexture(AttendingWork, L"Resources/sprite/coraRe.png");
-	spCom->LoadTexture(Work, L"Resources/sprite/coraRe.png");
-	spCom->LoadTexture(LeavingWork, L"Resources/sprite/coraRe.png");
-	spCom->LoadTexture(BeltConveyor, L"Resources/sprite/coraRe.png");*/
+	
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			employee_[i][j] = Sprite::Create(spCom, (UINT)Status::NONE, {0.5,0.5}, false, false);
+
+		}
+	}
 
 	employee = Sprite::Create(spCom, (UINT)Status::NONE, { 0.5,0.5 }, false, false);
 	//pos = { 0,0,0 };
 	pos = { 500,450,0 };
 	employee->SetPosition(pos);
+	employee->SetSize({ 60,60 });
 	//employee->SetSize({32,32});
 	employee->Update();
 	status = Work;
 	moveStatus = Left;
 	catchFlag = 0;
+
+	table = new Table();
+	table->Ins(spCom);
 }
 
 void Employee::Update()
@@ -82,6 +87,7 @@ void Employee::Update()
 	default:
 		break;
 	}
+	table->Update();
 	employee->Update();
 }
 
@@ -90,6 +96,8 @@ void Employee::Draw()
 	spCom->PreDraw();
 
 	employee->Draw();
+	table->Draw();
+
 }
 
 void Employee::Delete()
@@ -126,7 +134,7 @@ void Employee::CatchEmployeeWork()
 {
 	bool isHit = Collision::HitBox({ pos.x,pos.y }, 32, mousePos);
 
-	if (isHit && input->PushMouseLeft())
+	if (isHit && input->TriggerMouseLeft())
 	{
 		status = Grab;
 	}

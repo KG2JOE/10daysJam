@@ -258,4 +258,3 @@ void SpriteCommon::CreateGraphicsPipeline()
 
 
 }
-//PostEffectTest

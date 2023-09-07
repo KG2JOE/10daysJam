@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(SolutionDir)imgui;$(ProjectDir)engine;$(ProjectDir)engine\base;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\obj;$(ProjectDir)engine\3d\fbx;$(ProjectDir)gameCode;$(ProjectDir)gameCode\enemy;$(ProjectDir)gameCode\hud;$(ProjectDir)gameCode\player;$(ProjectDir)gameCode\stage;$(ProjectDir)gameCode\Bullet;$(ProjectDir)engine\gameScene;$(ProjectDir)gameCode\employee;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(SolutionDir)imgui;$(ProjectDir)engine;$(ProjectDir)engine\base;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\obj;$(ProjectDir)engine\3d\fbx;$(ProjectDir)gameCode;$(ProjectDir)gameCode\enemy;$(ProjectDir)gameCode\hud;$(ProjectDir)gameCode\player;$(ProjectDir)gameCode\stage;$(ProjectDir)gameCode\Bullet;$(ProjectDir)engine\gameScene;$(ProjectDir)gameCode\employee;$(ProjectDir)gameCode\Table;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -75,7 +75,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(SolutionDir)imgui;$(ProjectDir)engine;$(ProjectDir)engine\base;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\obj;$(ProjectDir)engine\3d\fbx;$(ProjectDir)gameCode;$(ProjectDir)gameCode\enemy;$(ProjectDir)gameCode\hud;$(ProjectDir)gameCode\player;$(ProjectDir)gameCode\stage;$(ProjectDir)gameCode\Bullet;$(ProjectDir)engine\gameScene;$(ProjectDir)gameCode\employee;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(SolutionDir)imgui;$(ProjectDir)engine;$(ProjectDir)engine\base;$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\3d\obj;$(ProjectDir)engine\3d\fbx;$(ProjectDir)gameCode;$(ProjectDir)gameCode\enemy;$(ProjectDir)gameCode\hud;$(ProjectDir)gameCode\player;$(ProjectDir)gameCode\stage;$(ProjectDir)gameCode\Bullet;$(ProjectDir)engine\gameScene;$(ProjectDir)gameCode\employee;$(ProjectDir)gameCode\Table;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -107,6 +107,7 @@
     <ClCompile Include="engine\base\WinApp.cpp" />
     <ClCompile Include="engine\gameScene\GameScene.cpp" />
     <ClCompile Include="gameCode\employee\Employee.cpp" />
+    <ClCompile Include="gameCode\Table\Table.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +188,7 @@
     <ClInclude Include="engine\gameScene\GameScene.h" />
     <ClInclude Include="gameCode\employee\Employee.h" />
     <ClInclude Include="gameCode\employee\employeeInfo.h" />
+    <ClInclude Include="gameCode\Table\Table.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

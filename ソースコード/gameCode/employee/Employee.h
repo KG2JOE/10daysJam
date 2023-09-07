@@ -4,6 +4,7 @@
 #include"Input.h"
 #include<DirectXMath.h>
 
+#include"Table.h"
 
 
 class Employee
@@ -60,7 +61,9 @@ private:
 	SpriteCommon* spCom{};
 	Input* input{};
 	Sprite* employee{};
+	Sprite* employee_[5][4]{};
 	XMFLOAT3 pos;
+	XMFLOAT3 pos_[5][4]{};
 
 	XMFLOAT2 mousePos{};
 
@@ -74,5 +77,7 @@ private:
 	bool deadFlag = 0;
 	MoveStatus moveStatus;
 
+
+	Table* table{};
 };
 
