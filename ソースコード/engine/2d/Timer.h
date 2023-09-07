@@ -18,7 +18,6 @@ private:
 	XMFLOAT2 position;
 	//サイズ
 	float size;
-
 	//タイムリミットの時間
 	int limitTime;
 	//現在の時間
@@ -51,16 +50,14 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
-
 	/// <summary>
 	/// 現在の時間に描画を切り替える
 	/// </summary>
 	void SetCurrentTime();
-
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
-	/// <param name="position"></param>
+	/// <param name="position">座標</param>
 	void SetPosition(XMFLOAT2 position) 
 	{ 
 		this->position = position;
@@ -73,7 +70,7 @@ public:
 	/// <summary>
 	/// サイズの設定
 	/// </summary>
-	/// <param name="size"></param>
+	/// <param name="size">サイズ</param>
 	void SetSize(float size) 
 	{ 
 		this->size = size; 
@@ -88,9 +85,8 @@ public:
 	/// <summary>
 	/// タイムリミットの設定
 	/// </summary>
-	/// <param name="time"></param>
+	/// <param name="time">タイムリミット</param>
 	void SetLimitTime(int time) { limitTime = time; }
-
 	/// <summary>
 	/// タイムリミットになったかどうかの取得
 	/// </summary>
