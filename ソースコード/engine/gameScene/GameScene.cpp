@@ -44,6 +44,12 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	timer->SetPosition({ 100.0f, 100.0f });
 	timer->SetSize(5.0f);
 	timer->Initialize();
+
+	score = new Score(spriteCommon, 1);
+	score->SetScore(0);
+	score->SetPosition({ 100.0f, 100.0f });
+	score->SetSize(2.0f);
+	score->Initialize();
 }
 
 
@@ -57,6 +63,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	EngineIns(winApp_, dxCommon_, input_);
 
 	timer->Initialize();
+	score->Initialize();
 }
 
 void GameScene::Update()
@@ -64,6 +71,8 @@ void GameScene::Update()
 	//particleManager->Add(0, 10, { 100.0f, 100.0f }, { 0.0f, 10.0f }, { 0.0f, 10.0f }, {100.0f, 100.0f});
 	particleManager->Update();
 	timer->Update();
+	score->AddScore(1);
+	score->Update();
 }
 
 
@@ -76,6 +85,7 @@ void GameScene::Draw()
 	spriteCommon->PreDraw();
 	particleManager->Draw();
 	timer->Draw();
+	score->Draw();
 	// ４．描画コマンドここまで
 }
 
@@ -89,5 +99,6 @@ void GameScene::Delete()
 	delete particleManager;
 
 	delete timer;
+	delete score;
 }
 

@@ -30,6 +30,8 @@ private:
 	std::vector<int> spriteNumbers;
 	//今どの連番画像か
 	int spriteIndex;
+	//アニメーションがループするかどうか
+	bool loopFlag;
 
 public:
 	/// <summary>
@@ -82,4 +84,10 @@ public:
 	/// </summary>
 	/// <param name="numbers"></param>
 	void SetSpriteNumbers(std::vector<int> numbers) { spriteNumbers = numbers; spriteIndex = numbers[0]; }
+
+	/// <summary>
+	/// アニメーションがループするかどうかの設定
+	/// </summary>
+	/// <param name="flag">アニメーションがループするかどうか</param>
+	void SetLoopFlag(bool flag) { loopFlag = flag; }
 };
