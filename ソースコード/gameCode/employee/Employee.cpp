@@ -8,8 +8,8 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	spCom = spCom_;
 	input = input_;
 
-	//spCom->LoadTexture(NONE, L"Resources/sprite/humanBack.png");
-	spCom->LoadTexture(NONE, L"Resources/sprite/bg(2).png");
+	spCom->LoadTexture(NONE, L"Resources/sprite/humanBack.png");
+	//spCom->LoadTexture(NONE, L"Resources/sprite/bg(2).png");
 	/*spCom->LoadTexture(Stress, L"Resources/sprite/coraRe.png");
 	spCom->LoadTexture(Dead, L"Resources/sprite/coraRe.png");
 	spCom->LoadTexture(Grab, L"Resources/sprite/coraRe.png");
@@ -18,14 +18,15 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	spCom->LoadTexture(LeavingWork, L"Resources/sprite/coraRe.png");
 	spCom->LoadTexture(BeltConveyor, L"Resources/sprite/coraRe.png");*/
 
-	employee = Sprite::Create(spCom, (UINT)Status::NONE, { 0,0 }, false, false);
-	pos = { 0,0,0 };
-	//pos = { 500,450,0 };
+	employee = Sprite::Create(spCom, (UINT)Status::NONE, { 0.5,0.5 }, false, false);
+	//pos = { 0,0,0 };
+	pos = { 500,450,0 };
 	employee->SetPosition(pos);
 	//employee->SetSize({32,32});
 	employee->Update();
-	status = AttendingWork;
+	status = Work;
 	moveStatus = Left;
+	catchFlag = 0;
 }
 
 void Employee::Update()
@@ -44,7 +45,11 @@ void Employee::Update()
 	case Employee::Dead:
 		break;
 	case Employee::Grab:
-		employee->SetPosition({ mousePos.x,mousePos.y,0 });
+		pos.x = mousePos.x;
+		pos.y = mousePos.y;
+		employee->SetPosition(pos);
+		CatchEmployeeGrab();
+
 		break;
 	case Employee::AttendingWork:
 		//Move();
@@ -55,9 +60,11 @@ void Employee::Update()
 		}
 		break;
 	case Employee::Work:
+		CatchEmployeeWork();
+
 		if (statusFlag == Grab)
 		{
-			employee = Sprite::Create(spCom, (UINT)Status::Grab, { 0,0 }, false, false);
+			employee = Sprite::Create(spCom, (UINT)Status::NONE, { 0,0 }, false, false);
 			employee->SetPosition(pos);
 		}
 		if (statusFlag == Dead)
@@ -115,17 +122,25 @@ void Employee::Move()
 
 }
 
-void Employee::CatchEmployee()
+void Employee::CatchEmployeeWork()
 {
-	if (catchFlag == true)
-	{
-		bool isHit = Collision::HitBox({pos.x,pos.y}, 32, mousePos);
+	bool isHit = Collision::HitBox({ pos.x,pos.y }, 32, mousePos);
 
-		if (isHit && input->PushMouseLeft())
-		{
-			catchFlag == true;
-			status = Grab;
-		}
+	if (isHit && input->PushMouseLeft())
+	{
+		status = Grab;
 	}
 
+}
+
+void Employee::CatchEmployeeGrab()
+{
+	if (input->PushMouseLeft())
+	{
+		status = Grab;
+	}
+	else
+	{
+		status = Work;
+	}
 }

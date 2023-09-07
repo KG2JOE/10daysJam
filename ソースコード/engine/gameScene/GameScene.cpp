@@ -40,7 +40,7 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	audio->SetVolume("ice1.wav", s);
 
 	debTxt = new DebugText;
-	debTxt->Initialize(spriteCommon, 0);
+	debTxt->Initialize(spriteCommon, 5);
 
 
 
@@ -64,6 +64,61 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 void GameScene::Update()
 {
 	employee->Update();
+
+	
+
+}
+
+void GameScene::DrawDbTxt()
+{
+	
+	char text2[256];
+	char text1[256];
+	sprintf_s(text1, "GetCatchFlag:%d", employee->GetCatchFlag());
+	debTxt->Print(text1, 0, 160, 1);
+
+
+	if (employee->GetStatus() == Employee::Status::NONE)
+	{
+		sprintf_s(text2, "NONE:%d", employee->GetStatus());
+		debTxt->Print(text2, 0, 128, 1);
+	}
+	if (employee->GetStatus() == Employee::Status::Stress)
+	{
+		sprintf_s(text2, "Stress:%d", employee->GetStatus());
+		debTxt->Print(text2, 0, 128, 1);
+	}
+	if (employee->GetStatus() == Employee::Status::Dead)
+	{
+		sprintf_s(text2, "Dead:%d", employee->GetStatus());
+		debTxt->Print(text2, 0, 128, 1);
+	}
+	if (employee->GetStatus() == Employee::Status::Grab)
+	{
+		sprintf_s(text2, "Grab:%d", employee->GetStatus());
+		debTxt->Print(text2, 0, 128, 1);
+	}
+	if (employee->GetStatus() == Employee::Status::AttendingWork)
+	{
+		sprintf_s(text2, "AttendingWork:%d", employee->GetStatus());
+		debTxt->Print(text2, 0, 128, 1);
+	}
+	if (employee->GetStatus() == Employee::Status::Work)
+	{
+		sprintf_s(text2, "Work:%d", employee->GetStatus());
+		debTxt->Print(text2, 0, 128, 1);
+	}
+	if (employee->GetStatus() == Employee::Status::LeavingWork)
+	{
+		sprintf_s(text2, "LeavingWork:%d", employee->GetStatus());
+		debTxt->Print(text2, 0, 128, 1);
+	}
+	if (employee->GetStatus() == Employee::Status::BeltConveyor)
+	{
+		sprintf_s(text2, "BeltConveyor:%d", employee->GetStatus());
+		debTxt->Print(text2, 0, 128, 1);
+	}
+
 }
 
 
@@ -79,6 +134,9 @@ void GameScene::Draw()
 	employee->Draw();
 
 	spriteCommon->PreDraw();
+
+	DrawDbTxt();
+	debTxt->DrawAll();
 
 	// ４．描画コマンドここまで
 

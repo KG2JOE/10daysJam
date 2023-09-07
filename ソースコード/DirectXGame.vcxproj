@@ -183,6 +183,7 @@
     <ClInclude Include="engine\base\WinApp.h" />
     <ClInclude Include="engine\gameScene\GameScene.h" />
     <ClInclude Include="gameCode\employee\Employee.h" />
+    <ClInclude Include="gameCode\employee\employeeInfo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

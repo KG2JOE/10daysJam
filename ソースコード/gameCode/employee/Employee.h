@@ -3,12 +3,17 @@
 #include "Sprite.h"
 #include"Input.h"
 #include<DirectXMath.h>
+
+
+
 class Employee
 {
 private:
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 
+
+public:
 	enum Status
 	{
 		NONE,			//èâä˙íl
@@ -43,7 +48,13 @@ public:
 
 	void Move();
 
-	void CatchEmployee();
+	void CatchEmployeeWork();
+
+	void CatchEmployeeGrab();
+
+	int GetStatus() { return status; }
+	
+	bool GetCatchFlag() { return catchFlag; }
 
 private:
 	SpriteCommon* spCom{};
@@ -53,7 +64,7 @@ private:
 
 	XMFLOAT2 mousePos{};
 
-	bool catchFlag = 0;
+	bool catchFlag;
 
 
 	Status status;

@@ -42,6 +42,8 @@ public:
 	//全体更新
 	void Update();
 
+	void DrawDbTxt();
+
 	//全体描画
 	void Draw();
 
