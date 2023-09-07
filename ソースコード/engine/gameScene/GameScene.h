@@ -17,6 +17,7 @@
 #include"DebugText.h"
 #include "ParticleManager2d.h"
 #include "Timer.h"
+#include "Score.h"
 
 #include"InstancingObject3d.h"
 using namespace DirectX;
@@ -64,6 +65,7 @@ private://ƒGƒ“ƒWƒ“
 
 	ParticleManager2d* particleManager = nullptr;
 	Timer* timer = nullptr;
+	Score* score = nullptr;
 
 
 	InsObj* insObj{};
