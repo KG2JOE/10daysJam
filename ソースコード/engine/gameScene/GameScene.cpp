@@ -22,7 +22,7 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	camera->SetEye({ 0, 10, 0 });
 	spriteCommon->initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	spriteCommon->LoadTexture(0, L"Resources/sprite/debugfont.png");
-	//spriteCommon->LoadTexture(0, L"Resources/sprite/drawNumber.png");
+	spriteCommon->LoadTexture(1, L"Resources/sprite/drawNumber.png");
 
 	audio->Initialize();
 	audio->LoadWave("thunder.wav");
@@ -35,6 +35,15 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 
 	debTxt = new DebugText;
 	debTxt->Initialize(spriteCommon, 0);
+
+	particleManager = ParticleManager2d::Create();
+	particleManager->SetSpriteCommon(spriteCommon);
+
+	timer = new Timer(spriteCommon, 1);
+	timer->SetLimitTime(120);
+	timer->SetPosition({ 100.0f, 100.0f });
+	timer->SetSize(5.0f);
+	timer->Initialize();
 }
 
 
@@ -42,45 +51,43 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 
 void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* input_)
 {
-
 	assert(winApp_);
 	assert(dxCommon_);
 	assert(input_);
 	EngineIns(winApp_, dxCommon_, input_);
 
-	
-	
+	timer->Initialize();
 }
 
 void GameScene::Update()
 {
+	//particleManager->Add(0, 10, { 100.0f, 100.0f }, { 0.0f, 10.0f }, { 0.0f, 10.0f }, {100.0f, 100.0f});
+	particleManager->Update();
+	timer->Update();
 }
 
 
 
 void GameScene::Draw()
 {
-
 	Object3d::PreDraw(dxCommon->GetCmdList());
-	
 	Object3d::PostDraw();
 
-
 	spriteCommon->PreDraw();
-
+	particleManager->Draw();
+	timer->Draw();
 	// ‚SD•`‰æƒRƒ}ƒ“ƒh‚±‚±‚Ü‚Å
-
-
 }
 
 void GameScene::Delete()
 {
-	
 	audio->Finalize();
 	delete debTxt;
 	delete camera;
 	
 	delete spriteCommon;
+	delete particleManager;
 
+	delete timer;
 }
 

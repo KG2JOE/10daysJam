@@ -92,6 +92,8 @@ public:
 
 	void SetIsFlipY(bool isFlipY) { isFlipY_ = isFlipY; }
 
+	void SetColor(XMFLOAT4 color) { color_ = color; }
+
 	void Draw();
 
 };
