@@ -310,26 +310,23 @@ void DirectXCommon::InitializeFence()
 
 void DirectXCommon::InitializeFixFPS()
 {
-	reference_ = steady_clock::now();
+	end = currentTimeMicro();
+	next = end + (1000 * 1000 / 60);
 }
 
 void DirectXCommon::UpdateFixFPS()
 {
-	const microseconds kMinTime(uint64_t(1000000.0f / 60.0f));
-	const microseconds kMinCheckTime(uint64_t(1000000.0f / 65.0f));
-
-	time_point now = steady_clock::now();
-
-	microseconds elapsed = std::chrono::duration_cast<microseconds>(now - reference_);
-
-	if (elapsed < kMinTime)
+	end = currentTimeMicro();
+	if (end < next)
 	{
-		while (steady_clock::now() - reference_ < kMinTime)
-		{
-			std::this_thread::sleep_for(microseconds(1));
-		}
+		//更新時間まで待機
+		std::this_thread::sleep_for(std::chrono::microseconds(next - end));
+		//次の更新時間を計算（1秒/フレームレート加算）
+		next += (1000 * 1000 / 60);
 	}
-
-	reference_ = steady_clock::now();
-
+	else
+	{
+		//更新時間を過ぎた場合は現在時刻から次の更新時間を計算
+		next = end + (1000 * 1000 / 60);
+	}
 }
