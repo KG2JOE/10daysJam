@@ -15,6 +15,8 @@
 #include "Collision.h"
 #include"Audio.h"
 #include"DebugText.h"
+#include "ParticleManager2d.h"
+#include "Timer.h"
 
 #include"InstancingObject3d.h"
 using namespace DirectX;
@@ -59,6 +61,10 @@ private://ƒGƒ“ƒWƒ“
 
 
 	//test
+
+	ParticleManager2d* particleManager = nullptr;
+	Timer* timer = nullptr;
+
 
 	InsObj* insObj{};
 
