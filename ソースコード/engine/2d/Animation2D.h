@@ -33,7 +33,7 @@ private:
 
 public:
 	/// <summary>
-	/// インストラクタ
+	/// コンストラクタ
 	/// </summary>
 	/// <param name="spriteCommon">スプライトコモン</param>
 	/// <param name="texNumber">テクスチャナンバー</param>
@@ -41,7 +41,7 @@ public:
 	/// <param name="widthNum">どれだけ横に連番されているか</param>
 	Animation2D(SpriteCommon* spriteCommon, int texNumber, XMFLOAT2 TexSize, int widthNum);
 	/// <summary>
-	/// 削除
+	/// デストラクタ
 	/// </summary>
 	~Animation2D();
 	/// <summary>
