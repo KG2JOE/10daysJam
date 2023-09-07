@@ -93,6 +93,9 @@
     <ClCompile Include="engine\2d\ParticleManager2d.cpp">
       <Filter>ソース ファイル\2D</Filter>
     </ClCompile>
+    <ClCompile Include="engine\2d\Timer.cpp">
+      <Filter>ソース ファイル\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -209,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="engine\base\XMFLOAT_Helper.h">
       <Filter>ヘッダー ファイル\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\2d\Timer.h">
+      <Filter>ヘッダー ファイル\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

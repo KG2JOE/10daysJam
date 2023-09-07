@@ -93,6 +93,7 @@
     <ClCompile Include="engine\2d\ParticleManager2d.cpp" />
     <ClCompile Include="engine\2d\Sprite.cpp" />
     <ClCompile Include="engine\2d\SpriteCommon.cpp" />
+    <ClCompile Include="engine\2d\Timer.cpp" />
     <ClCompile Include="engine\3d\obj\InstancingObject3d.cpp" />
     <ClCompile Include="engine\3d\obj\Model.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
@@ -192,6 +193,7 @@
     <ClInclude Include="engine\2d\ParticleManager2d.h" />
     <ClInclude Include="engine\2d\Sprite.h" />
     <ClInclude Include="engine\2d\SpriteCommon.h" />
+    <ClInclude Include="engine\2d\Timer.h" />
     <ClInclude Include="engine\3d\obj\InstancingObject3d.h" />
     <ClInclude Include="engine\3d\obj\Model.h" />
     <ClInclude Include="engine\3d\obj\Object3d.h" />
