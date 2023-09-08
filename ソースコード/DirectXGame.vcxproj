@@ -90,6 +90,7 @@
     <ClCompile Include="engine\2d\AddParticle2dManager.cpp" />
     <ClCompile Include="engine\2d\Animation2D.cpp" />
     <ClCompile Include="engine\2d\DebugText.cpp" />
+    <ClCompile Include="engine\2d\Fade.cpp" />
     <ClCompile Include="engine\2d\ParticleManager2d.cpp" />
     <ClCompile Include="engine\2d\Score.cpp" />
     <ClCompile Include="engine\2d\Sprite.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="engine\2d\AddParticle2dManager.h" />
     <ClInclude Include="engine\2d\Animation2D.h" />
     <ClInclude Include="engine\2d\DebugText.h" />
+    <ClInclude Include="engine\2d\Fade.h" />
     <ClInclude Include="engine\2d\ParticleManager2d.h" />
     <ClInclude Include="engine\2d\Score.h" />
     <ClInclude Include="engine\2d\Sprite.h" />
