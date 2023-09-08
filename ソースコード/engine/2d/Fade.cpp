@@ -104,6 +104,12 @@ void Fade::Update()
 
 		count++;
 
+		if (count >= 60 + (WidthNum + HeightNum - 2) * 10)
+		{
+			count = 0;
+			fadeState = FadeState::NONEFADE;
+		}
+
 		break;
 	case Fade::NONEFADE:
 
@@ -134,6 +140,12 @@ void Fade::Update()
 		}
 
 		count++;
+
+		if (count >= 60 + (WidthNum + HeightNum - 2) * 10)
+		{
+			count = 0;
+			fadeState = FadeState::FADE;
+		}
 
 		break;
 	default:
