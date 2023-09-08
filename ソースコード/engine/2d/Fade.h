@@ -41,13 +41,10 @@ public:
 	/// </summary>
 	~Fade();
 	/// <summary>
-	/// フェードインする状態に初期化
+	/// 特定のフェードの状態で初期化
 	/// </summary>
-	void SetFadeIn();
-	/// <summary>
-	/// フェードアウトする状態に初期化
-	/// </summary>
-	void SetFadeOut();
+	/// <param name="state">特定のフェードの状態</param>
+	void SetFadeState(FadeState state);
 	/// <summary>
 	/// 更新
 	/// </summary>

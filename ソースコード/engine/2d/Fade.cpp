@@ -38,36 +38,81 @@ Fade::~Fade()
 	}
 }
 
-void Fade::SetFadeIn()
+void Fade::SetFadeState(FadeState state)
 {
-	count = 0;
-
-	for (int x = 0; x < WidthNum; x++)
+	switch (state)
 	{
-		for (int y = 0; y < HeightNum; y++)
+	case Fade::FADE:
+
+		count = 0;
+
+		for (int x = 0; x < WidthNum; x++)
 		{
-			sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, 1.0f });
-			sprites[x][y]->Update();
+			for (int y = 0; y < HeightNum; y++)
+			{
+				sprites[x][y]->SetPosition({ (x + 0.5f) * (float)WinApp::window_width / WidthNum, (y + 0.5f) * (float)WinApp::window_height / HeightNum, 0.0f });
+				sprites[x][y]->SetSize(XMFLOAT2{ (float)WinApp::window_width / WidthNum, (float)WinApp::window_height / HeightNum });
+				sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, 1.0f });
+				sprites[x][y]->Update();
+			}
 		}
-	}
 
-	fadeState = FadeState::FADEIN;
-}
+		fadeState = FadeState::FADE;
 
-void Fade::SetFadeOut()
-{
-	count = 0;
+		break;
+	case Fade::FADEIN:
 
-	for (int x = 0; x < WidthNum; x++)
-	{
-		for (int y = 0; y < HeightNum; y++)
+		count = 0;
+
+		for (int x = 0; x < WidthNum; x++)
 		{
-			sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, 0.0f });
-			sprites[x][y]->Update();
+			for (int y = 0; y < HeightNum; y++)
+			{
+				sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, 1.0f });
+				sprites[x][y]->Update();
+			}
 		}
-	}
 
-	fadeState = FadeState::FADEOUT;
+		fadeState = FadeState::FADEIN;
+
+		break;
+	case Fade::NONEFADE:
+
+		count = 0;
+
+		for (int x = 0; x < WidthNum; x++)
+		{
+			for (int y = 0; y < HeightNum; y++)
+			{
+				sprites[x][y]->SetPosition({ (x + 0.5f) * (float)WinApp::window_width / WidthNum, (y + 0.5f) * (float)WinApp::window_height / HeightNum, 0.0f });
+				sprites[x][y]->SetSize(XMFLOAT2{ (float)WinApp::window_width / WidthNum, (float)WinApp::window_height / HeightNum });
+				sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, 0.0f });
+				sprites[x][y]->Update();
+			}
+		}
+
+		fadeState = FadeState::NONEFADE;
+
+		break;
+	case Fade::FADEOUT:
+
+		count = 0;
+
+		for (int x = 0; x < WidthNum; x++)
+		{
+			for (int y = 0; y < HeightNum; y++)
+			{
+				sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, 0.0f });
+				sprites[x][y]->Update();
+			}
+		}
+
+		fadeState = FadeState::FADEOUT;
+
+		break;
+	default:
+		break;
+	}
 }
 
 void Fade::Update()
