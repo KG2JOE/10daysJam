@@ -206,6 +206,7 @@
     <ClInclude Include="engine\base\collision.h" />
     <ClInclude Include="engine\base\DebugCamera.h" />
     <ClInclude Include="engine\base\DirectXCommon.h" />
+    <ClInclude Include="engine\base\Easing.h" />
     <ClInclude Include="engine\base\Input.h" />
     <ClInclude Include="engine\base\PipelineSet.h" />
     <ClInclude Include="engine\base\PostEffect.h" />
