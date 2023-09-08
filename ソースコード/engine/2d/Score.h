@@ -22,6 +22,10 @@ private:
 	int currentScore;
 	//0で右詰め表示するかどうか
 	bool printZeroFlag;
+	/// <summary>
+	/// 現在のスコアに描画を切り替える
+	/// </summary>
+	void SetCurrentScore();
 
 public:
 	/// <summary>
@@ -46,10 +50,6 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
-	/// <summary>
-	/// 現在のスコアに描画を切り替える
-	/// </summary>
-	void SetCurrentScore();
 	/// <summary>
 	/// 座標の設定
 	/// </summary>

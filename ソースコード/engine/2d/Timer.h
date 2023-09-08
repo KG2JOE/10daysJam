@@ -26,6 +26,10 @@ private:
 	int count;
 	//タイムリミットになったかどうか
 	bool limitFlag;
+	/// <summary>
+	/// 現在の時間に描画を切り替える
+	/// </summary>
+	void SetCurrentTime();
 
 public:
 	/// <summary>
@@ -50,10 +54,6 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
-	/// <summary>
-	/// 現在の時間に描画を切り替える
-	/// </summary>
-	void SetCurrentTime();
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
