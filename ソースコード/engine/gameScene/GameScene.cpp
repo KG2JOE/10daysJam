@@ -23,6 +23,7 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	spriteCommon->initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	spriteCommon->LoadTexture(0, L"Resources/sprite/debugfont.png");
 	spriteCommon->LoadTexture(1, L"Resources/sprite/drawNumber.png");
+	spriteCommon->LoadTexture(2, L"Resources/sprite/white1x1.png");
 
 	audio->Initialize();
 	audio->LoadWave("thunder.wav");
@@ -50,6 +51,8 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	score->SetPosition({ 100.0f, 100.0f });
 	score->SetSize(2.0f);
 	score->Initialize();
+
+	fade = new Fade(spriteCommon, 2);
 }
 
 
@@ -64,6 +67,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 	timer->Initialize();
 	score->Initialize();
+	fade->SetFadeOut();
 }
 
 void GameScene::Update()
@@ -73,6 +77,7 @@ void GameScene::Update()
 	timer->Update();
 	score->AddScore(1);
 	score->Update();
+	fade->Update();
 }
 
 
@@ -85,7 +90,8 @@ void GameScene::Draw()
 	spriteCommon->PreDraw();
 	particleManager->Draw();
 	timer->Draw();
-	score->Draw();
+	//score->Draw();
+	fade->Draw();
 	// ４．描画コマンドここまで
 }
 
@@ -100,5 +106,6 @@ void GameScene::Delete()
 
 	delete timer;
 	delete score;
+	delete fade;
 }
 
