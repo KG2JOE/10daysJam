@@ -6,6 +6,8 @@
 #include"WinApp.h"
 #include<chrono>
 #include<thread>
+#include <string>
+#include <functional>
 
 
 class DirectXCommon
@@ -44,7 +46,12 @@ public:
 	ID3D12Device* GetDev() { return dev.Get(); }
 	ID3D12GraphicsCommandList* GetCmdList() { return cmdList.Get(); }
 private:
-	steady_clock::time_point reference_;
+	long long end;
+	long long next;
+	std::function<long long(void)> currentTimeMicro = []() {
+		std::chrono::system_clock::duration d = std::chrono::system_clock::now().time_since_epoch();
+		return std::chrono::duration_cast<std::chrono::microseconds>(d).count();
+	};
 	WinApp* win = nullptr;
 
 	ComPtr<ID3D12Device> dev;

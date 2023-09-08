@@ -11,6 +11,11 @@
 //. XMFLOAT4Œn
 //-------------------------------------------------------------------------------------------------------------
 
+using XMFLOAT2 = DirectX::XMFLOAT2;
+using XMFLOAT3 = DirectX::XMFLOAT3;
+using XMFLOAT4 = DirectX::XMFLOAT4;
+using XMMATRIX = DirectX::XMMATRIX;
+
 static inline void operator+= (DirectX::XMFLOAT4& v1, const DirectX::XMFLOAT4& v2)
 {
     v1.x += v2.x;
