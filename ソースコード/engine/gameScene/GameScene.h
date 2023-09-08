@@ -72,6 +72,7 @@ private://ƒGƒ“ƒWƒ“
 	SceneState sceneState;
 
 	//test
+	Sprite* titleSprite = nullptr;
 
 	ParticleManager2d* particleManager = nullptr;
 	Timer* timer = nullptr;

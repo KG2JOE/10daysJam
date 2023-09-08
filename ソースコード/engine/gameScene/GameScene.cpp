@@ -24,6 +24,7 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	spriteCommon->LoadTexture(0, L"Resources/sprite/debugfont.png");
 	spriteCommon->LoadTexture(1, L"Resources/sprite/drawNumber.png");
 	spriteCommon->LoadTexture(2, L"Resources/sprite/white1x1.png");
+	spriteCommon->LoadTexture(3, L"Resources/sprite/titleBack.png");
 
 	audio->Initialize();
 	audio->LoadWave("thunder.wav");
@@ -48,6 +49,8 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	assert(input_);
 	EngineIns(winApp_, dxCommon_, input_);
 
+	titleSprite = Sprite::Create(spriteCommon, 3, {0.0f, 0.0f});
+
 	particleManager = ParticleManager2d::Create();
 	particleManager->SetSpriteCommon(spriteCommon);
 
@@ -64,15 +67,30 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	score->Initialize();
 
 	fade = new Fade(spriteCommon, 2);
-	fade->SetFadeOut();
+	fade->SetFadeState(Fade::FadeState::FADEIN);
 	sceneState = SceneState::TITLE;
 }
 
 void GameScene::Update()
 {
+	input->Update();
+
 	switch (sceneState)
 	{
 	case GameScene::TITLE:
+
+		if (fade->GetFadeState() == Fade::FadeState::NONEFADE &&
+			input->TriggerMouseLeft())
+		{
+			fade->SetFadeState(Fade::FadeState::FADEOUT);
+		}
+
+		if (fade->GetFadeState() == Fade::FadeState::FADE)
+		{
+			fade->SetFadeState(Fade::FadeState::FADEIN);
+			sceneState = SceneState::GUIDE;
+		}
+
 		break;
 	case GameScene::GUIDE:
 		break;
@@ -103,23 +121,37 @@ void GameScene::Draw()
 	switch (sceneState)
 	{
 	case GameScene::TITLE:
+
+		titleSprite->Draw();
+
 		break;
 	case GameScene::GUIDE:
+
 		timer->Draw();
+
 		score->Draw();
+
 		break;
 	case GameScene::GAMEPLAY:
+
 		particleManager->Draw();
+
 		timer->Draw();
+
 		score->Draw();
+
 		break;
 	case GameScene::RESULT:
+
 		timer->Draw();
+
 		score->Draw();
+
 		break;
 	default:
 		break;
 	}
+
 	fade->Draw();
 }
 
