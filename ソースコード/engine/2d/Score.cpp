@@ -60,7 +60,7 @@ void Score::SetCurrentScore()
 	int num = 0;
 	for (int i = 0; i < MaxSprite; i++)
 	{
-		if (currentScore == num)
+		if (currentScore == num && i > 0)
 		{
 			sprites[i]->SetTexSize({ 0.0f, TexHeight });
 			sprites[i]->Update();
