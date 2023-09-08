@@ -24,6 +24,15 @@
 using namespace DirectX;
 class GameScene
 {
+public:
+	//ゲームシーンの状態
+	enum SceneState
+	{
+		TITLE, //タイトル
+		GUIDE, //操作説明
+		GAMEPLAY, //ゲームプレイ
+		RESULT, //リザルト
+	};
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::を省略
@@ -60,7 +69,7 @@ private://エンジン
 	Audio* audio = Audio::GetInstance();
 	
 	int scene = 0;
-
+	SceneState sceneState;
 
 	//test
 

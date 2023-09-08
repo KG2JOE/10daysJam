@@ -36,6 +36,17 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 
 	debTxt = new DebugText;
 	debTxt->Initialize(spriteCommon, 0);
+}
+
+
+
+
+void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* input_)
+{
+	assert(winApp_);
+	assert(dxCommon_);
+	assert(input_);
+	EngineIns(winApp_, dxCommon_, input_);
 
 	particleManager = ParticleManager2d::Create();
 	particleManager->SetSpriteCommon(spriteCommon);
@@ -53,30 +64,30 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	score->Initialize();
 
 	fade = new Fade(spriteCommon, 2);
-}
-
-
-
-
-void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* input_)
-{
-	assert(winApp_);
-	assert(dxCommon_);
-	assert(input_);
-	EngineIns(winApp_, dxCommon_, input_);
-
-	timer->Initialize();
-	score->Initialize();
 	fade->SetFadeOut();
+	sceneState = SceneState::TITLE;
 }
 
 void GameScene::Update()
 {
-	//particleManager->Add(0, 10, { 100.0f, 100.0f }, { 0.0f, 10.0f }, { 0.0f, 10.0f }, {100.0f, 100.0f});
-	particleManager->Update();
-	timer->Update();
-	score->AddScore(1);
-	score->Update();
+	switch (sceneState)
+	{
+	case GameScene::TITLE:
+		break;
+	case GameScene::GUIDE:
+		break;
+	case GameScene::GAMEPLAY:
+		particleManager->Update();
+		timer->Update();
+		score->AddScore(1);
+		score->Update();
+		break;
+	case GameScene::RESULT:
+		break;
+	default:
+		break;
+	}
+	
 	fade->Update();
 }
 
@@ -88,11 +99,28 @@ void GameScene::Draw()
 	Object3d::PostDraw();
 
 	spriteCommon->PreDraw();
-	particleManager->Draw();
-	timer->Draw();
-	//score->Draw();
+
+	switch (sceneState)
+	{
+	case GameScene::TITLE:
+		break;
+	case GameScene::GUIDE:
+		timer->Draw();
+		score->Draw();
+		break;
+	case GameScene::GAMEPLAY:
+		particleManager->Draw();
+		timer->Draw();
+		score->Draw();
+		break;
+	case GameScene::RESULT:
+		timer->Draw();
+		score->Draw();
+		break;
+	default:
+		break;
+	}
 	fade->Draw();
-	// ４．描画コマンドここまで
 }
 
 void GameScene::Delete()
