@@ -82,6 +82,8 @@ public:
 
 	void SetSize(XMFLOAT2 size) { size_ = size; }
 
+	XMFLOAT2 GetSize() { return size_; }
+
 	void SetTexLeftTop(XMFLOAT2 texLeftTop) { texLeftTop_ = texLeftTop; }
 
 	void SetTexSize(XMFLOAT2 texSize) { texSize_ = texSize; }
@@ -93,6 +95,8 @@ public:
 	void SetIsFlipY(bool isFlipY) { isFlipY_ = isFlipY; }
 
 	void SetColor(XMFLOAT4 color) { color_ = color; }
+
+	XMFLOAT4 GetColor() { return color_; }
 
 	void Draw();
 
