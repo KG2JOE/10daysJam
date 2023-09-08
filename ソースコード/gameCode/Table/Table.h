@@ -21,6 +21,9 @@ public:
 
 	void Delete();
 
+
+	XMFLOAT3 GetPos(int i, int j) { return pos[i][j]; }
+
 private:
 	SpriteCommon* spCom;
 	Sprite* table[5][4]{};

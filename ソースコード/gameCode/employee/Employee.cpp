@@ -8,14 +8,21 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	spCom = spCom_;
 	input = input_;
 	
-	spCom->LoadTexture(NONE, L"Resources/sprite/humanBack.png");
-	
+	spCom->LoadTexture(NONE, L"Resources/sprite/human.png");
+	table = new Table();
+	table->Ins(spCom);
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			employee_[i][j] = Sprite::Create(spCom, (UINT)Status::NONE, {0.5,0.5}, false, false);
+			employeeS[i][j] = new EmployeeS();
 
+			employeeS[i][j]->sprite_ = Sprite::Create(spCom, (UINT)Status::NONE, {0.5,0.5}, false, false);
+			employeeS[i][j]->pos_ = table->GetPos(i, j);
+			employeeS[i][j]->pos_.y -= 25.f;
+			employeeS[i][j]->sprite_->SetPosition(employeeS[i][j]->pos_);
+			employeeS[i][j]->sprite_->SetSize({ 60,60 });
+			employeeS[i][j]->status_ = Work;
 		}
 	}
 
@@ -30,8 +37,7 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	moveStatus = Left;
 	catchFlag = 0;
 
-	table = new Table();
-	table->Ins(spCom);
+	
 }
 
 void Employee::Update()
@@ -40,8 +46,30 @@ void Employee::Update()
 
 	mousePos.x = input->GetMousePoint().x;
 	mousePos.y = input->GetMousePoint().y;
+	
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			EmployeeSUpdate(i,j);
+			
+		}
+	}
+	table->Update();
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			employeeS[i][j]->sprite_->SetPosition(employeeS[i][j]->pos_);
+			employeeS[i][j]->sprite_->Update();
+		}
+	}
+	//employee->Update();
+}
 
-	switch (status)
+void Employee::EmployeeSUpdate(int i, int j)
+{
+	switch (employeeS[i][j]->status_)
 	{
 	case Employee::NONE:
 		break;
@@ -52,31 +80,22 @@ void Employee::Update()
 	case Employee::Grab:
 		pos.x = mousePos.x;
 		pos.y = mousePos.y;
+		employeeS[i][j]->pos_.x = mousePos.x;
+		employeeS[i][j]->pos_.y = mousePos.y;
+		employeeS[i][j]->sprite_->SetPosition(employeeS[i][j]->pos_);
 		employee->SetPosition(pos);
-		CatchEmployeeGrab();
+		CatchEmployeeGrab(i, j);
 
 		break;
 	case Employee::AttendingWork:
 		//Move();
-		if (statusFlag == Work)
-		{
-			employee = Sprite::Create(spCom, (UINT)Status::Work, { 0,0 }, false, false);
-			employee->SetPosition(pos);
-		}
 		break;
 	case Employee::Work:
-		CatchEmployeeWork();
+		employeeS[i][j]->pos_ = table->GetPos(i, j);
+		employeeS[i][j]->pos_.y -= 25.f;
 
-		if (statusFlag == Grab)
-		{
-			employee = Sprite::Create(spCom, (UINT)Status::NONE, { 0,0 }, false, false);
-			employee->SetPosition(pos);
-		}
-		if (statusFlag == Dead)
-		{
-			employee = Sprite::Create(spCom, (UINT)Status::Dead, { 0,0 }, false, false);
-			employee->SetPosition(pos);
-		}
+		CatchEmployeeWork(i, j);
+
 		break;
 	case Employee::LeavingWork:
 
@@ -87,15 +106,20 @@ void Employee::Update()
 	default:
 		break;
 	}
-	table->Update();
-	employee->Update();
 }
 
 void Employee::Draw()
 {
 	spCom->PreDraw();
 
-	employee->Draw();
+	//employee->Draw();
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			employeeS[i][j]->sprite_->Draw();
+		}
+	}
 	table->Draw();
 
 }
@@ -130,19 +154,52 @@ void Employee::Move()
 
 }
 
-void Employee::CatchEmployeeWork()
+void Employee::CatchEmployeeWork(int i, int j)
 {
-	bool isHit = Collision::HitBox({ pos.x,pos.y }, 32, mousePos);
-
-	if (isHit && input->TriggerMouseLeft())
+	int count = 0;
+	for (int k = 0; k < 5; k++)
 	{
-		status = Grab;
+		for (int l = 0; l < 4; l++)
+		{
+			if (employeeS[k][l]->status_ != Grab)
+			{
+				count++;
+			}
+			else
+			{
+
+			}
+		}
 	}
+
+	if (count == 20)
+	{
+		bool isHit = Collision::HitBox({ employeeS[i][j]->pos_.x,employeeS[i][j]->pos_.y }, 32, mousePos);
+
+		if (isHit && input->TriggerMouseLeft())
+		{
+			employeeS[i][j]->status_ = Grab;
+		}
+		
+	}
+
+	
+	
 
 }
 
-void Employee::CatchEmployeeGrab()
+void Employee::CatchEmployeeGrab(int i, int j)
 {
+	if (input->PushMouseLeft())
+	{
+		employeeS[i][j]->status_ = employeeS[i][j]->status_;
+	}
+	else
+	{
+		employeeS[i][j]->status_ = Work;
+
+
+	}
 	if (input->PushMouseLeft())
 	{
 		status = Grab;

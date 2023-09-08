@@ -35,7 +35,14 @@ public:
 		Right,
 		Left
 	};
-	
+private:
+
+	struct EmployeeS
+	{
+		Sprite* sprite_;
+		Status status_;
+		XMFLOAT3 pos_;
+	};
 
 public:
 
@@ -43,15 +50,17 @@ public:
 
 	void Update();
 
+	void EmployeeSUpdate(int i,int j);
+
 	void Draw();
 
 	void Delete();
 
 	void Move();
 
-	void CatchEmployeeWork();
+	void CatchEmployeeWork(int i, int j);
 
-	void CatchEmployeeGrab();
+	void CatchEmployeeGrab(int i, int j);
 
 	int GetStatus() { return status; }
 	
@@ -61,9 +70,10 @@ private:
 	SpriteCommon* spCom{};
 	Input* input{};
 	Sprite* employee{};
-	Sprite* employee_[5][4]{};
+	
 	XMFLOAT3 pos;
-	XMFLOAT3 pos_[5][4]{};
+	
+	EmployeeS* employeeS[5][4];
 
 	XMFLOAT2 mousePos{};
 
