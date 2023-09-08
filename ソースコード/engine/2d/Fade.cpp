@@ -84,7 +84,7 @@ void Fade::Update()
 			{
 				sprites[x][y]->SetPosition({ (x + 0.5f) * (float)WinApp::window_width / WidthNum, (y + 0.5f) * (float)WinApp::window_height / HeightNum, 0.0f });
 				sprites[x][y]->SetSize(XMFLOAT2{ (float)WinApp::window_width / WidthNum, (float)WinApp::window_height / HeightNum });
-				sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, 0.0f });
+				sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, 1.0f });
 				sprites[x][y]->Update();
 			}
 		}
