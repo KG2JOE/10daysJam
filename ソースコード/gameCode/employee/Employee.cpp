@@ -11,6 +11,8 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	spCom->LoadTexture(NONE, L"Resources/sprite/human.png");
 	table = new Table();
 	table->Ins(spCom);
+	doorWay = new Doorway();
+	doorWay->Ins(spCom);
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -18,11 +20,14 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 			employeeS[i][j] = new EmployeeS();
 
 			employeeS[i][j]->sprite_ = Sprite::Create(spCom, (UINT)Status::NONE, {0.5,0.5}, false, false);
-			employeeS[i][j]->pos_ = table->GetPos(i, j);
-			employeeS[i][j]->pos_.y -= 25.f;
+			
+			employeeS[i][j]->tablePos_ = table->GetPos(i, j);
+			employeeS[i][j]->tablePos_.y -= 25.f;
+
+			employeeS[i][j]->pos_ = doorWay->GetAttendingWorkPos();
 			employeeS[i][j]->sprite_->SetPosition(employeeS[i][j]->pos_);
 			employeeS[i][j]->sprite_->SetSize({ 60,60 });
-			employeeS[i][j]->status_ = Work;
+			employeeS[i][j]->status_ = AttendingWork;
 		}
 	}
 
@@ -33,7 +38,7 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	employee->SetSize({ 60,60 });
 	//employee->SetSize({32,32});
 	employee->Update();
-	status = Work;
+	status = AttendingWork;
 	moveStatus = Left;
 	catchFlag = 0;
 
@@ -88,6 +93,24 @@ void Employee::EmployeeSUpdate(int i, int j)
 
 		break;
 	case Employee::AttendingWork:
+		if (employeeS[i][j]->tablePos_.y < employeeS[i][j]->pos_.y)
+		{
+			Move(i,j, Front);
+			if (employeeS[i][j]->tablePos_.y >= employeeS[i][j]->pos_.y)
+			{
+				employeeS[i][j]->pos_.y = employeeS[i][j]->tablePos_.y;
+			}
+		}
+		if (employeeS[i][j]->pos_.y == employeeS[i][j]->tablePos_.y)
+		{
+			Move(i, j,Right);
+			if (employeeS[i][j]->tablePos_.x <= employeeS[i][j]->pos_.x)
+			{
+				employeeS[i][j]->pos_.x = employeeS[i][j]->tablePos_.x;
+				employeeS[i][j]->status_ = Work;
+			}
+		}
+
 		//Move();
 		break;
 	case Employee::Work:
@@ -121,7 +144,7 @@ void Employee::Draw()
 		}
 	}
 	table->Draw();
-
+	doorWay->Draw();
 }
 
 void Employee::Delete()
@@ -129,22 +152,22 @@ void Employee::Delete()
 
 }
 
-void Employee::Move()
+void Employee::Move(int i, int j, MoveStatus oveStatus)
 {
-	switch (moveStatus)
+	switch (oveStatus)
 	{
 	case Employee::Front:
-		pos.y -= 3.f;
+		employeeS[i][j]->pos_.y -= 3.f;
 		break;
 	case Employee::Back:
-		pos.y += 3.f;
+		employeeS[i][j]->pos_.y += 3.f;
 		break;
 	case Employee::Right:
-		pos.x += 3.f;
+		employeeS[i][j]->pos_.x += 3.f;
 
 		break;
 	case Employee::Left:
-		pos.x -= 3.f;
+		employeeS[i][j]->pos_.x -= 3.f;
 
 		break;
 	default:

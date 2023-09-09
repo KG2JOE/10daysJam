@@ -15,10 +15,10 @@ public:
 
 	enum
 	{
-		attending = 20,
-		leavingWork,
-		incinerator,
-		beltConveyor
+		incinerator = 20,
+		beltConveyor_1,
+		beltConveyor_2,
+
 	};
 
 	void Ins(SpriteCommon* spCom_);
@@ -29,23 +29,23 @@ public:
 
 	void Delete();
 
+	XMFLOAT3 GetAttendingWorkPos() { return attendingWorkPos; }
 	
 	
 private:
 	SpriteCommon* spCom{};
 
-	Sprite* attendingWorkSprite{};
 	XMFLOAT3 attendingWorkPos{};
 	
-	Sprite* leavingWorkSprite{};
 	XMFLOAT3 leavingWorkPos{};
+
 
 	Sprite* incineratorSprite{};
 	XMFLOAT3 incineratorPos{};
 
+	Sprite* beltConveyorSprite[3]{};
+	XMFLOAT3 beltConveyorPos[3]{};
 
-	Sprite* beltConveyorSprite[2]{};
-	XMFLOAT3 beltConveyorPos[2]{};
 
 
 };

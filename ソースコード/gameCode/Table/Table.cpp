@@ -5,7 +5,7 @@ void Table::Ins(SpriteCommon* spCom_)
 	assert(spCom_);
 
 	spCom = spCom_;
-	spCom->LoadTexture(20, L"Resources/sprite/tableBack.png");
+	spCom->LoadTexture(15, L"Resources/sprite/tableBack.png");
 	mapInsPos = {100,100};
 
 
@@ -17,7 +17,7 @@ void Table::Ins(SpriteCommon* spCom_)
 			XMFLOAT3 temp = {((float)i* intervalX) + startPosX,((float)j* intervalY) + startPosY,0 };
 			pos[i][j]=temp;
 
-			table[i][j] = Sprite::Create(spCom, 20, { 0.5,0.5 }, false, false);
+			table[i][j] = Sprite::Create(spCom, 15, { 0.5,0.5 }, false, false);
 
 			table[i][j]->SetSize({80,60});
 			table[i][j]->SetPosition(pos[i][j]);

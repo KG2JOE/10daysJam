@@ -6,6 +6,8 @@
 
 #include"Table.h"
 
+#include "Doorway.h"
+
 
 class Employee
 {
@@ -41,7 +43,9 @@ private:
 	{
 		Sprite* sprite_;
 		Status status_;
-		XMFLOAT3 pos_;
+		XMFLOAT3 pos_{};
+		XMFLOAT3 tablePos_{};
+
 	};
 
 public:
@@ -56,7 +60,7 @@ public:
 
 	void Delete();
 
-	void Move();
+	void Move(int i, int j,MoveStatus oveStatus);
 
 	void CatchEmployeeWork(int i, int j);
 
@@ -89,5 +93,7 @@ private:
 
 
 	Table* table{};
+
+	Doorway* doorWay{};
 };
 
