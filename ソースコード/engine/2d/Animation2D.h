@@ -30,10 +30,12 @@ private:
 	std::vector<int> spriteNumbers;
 	//今どの連番画像か
 	int spriteIndex;
+	//アニメーションがループするかどうか
+	bool loopFlag;
 
 public:
 	/// <summary>
-	/// インストラクタ
+	/// コンストラクタ
 	/// </summary>
 	/// <param name="spriteCommon">スプライトコモン</param>
 	/// <param name="texNumber">テクスチャナンバー</param>
@@ -41,7 +43,7 @@ public:
 	/// <param name="widthNum">どれだけ横に連番されているか</param>
 	Animation2D(SpriteCommon* spriteCommon, int texNumber, XMFLOAT2 TexSize, int widthNum);
 	/// <summary>
-	/// 削除
+	/// デストラクタ
 	/// </summary>
 	~Animation2D();
 	/// <summary>
@@ -82,4 +84,10 @@ public:
 	/// </summary>
 	/// <param name="numbers"></param>
 	void SetSpriteNumbers(std::vector<int> numbers) { spriteNumbers = numbers; spriteIndex = numbers[0]; }
+
+	/// <summary>
+	/// アニメーションがループするかどうかの設定
+	/// </summary>
+	/// <param name="flag">アニメーションがループするかどうか</param>
+	void SetLoopFlag(bool flag) { loopFlag = flag; }
 };

@@ -17,6 +17,8 @@ Animation2D::Animation2D(SpriteCommon* spriteCommon, int texNumber, XMFLOAT2 Tex
 	spriteNumbers = { 0 };
 	spriteIndex = 0;
 
+	loopFlag = false;
+
 	sprite->SetAnchorpoint(anchorPoint);
 	sprite->SetPosition(XMFLOAT3(position.x, position.y, 0.0f));
 	sprite->SetTexLeftTop({ 0.0f, 0.0f });
@@ -48,7 +50,7 @@ void Animation2D::Update()
 	if (count >= animationFlame)
 	{
 		spriteIndex++;
-		if (spriteIndex >= spriteNumbers.size())
+		if (spriteIndex >= spriteNumbers.size() && loopFlag)
 		{
 			spriteIndex = 0;
 		}
@@ -62,7 +64,11 @@ void Animation2D::Update()
 	sprite->SetTexSize(texSize);
 	sprite->SetSize(texSize * size);
 	sprite->Update();
-	count++;
+
+	if (!(spriteIndex >= spriteNumbers.size() && !loopFlag))
+	{
+		count++;
+	}
 }
 
 void Animation2D::Draw()

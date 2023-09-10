@@ -15,6 +15,10 @@
 #include "Collision.h"
 #include"Audio.h"
 #include"DebugText.h"
+#include "ParticleManager2d.h"
+#include "Timer.h"
+#include "Score.h"
+#include "Fade.h"
 
 #include"InstancingObject3d.h"
 
@@ -22,6 +26,15 @@
 using namespace DirectX;
 class GameScene
 {
+public:
+	//ゲームシーンの状態
+	enum SceneState
+	{
+		TITLE, //タイトル
+		GUIDE, //操作説明
+		GAMEPLAY, //ゲームプレイ
+		RESULT, //リザルト
+	};
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::を省略
@@ -61,10 +74,17 @@ private://エンジン
 	Audio* audio = Audio::GetInstance();
 	
 	int scene = 0;
+	SceneState sceneState;
 
 	Employee* employee{};
 
 	//test
+	Sprite* titleSprite = nullptr;
+
+	ParticleManager2d* particleManager = nullptr;
+	Timer* timer = nullptr;
+	Score* score = nullptr;
+	Fade* fade = nullptr;
 
 	InsObj* insObj{};
 

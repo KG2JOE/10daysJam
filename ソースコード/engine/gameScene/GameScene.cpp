@@ -21,6 +21,10 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	camera->SetDistance(3.0f);
 	camera->SetEye({ 0, 10, 0 });
 	spriteCommon->initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
+	spriteCommon->LoadTexture(0, L"Resources/sprite/debugfont.png");
+	spriteCommon->LoadTexture(1, L"Resources/sprite/drawNumber.png");
+	spriteCommon->LoadTexture(2, L"Resources/sprite/white1x1.png");
+	spriteCommon->LoadTexture(3, L"Resources/sprite/titleBack.png");
 	
 	employee = new Employee();
 	employee->Ins(spriteCommon, input);
@@ -51,14 +55,31 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 
 void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* input_)
 {
-
 	assert(winApp_);
 	assert(dxCommon_);
 	assert(input_);
 	EngineIns(winApp_, dxCommon_, input_);
 
-	
-	
+	titleSprite = Sprite::Create(spriteCommon, 3, {0.0f, 0.0f});
+
+	particleManager = ParticleManager2d::Create();
+	particleManager->SetSpriteCommon(spriteCommon);
+
+	timer = new Timer(spriteCommon, 1);
+	timer->SetLimitTime(120);
+	timer->SetPosition({ 100.0f, 100.0f });
+	timer->SetSize(5.0f);
+	timer->Initialize();
+
+	score = new Score(spriteCommon, 1);
+	score->SetScore(0);
+	score->SetPosition({ 100.0f, 100.0f });
+	score->SetSize(2.0f);
+	score->Initialize();
+
+	fade = new Fade(spriteCommon, 2);
+	fade->SetFadeState(Fade::FadeState::FADEIN);
+	sceneState = SceneState::TITLE;
 }
 
 void GameScene::Update()
@@ -120,12 +141,70 @@ void GameScene::DrawDbTxt()
 	}
 
 }
+	input->Update();
+
+	switch (sceneState)
+	{
+	case GameScene::TITLE:
+
+		if (fade->GetFadeState() == Fade::FadeState::NONEFADE &&
+			input->TriggerMouseLeft())
+		{
+			fade->SetFadeState(Fade::FadeState::FADEOUT);
+		}
+
+		if (fade->GetFadeState() == Fade::FadeState::FADE)
+		{
+			fade->SetFadeState(Fade::FadeState::FADEIN);
+			sceneState = SceneState::GUIDE;
+		}
+
+		break;
+	case GameScene::GUIDE:
+		break;
+	case GameScene::GAMEPLAY:
+		particleManager->Update();
+		timer->Update();
+		score->AddScore(1);
+		score->Update();
+		break;
+	case GameScene::RESULT:
+		break;
+	default:
+		break;
+	}
+	
+	fade->Update();
+}
 
 
 
 void GameScene::Draw()
 {
+	Object3d::PreDraw(dxCommon->GetCmdList());
+	Object3d::PostDraw();
 
+	spriteCommon->PreDraw();
+
+	switch (sceneState)
+	{
+	case GameScene::TITLE:
+
+		titleSprite->Draw();
+
+		break;
+	case GameScene::GUIDE:
+
+		timer->Draw();
+
+		score->Draw();
+
+		break;
+	case GameScene::GAMEPLAY:
+
+		particleManager->Draw();
+
+		timer->Draw();
 	Object3d::PreDraw(dxCommon->GetCmdList());
 	
 	Object3d::PostDraw();
@@ -133,24 +212,38 @@ void GameScene::Draw()
 	
 	employee->Draw();
 
-	spriteCommon->PreDraw();
+		score->Draw();
 
 	//DrawDbTxt();
 	debTxt->DrawAll();
 
 	// ‚SD•`‰æƒRƒ}ƒ“ƒh‚±‚±‚Ü‚Å
+		break;
+	case GameScene::RESULT:
 
+		timer->Draw();
 
+		score->Draw();
+
+		break;
+	default:
+		break;
+	}
+
+	fade->Draw();
 }
 
 void GameScene::Delete()
 {
-	
 	audio->Finalize();
 	delete debTxt;
 	delete camera;
 	
 	delete spriteCommon;
+	delete particleManager;
 
+	delete timer;
+	delete score;
+	delete fade;
 }
 
