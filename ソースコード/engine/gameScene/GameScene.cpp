@@ -68,6 +68,9 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
+
+	guide = new Guide(spriteCommon, { 2,2,2 }, 2, 2);
+	guide->Initialize();
 	sceneState = SceneState::TITLE;
 }
 
@@ -93,6 +96,7 @@ void GameScene::Update()
 
 		break;
 	case GameScene::GUIDE:
+		guide->Update();
 		break;
 	case GameScene::GAMEPLAY:
 		particleManager->Update();
@@ -130,6 +134,8 @@ void GameScene::Draw()
 		timer->Draw();
 
 		score->Draw();
+
+		guide->Draw();
 
 		break;
 	case GameScene::GAMEPLAY:

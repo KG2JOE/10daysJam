@@ -19,6 +19,7 @@
 #include "Timer.h"
 #include "Score.h"
 #include "Fade.h"
+#include "Guide.h"
 
 #include"InstancingObject3d.h"
 using namespace DirectX;
@@ -73,6 +74,7 @@ private://ƒGƒ“ƒWƒ“
 
 	//test
 	Sprite* titleSprite = nullptr;
+	Guide* guide = nullptr;
 
 	ParticleManager2d* particleManager = nullptr;
 	Timer* timer = nullptr;

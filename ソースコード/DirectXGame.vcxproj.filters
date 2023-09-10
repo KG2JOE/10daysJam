@@ -99,6 +99,12 @@
     <ClCompile Include="engine\2d\Score.cpp">
       <Filter>ソース ファイル\2D</Filter>
     </ClCompile>
+    <ClCompile Include="engine\2d\Guide.cpp">
+      <Filter>ソース ファイル\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\2d\Fade.cpp">
+      <Filter>ソース ファイル\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -221,6 +227,15 @@
     </ClInclude>
     <ClInclude Include="engine\2d\Score.h">
       <Filter>ヘッダー ファイル\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\2d\Guide.h">
+      <Filter>ヘッダー ファイル\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\2d\Fade.h">
+      <Filter>ヘッダー ファイル\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\base\Easing.h">
+      <Filter>ヘッダー ファイル\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

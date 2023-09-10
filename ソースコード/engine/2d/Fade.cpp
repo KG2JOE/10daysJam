@@ -141,7 +141,7 @@ void Fade::Update()
 		{
 			for (int y = 0; y < HeightNum; y++)
 			{
-				float alpha = 1.0f - (count - (x + y) * 10.0f) / 60.0f;
+				float alpha = 1.0f - (count - (x + y) * 5.0f) / 30.0f;
 				sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, alpha });
 				sprites[x][y]->Update();
 			}
@@ -149,7 +149,7 @@ void Fade::Update()
 
 		count++;
 
-		if (count >= 60 + (WidthNum + HeightNum - 2) * 10)
+		if (count >= 30 + (WidthNum + HeightNum - 2) * 5)
 		{
 			count = 0;
 			fadeState = FadeState::NONEFADE;
@@ -178,7 +178,7 @@ void Fade::Update()
 		{
 			for (int y = 0; y < HeightNum; y++)
 			{
-				float alpha = (count - (x + y) * 10.0f) / 60.0f;
+				float alpha = (count - (x + y) * 5.0f) / 30.0f;
 				sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, alpha });
 				sprites[x][y]->Update();
 			}
@@ -186,7 +186,7 @@ void Fade::Update()
 
 		count++;
 
-		if (count >= 60 + (WidthNum + HeightNum - 2) * 10)
+		if (count >= 30 + (WidthNum + HeightNum - 2) * 5)
 		{
 			count = 0;
 			fadeState = FadeState::FADE;
