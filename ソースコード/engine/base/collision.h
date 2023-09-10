@@ -19,6 +19,7 @@ private: // エイリアス
 public:
 
 	static bool HitBox(XMFLOAT2 box, int boxSize, XMFLOAT2 point, int pointSize = 0);
+	static bool HitBox2(XMFLOAT2 box, XMFLOAT2 boxSize, XMFLOAT2 point, int pointSize = 0);
 
 
 

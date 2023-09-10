@@ -9,41 +9,71 @@ void Doorway::Ins(SpriteCommon* spCom_)
 	spCom->LoadTexture(beltConveyor_1, L"Resources/sprite/beltConveyor.png");
 	spCom->LoadTexture(beltConveyor_2, L"Resources/sprite/beltConveyor.png");
 
-	incineratorPos = {1200,50,0};
+	incineratorPos = { 1200,128,0 };
 
 	incineratorSprite = Sprite::Create(spCom, incinerator, { 0.5,0.5 }, false, false);
 	incineratorSprite->SetPosition(incineratorPos);
 	incineratorSprite->Update();
-	
-
-	beltConveyorPos[0] = { 1200,200,0 };
-	beltConveyorPos[1] = { 1200,400,0 };
-	beltConveyorPos[2] = { 1200,150,0 };
 
 
-	for (int i = 0; i < 3; i++)
+	deadConveyorPos[0] = { 1200,152,0 };
+	deadConveyorPos[1] = { 1200,197,0 };
+	deadConveyorPos[2] = { 1200,242,0 };
+
+	deadConveyorPos[3] = { 1200,242,0 };
+	deadConveyorPos[4] = { 1200,242,0 };
+	deadConveyorPos[5] = { 1200,242,0 };
+
+
+	for (int i = 0; i < 5; i++)
 	{
-
-		beltConveyorSprite[i] = Sprite::Create(spCom, beltConveyor_1, { 0.5,0.5 }, false, false);
-		beltConveyorSprite[i]->SetPosition(beltConveyorPos[i]);
-		beltConveyorSprite[i]->Update();
+		aliveConveyorPos[i] = { 1256.f - (distance_2 *i),incineratorPos.y + distance_1 + (distance_2 * 6),0 };
+		aliveConveyorSprite[i] = Sprite::Create(spCom, beltConveyor_1, { 0.5,0.5 }, false, false);
+		aliveConveyorSprite[i]->SetRotation(90);
+		aliveConveyorSprite[i]->SetPosition(aliveConveyorPos[i]);
+		aliveConveyorSprite[i]->Update();
 	}
-	attendingWorkPos = { 64,720,0 };
+	for (int i = 0; i < 6; i++)
+	{
+		if (i <= 2)
+		{
+			deadConveyorPos[i] = { 1200,incineratorPos.y + distance_1 + (distance_2 * i),0 };
+			deadConveyorSprite[i] = Sprite::Create(spCom, beltConveyor_1, { 0.5,0.5 }, false, false);
+
+		}
+		else
+		{
+			deadConveyorPos[i] = { 1200.f - (distance_2 * (i - 2)),incineratorPos.y + distance_1 + (distance_2 * 2),0 };
+			deadConveyorSprite[i] = Sprite::Create(spCom, beltConveyor_1, { 0.5,0.5 }, false, false);
+			deadConveyorSprite[i]->SetRotation(90);
+		}
+		deadConveyorSprite[i]->SetPosition(deadConveyorPos[i]);
+		deadConveyorSprite[i]->Update();
+	}
+	attendingWorkPos = { 64,770,0 };
 }
 
 void Doorway::Update()
 {
 }
 
-void Doorway::Draw()
+void Doorway::DrawIncinerator()
 {
 	incineratorSprite->Draw();
 
-	for (int i = 0; i < 3; i++)
-	{
-		beltConveyorSprite[i]->Draw();
-	}
+}
 
+void Doorway::Draw()
+{
+	
+	for (int i = 0; i < 6; i++)
+	{
+		deadConveyorSprite[i]->Draw();
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		aliveConveyorSprite[i]->Draw();
+	}
 }
 
 void Doorway::Delete()

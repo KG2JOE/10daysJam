@@ -19,6 +19,24 @@ bool Collision::HitBox(XMFLOAT2 box, int boxSize, XMFLOAT2 point, int pointSize)
 	return flag;
 }
 
+bool Collision::HitBox2(XMFLOAT2 box, XMFLOAT2 boxSize, XMFLOAT2 point, int pointSize)
+{
+
+	bool flag = 0;
+	if (box.x - boxSize.x < point.x + pointSize &&
+		box.x + boxSize.x > point.x - pointSize)
+	{
+		if (box.y - boxSize.y < point.y + pointSize &&
+			box.y + boxSize.y > point.y - pointSize)
+		{
+			flag = true;
+		}
+	}
+
+
+	return flag;
+}
+
 
 bool Collision::HitSphere(XMFLOAT3 playerPos, float playerRad, XMFLOAT3 enemyPos, float enemyRad)
 {

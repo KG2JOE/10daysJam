@@ -21,6 +21,7 @@ public:
 	{
 		NONE,			//初期値
 		Stress,			//ストレス			フラグ
+		Incinerator,	//償却
 		Dead,			//死んでる			フラグ
 		Grab,			//掴まれてる		フラグ
 		AttendingWork,	//出勤				フラグ
@@ -41,11 +42,17 @@ private:
 
 	struct EmployeeS
 	{
-		Sprite* sprite_;
-		Status status_;
+		Sprite* sprite_{};
+		Sprite* stressBar{};
+		int stressValue = 0;
+		int addstress = 1;
+		int maxStress = 300;
+		Status status_{};
 		XMFLOAT3 pos_{};
 		XMFLOAT3 tablePos_{};
-
+		bool aliveFlag = true;
+		int time = 60;
+		float addMove = 3.f;
 	};
 
 public:
@@ -60,7 +67,11 @@ public:
 
 	void Delete();
 
+	void ReturnEmployee(int i, int j);
+
 	void Move(int i, int j,MoveStatus oveStatus);
+
+	void StressMove(int i, int j);
 
 	void CatchEmployeeWork(int i, int j);
 
@@ -83,6 +94,7 @@ private:
 
 	bool catchFlag;
 
+	
 
 	Status status;
 	Status statusFlag;
@@ -95,5 +107,7 @@ private:
 	Table* table{};
 
 	Doorway* doorWay{};
+
+	int resetTime = 60;
 };
 

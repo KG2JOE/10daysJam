@@ -25,11 +25,16 @@ public:
 
 	void Update();
 
+	void DrawIncinerator();
 	void Draw();
 
 	void Delete();
 
 	XMFLOAT3 GetAttendingWorkPos() { return attendingWorkPos; }
+	XMFLOAT3 GetIncineratorPos() { return incineratorPos; }
+	
+	XMFLOAT3 GetDeadConveyorPos(int i) { return deadConveyorPos[i]; }
+	XMFLOAT3 GetAliveConveyorPos(int i) { return aliveConveyorPos[i]; }
 	
 	
 private:
@@ -43,10 +48,13 @@ private:
 	Sprite* incineratorSprite{};
 	XMFLOAT3 incineratorPos{};
 
-	Sprite* beltConveyorSprite[3]{};
-	XMFLOAT3 beltConveyorPos[3]{};
+	Sprite* deadConveyorSprite[6]{};
+	XMFLOAT3 deadConveyorPos[6]{};
 
+	Sprite* aliveConveyorSprite[5]{};
+	XMFLOAT3 aliveConveyorPos[5]{};
 
-
+	float distance_1 = 102.f;
+	float distance_2 = 45.f;
 };
 

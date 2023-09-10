@@ -135,7 +135,7 @@ void GameScene::Draw()
 
 	spriteCommon->PreDraw();
 
-	DrawDbTxt();
+	//DrawDbTxt();
 	debTxt->DrawAll();
 
 	// ４．描画コマンドここまで
