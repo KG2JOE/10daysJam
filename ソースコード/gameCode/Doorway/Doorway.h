@@ -25,6 +25,7 @@ public:
 
 	void Update();
 
+	//Ä‹p˜F•`‰æ
 	void DrawIncinerator();
 	void Draw();
 

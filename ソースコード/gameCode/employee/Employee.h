@@ -69,28 +69,31 @@ private:
 	};
 
 public:
-
+	//初期化
 	void Ins(SpriteCommon* spCom , Input* input_);
-
+	//更新
 	void Update();
-
+	//社員一人一人の更新
 	void EmployeeSUpdate(int i,int j);
-
+	//描画
 	void Draw();
-
+	//デリート
 	void Delete();
-
+	//復帰処理
 	void ReturnEmployee(int i, int j);
-
+	//社員一人ひとりの動き
 	void Move(int i, int j,MoveStatus oveStatus);
-
+	//ストレスの動き
 	void StressMove(int i, int j);
-
+	//働いてるときのつかみ処理
 	void CatchEmployeeWork(int i, int j);
-
+	//つかまれてるときのつかみ処理
 	void CatchEmployeeGrab(int i, int j);
 
 	int GetStatus() { return status; }
+
+
+	int GetScore() { return Score; }
 	
 	bool GetCatchFlag() { return catchFlag; }
 
@@ -129,6 +132,9 @@ private:
 
 	int nowEmployeeCount = 0;
 	int maxEmployeeCount = 5;
+
+
+	int Score = 500;
 
 };
 

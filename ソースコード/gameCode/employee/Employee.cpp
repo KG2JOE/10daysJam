@@ -70,7 +70,7 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	catchFlag = 0;
 	nowEmployeeCount = 0;
 	maxEmployeeCount = 5;
-	
+	Score = 500;
 }
 
 void Employee::Update()
@@ -132,8 +132,8 @@ void Employee::EmployeeSUpdate(int i, int j)
 	case Employee::Stress:
 		break;
 	case Employee::Incinerator:
+		Score = Score - 200;
 		employeeS[i][j]->status_ = NONE;
-
 		break;
 	case Employee::Dead:
 		CatchEmployeeWork(i, j);
@@ -178,6 +178,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 	case Employee::Work:
 		employeeS[i][j]->pos_ = table->GetPos(i, j);
 		employeeS[i][j]->pos_.y -= 25.f;
+		Score++;
 		StressMove(i, j);
 		CatchEmployeeWork(i, j);
 

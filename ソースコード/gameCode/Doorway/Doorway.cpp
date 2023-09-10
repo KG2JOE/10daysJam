@@ -62,7 +62,6 @@ void Doorway::Update()
 void Doorway::DrawIncinerator()
 {
 	incineratorSprite->Draw();
-
 }
 
 void Doorway::Draw()
