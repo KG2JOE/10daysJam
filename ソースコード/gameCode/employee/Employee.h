@@ -94,6 +94,8 @@ public:
 	
 	bool GetCatchFlag() { return catchFlag; }
 
+	void SetPlayTime(int time) { this->playTime = time; }
+
 private:
 	SpriteCommon* spCom{};
 	Input* input{};
@@ -122,5 +124,11 @@ private:
 	Doorway* doorWay{};
 
 	int resetTime = 60;
+
+	int playTime = 0;
+
+	int nowEmployeeCount = 0;
+	int maxEmployeeCount = 5;
+
 };
 

@@ -51,7 +51,7 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 			else
 			{
 				employeeS[i][j]->status_ = LeavingWork;
-				employeeS[i][j]->time += (i * 10 + j * 20);
+				employeeS[i][j]->time += (i * 60 + j * 30);
 			}
 		}
 	}
@@ -68,22 +68,39 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	status = AttendingWork;
 	moveStatus = Left;
 	catchFlag = 0;
-
+	nowEmployeeCount = 0;
+	maxEmployeeCount = 5;
 	
 }
 
 void Employee::Update()
 {
-	//input->Update();
-
+	
 	mousePos.x = (float)input->GetMousePoint().x;
 	mousePos.y = (float)input->GetMousePoint().y;
-	
+
+	if (playTime == 93)
+	{
+		maxEmployeeCount = 8;
+	}
+	else if (playTime == 58)
+	{
+		maxEmployeeCount = 13;
+	}
+	else if (playTime == 24)
+	{
+		maxEmployeeCount = 20;
+	}
+	nowEmployeeCount = 0;
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			EmployeeSUpdate(i,j);
+			if (nowEmployeeCount < maxEmployeeCount)
+			{
+				EmployeeSUpdate(i, j);
+				nowEmployeeCount++;
+			}
 			
 		}
 	}
@@ -221,9 +238,13 @@ void Employee::Draw()
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			employeeS[i][j]->sprite_->Draw();
-			employeeS[i][j]->stressBar_1->Draw();
-			employeeS[i][j]->stressBar_2->Draw();
+			if (employeeS[i][j]->status_ != LeavingWork)
+			{
+				employeeS[i][j]->sprite_->Draw();
+				employeeS[i][j]->stressBar_1->Draw();
+				employeeS[i][j]->stressBar_2->Draw();
+			}
+			
 		}
 	}
 	table->Draw();

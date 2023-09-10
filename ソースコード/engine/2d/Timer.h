@@ -31,6 +31,8 @@ private:
 	/// </summary>
 	void SetCurrentTime();
 
+
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -92,4 +94,6 @@ public:
 	/// </summary>
 	/// <returns>タイムリミットになったかどうか</returns>
 	bool GetLimitFlag() { return limitFlag; }
+
+	int GetCurrentTime() { return currentTime; }
 };

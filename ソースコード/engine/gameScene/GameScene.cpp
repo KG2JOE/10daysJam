@@ -68,7 +68,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	timer = new Timer(spriteCommon, 1);
 	timer->SetLimitTime(120);
 	timer->SetPosition({ 100.0f, 100.0f });
-	timer->SetSize(5.0f);
+	timer->SetSize(1.0f);
 	timer->Initialize();
 
 	score = new Score(spriteCommon, 1);
@@ -107,9 +107,10 @@ void GameScene::Update()
 	case GameScene::GUIDE:
 		break;
 	case GameScene::GAMEPLAY:
+		timer->Update();
+		employee->SetPlayTime(timer->GetCurrentTime());
 		employee->Update();
 		particleManager->Update();
-		timer->Update();
 		score->AddScore(1);
 		score->Update();
 		break;
@@ -204,6 +205,7 @@ void GameScene::Draw()
 
 		employee->Draw();
 
+		timer->Draw();
 		/*particleManager->Draw();
 
 		timer->Draw();
