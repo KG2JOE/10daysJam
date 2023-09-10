@@ -33,7 +33,7 @@ private:
 	XMFLOAT2 mapInsPos{};
 
 	float startPosX = 196.f;
-	float startPosY = 128.f;
+	float startPosY = 256.f;
 
 	float intervalX = 160.f;
 	float intervalY = 128.f;

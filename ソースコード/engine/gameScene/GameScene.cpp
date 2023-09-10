@@ -79,14 +79,47 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
-	sceneState = SceneState::TITLE;
+	sceneState = SceneState::GAMEPLAY;
 }
 
 void GameScene::Update()
 {
-	employee->Update();
-
 	
+	input->Update();
+
+	switch (sceneState)
+	{
+	case GameScene::TITLE:
+
+		if (fade->GetFadeState() == Fade::FadeState::NONEFADE &&
+			input->TriggerMouseLeft())
+		{
+			fade->SetFadeState(Fade::FadeState::FADEOUT);
+		}
+
+		if (fade->GetFadeState() == Fade::FadeState::FADE)
+		{
+			fade->SetFadeState(Fade::FadeState::FADEIN);
+			sceneState = SceneState::GUIDE;
+		}
+
+		break;
+	case GameScene::GUIDE:
+		break;
+	case GameScene::GAMEPLAY:
+		employee->Update();
+		particleManager->Update();
+		timer->Update();
+		score->AddScore(1);
+		score->Update();
+		break;
+	case GameScene::RESULT:
+		break;
+	default:
+		break;
+	}
+
+	fade->Update();
 
 }
 
@@ -140,41 +173,8 @@ void GameScene::DrawDbTxt()
 		debTxt->Print(text2, 0, 128, 1);
 	}
 
-}
-	input->Update();
 
-	switch (sceneState)
-	{
-	case GameScene::TITLE:
-
-		if (fade->GetFadeState() == Fade::FadeState::NONEFADE &&
-			input->TriggerMouseLeft())
-		{
-			fade->SetFadeState(Fade::FadeState::FADEOUT);
-		}
-
-		if (fade->GetFadeState() == Fade::FadeState::FADE)
-		{
-			fade->SetFadeState(Fade::FadeState::FADEIN);
-			sceneState = SceneState::GUIDE;
-		}
-
-		break;
-	case GameScene::GUIDE:
-		break;
-	case GameScene::GAMEPLAY:
-		particleManager->Update();
-		timer->Update();
-		score->AddScore(1);
-		score->Update();
-		break;
-	case GameScene::RESULT:
-		break;
-	default:
-		break;
-	}
 	
-	fade->Update();
 }
 
 
@@ -202,17 +202,14 @@ void GameScene::Draw()
 		break;
 	case GameScene::GAMEPLAY:
 
-		particleManager->Draw();
+		employee->Draw();
+
+		/*particleManager->Draw();
 
 		timer->Draw();
-	Object3d::PreDraw(dxCommon->GetCmdList());
 	
-	Object3d::PostDraw();
-	
-	
-	employee->Draw();
 
-		score->Draw();
+		score->Draw();*/
 
 	//DrawDbTxt();
 	debTxt->DrawAll();
@@ -236,6 +233,8 @@ void GameScene::Draw()
 void GameScene::Delete()
 {
 	audio->Finalize();
+
+	delete employee;
 	delete debTxt;
 	delete camera;
 	

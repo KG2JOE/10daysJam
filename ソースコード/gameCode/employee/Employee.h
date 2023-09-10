@@ -38,12 +38,25 @@ public:
 		Right,
 		Left
 	};
+
+	enum SpriteStatus
+	{
+		SpriteFront = 50,
+		SpriteBack,
+		SpriteRight,
+		SpriteLeft,
+		SpriteDead,
+		SpriteStressUI,
+		SpriteStressBar,
+	};
+
 private:
 
 	struct EmployeeS
 	{
 		Sprite* sprite_{};
-		Sprite* stressBar{};
+		Sprite* stressBar_1{};
+		Sprite* stressBar_2{};
 		int stressValue = 0;
 		int addstress = 1;
 		int maxStress = 300;
