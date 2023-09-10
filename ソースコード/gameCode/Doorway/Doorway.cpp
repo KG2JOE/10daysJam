@@ -8,10 +8,12 @@ void Doorway::Ins(SpriteCommon* spCom_)
 	spCom->LoadTexture(incinerator, L"Resources/sprite/Furnace.png");
 	spCom->LoadTexture(beltConveyor_1, L"Resources/sprite/beltConveyor.png");
 	spCom->LoadTexture(beltConveyor_2, L"Resources/sprite/beltConveyor.png");
+	spCom->LoadTexture(bg, L"Resources/sprite/bg.png");
 
 	incineratorPos = { 1200,128,0 };
 
 	incineratorSprite = Sprite::Create(spCom, incinerator, { 0.5,0.5 }, false, false);
+	bgSprite = Sprite::Create(spCom, bg, { 0,0 }, false, false);
 	incineratorSprite->SetPosition(incineratorPos);
 	incineratorSprite->Update();
 
@@ -65,7 +67,7 @@ void Doorway::DrawIncinerator()
 
 void Doorway::Draw()
 {
-	
+	bgSprite->Draw();
 	for (int i = 0; i < 6; i++)
 	{
 		deadConveyorSprite[i]->Draw();

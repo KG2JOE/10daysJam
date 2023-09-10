@@ -18,7 +18,7 @@ public:
 		incinerator = 20,
 		beltConveyor_1,
 		beltConveyor_2,
-
+		bg,
 	};
 
 	void Ins(SpriteCommon* spCom_);
@@ -43,6 +43,8 @@ private:
 	XMFLOAT3 attendingWorkPos{};
 	
 	XMFLOAT3 leavingWorkPos{};
+
+	Sprite* bgSprite{};
 
 
 	Sprite* incineratorSprite{};
