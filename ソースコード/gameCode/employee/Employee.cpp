@@ -1,13 +1,14 @@
 #include "Employee.h"
 #include "collision.h"
 #include"RandCreate.h"
+#include "XMFLOAT_Helper.h"
 void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 {
 	assert(spCom_);
 	assert(input_);
 	spCom = spCom_;
 	input = input_;
-	
+
 	spCom->LoadTexture(SpriteFront, L"Resources/sprite/human.png");
 	spCom->LoadTexture(SpriteBack, L"Resources/sprite/humanBack.png");
 	spCom->LoadTexture(SpriteRight, L"Resources/sprite/humanRight.png");
@@ -27,12 +28,12 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 			employeeS[i][j] = new EmployeeS();
 
 			employeeS[i][j]->sprite_ = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteBack, { 0.5,0.5 }, false, false);
-			employeeS[i][j]->stressBar_1 = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteStressBar, { 0.5,0.5 }, false, false);
-			employeeS[i][j]->stressBar_2 = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteStressUI, {0.5,0.5}, false, false);
-			
+			employeeS[i][j]->stressBar_1 = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteStressBar, { 0.0,0.0 }, false, false);
+			employeeS[i][j]->stressBar_2 = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteStressUI, { 0.5,0.5 }, false, false);
+
 			XMFLOAT3 temp = { employeeS[i][j]->pos_.x,employeeS[i][j]->pos_.y,employeeS[i][j]->pos_.z };
 
-			employeeS[i][j]->stressBar_1->SetPosition(temp);
+			employeeS[i][j]->stressBar_1->SetPosition(temp - XMFLOAT3{31.0f, 6.5f, 0.0f});
 			employeeS[i][j]->stressBar_2->SetPosition(temp);
 			employeeS[i][j]->stressBar_1->Update();
 			employeeS[i][j]->stressBar_2->Update();
@@ -75,7 +76,7 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 
 void Employee::Update()
 {
-	
+
 	mousePos.x = (float)input->GetMousePoint().x;
 	mousePos.y = (float)input->GetMousePoint().y;
 
@@ -101,7 +102,7 @@ void Employee::Update()
 				EmployeeSUpdate(i, j);
 				nowEmployeeCount++;
 			}
-			
+
 		}
 	}
 	table->Update();
@@ -113,8 +114,10 @@ void Employee::Update()
 			employeeS[i][j]->sprite_->Update();
 
 			XMFLOAT3 temp = { employeeS[i][j]->pos_.x,employeeS[i][j]->pos_.y - 40.f,employeeS[i][j]->pos_.z };
-			employeeS[i][j]->stressBar_1->SetPosition(temp);
+			employeeS[i][j]->stressBar_1->SetPosition(temp - XMFLOAT3{ 31.0f, 6.5f, 0.0f });
 			employeeS[i][j]->stressBar_2->SetPosition(temp);
+			float size = (float)employeeS[i][j]->stressValue / employeeS[i][j]->maxStress * 62.0f;
+			employeeS[i][j]->stressBar_1->SetSize({size, 13.0f});
 			employeeS[i][j]->stressBar_1->Update();
 			employeeS[i][j]->stressBar_2->Update();
 		}
@@ -151,10 +154,10 @@ void Employee::EmployeeSUpdate(int i, int j)
 	case Employee::AttendingWork:
 		if (employeeS[i][j]->tablePos_.y < employeeS[i][j]->pos_.y)
 		{
-			Move(i,j, Front);
+			Move(i, j, Front);
 			if (employeeS[i][j]->tablePos_.y >= employeeS[i][j]->pos_.y)
 			{
-				
+
 				employeeS[i][j]->pos_.y = employeeS[i][j]->tablePos_.y;
 				employeeS[i][j]->sprite_ = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteRight, { 0.5,0.5 }, false, false);
 				employeeS[i][j]->sprite_->SetSize({ 60,60 });
@@ -163,7 +166,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 		}
 		if (employeeS[i][j]->pos_.y == employeeS[i][j]->tablePos_.y)
 		{
-			Move(i, j,Right);
+			Move(i, j, Right);
 			if (employeeS[i][j]->tablePos_.x <= employeeS[i][j]->pos_.x)
 			{
 				employeeS[i][j]->pos_.x = employeeS[i][j]->tablePos_.x;
@@ -187,10 +190,10 @@ void Employee::EmployeeSUpdate(int i, int j)
 		ReturnEmployee(i, j);
 		break;
 	case Employee::BeltConveyor:
-		
+
 		if (employeeS[i][j]->aliveFlag)
 		{
-			Move(i,j,Right);
+			Move(i, j, Right);
 			if (employeeS[i][j]->pos_.x > 1300)
 			{
 				employeeS[i][j]->status_ = LeavingWork;
@@ -198,7 +201,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 		}
 		else
 		{
-			if (employeeS[i][j]->pos_.x< doorWay->GetDeadConveyorPos(2).x)
+			if (employeeS[i][j]->pos_.x < doorWay->GetDeadConveyorPos(2).x)
 			{
 				Move(i, j, Right);
 				if (employeeS[i][j]->pos_.x >= doorWay->GetDeadConveyorPos(2).x)
@@ -245,7 +248,7 @@ void Employee::Draw()
 				employeeS[i][j]->stressBar_1->Draw();
 				employeeS[i][j]->stressBar_2->Draw();
 			}
-			
+
 		}
 	}
 	table->Draw();
@@ -270,7 +273,7 @@ void Employee::ReturnEmployee(int i, int j)
 
 		employeeS[i][j]->addMove = RndCreate::sGetRandInt(3, 7);
 
-		employeeS[i][j]->stressValue = RndCreate::sGetRandInt(0,20);
+		employeeS[i][j]->stressValue = RndCreate::sGetRandInt(0, 20);
 		employeeS[i][j]->maxStress = RndCreate::sGetRandInt(300, 400);
 
 		employeeS[i][j]->status_ = AttendingWork;
@@ -282,7 +285,7 @@ void Employee::Move(int i, int j, MoveStatus oveStatus)
 {
 	switch (oveStatus)
 	{
-		
+
 	case Employee::Front:
 		employeeS[i][j]->pos_.y -= employeeS[i][j]->addMove;
 		break;
@@ -306,7 +309,7 @@ void Employee::Move(int i, int j, MoveStatus oveStatus)
 
 void Employee::StressMove(int i, int j)
 {
-	
+
 	if (employeeS[i][j]->stressValue < employeeS[i][j]->maxStress)
 	{
 		employeeS[i][j]->stressValue += employeeS[i][j]->addstress;
@@ -342,16 +345,16 @@ void Employee::CatchEmployeeWork(int i, int j)
 
 	if (count == 20)
 	{
-		bool isHit = Collision::HitBox({ employeeS[i][j]->pos_.x,employeeS[i][j]->pos_.y }, 32, mousePos,10);
+		bool isHit = Collision::HitBox({ employeeS[i][j]->pos_.x,employeeS[i][j]->pos_.y }, 32, mousePos, 10);
 
 		if (isHit && input->TriggerMouseLeft())
 		{
 			employeeS[i][j]->status_ = Grab;
 		}
-		
+
 	}
 
-	
+
 }
 
 void Employee::CatchEmployeeGrab(int i, int j)
@@ -429,8 +432,8 @@ void Employee::CatchEmployeeGrab(int i, int j)
 
 			}
 		}
-		
-		
+
+
 	}
 	if (input->PushMouseLeft())
 	{

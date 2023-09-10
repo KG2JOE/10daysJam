@@ -79,7 +79,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
-	sceneState = SceneState::GAMEPLAY;
+	sceneState = SceneState::TITLE;
 }
 
 void GameScene::Update()
@@ -100,7 +100,7 @@ void GameScene::Update()
 		if (fade->GetFadeState() == Fade::FadeState::FADE)
 		{
 			fade->SetFadeState(Fade::FadeState::FADEIN);
-			sceneState = SceneState::GUIDE;
+			sceneState = SceneState::GAMEPLAY;
 		}
 
 		break;

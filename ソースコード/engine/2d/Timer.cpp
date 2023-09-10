@@ -88,7 +88,7 @@ void Timer::Draw()
 		sprites[i]->Draw();
 	}
 
-	colon->Draw();
+	//colon->Draw();
 }
 
 void Timer::SetCurrentTime()
