@@ -16,7 +16,6 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	InsObj::SetCamera(camera);
 
 
-	// �J���������_���Z�b�g
 	camera->SetTarget({ 0, 0, 00 });
 	camera->SetDistance(3.0f);
 	camera->SetEye({ 0, 10, 0 });
@@ -203,8 +202,6 @@ void GameScene::DrawDbTxt()
 		sprintf_s(text2, "BeltConveyor:%d", employee->GetStatus());
 		debTxt->Print(text2, 0, 128, 1);
 	}
-
-
 	
 }
 
@@ -225,6 +222,8 @@ void GameScene::Draw()
 
 		break;
 	case GameScene::GUIDE:
+
+		employee->Draw();
 
 		timer->Draw();
 
@@ -250,7 +249,6 @@ void GameScene::Draw()
 	//DrawDbTxt();
 	debTxt->DrawAll();
 
-	// �S�D�`��R�}���h�����܂�
 		break;
 	case GameScene::RESULT:
 
