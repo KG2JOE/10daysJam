@@ -25,7 +25,7 @@ private:
 	//現在のフェードの状態
 	FadeState fadeState;
 	//フェードする色
-	XMFLOAT3 fadeColor;
+	XMFLOAT4 fadeColor;
 	//汎用のカウント
 	int count;
 
@@ -57,7 +57,7 @@ public:
 	/// フェードする色の設定
 	/// </summary>
 	/// <param name="color">フェードする色</param>
-	void SetFadeColor(XMFLOAT3 color) { fadeColor = color; }
+	void SetFadeColor(XMFLOAT4 color) { fadeColor = color; }
 	/// <summary>
 	/// フェードの状態の取得
 	/// </summary>

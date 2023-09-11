@@ -54,6 +54,11 @@ void Guide::Initialize()
 
 void Guide::Update()
 {
+	if (endFlag)
+	{
+		return;
+	}
+
 	switch (guideState)
 	{
 	case Guide::DISPLAYIN:
@@ -88,11 +93,54 @@ void Guide::DisplayIn()
 {
 	if (currentSprite < nextSprite)
 	{
-		float e = Easing::OutQuart((float)min(count, 120), 120.0f);
+		float e = Easing::OutQuart((float)min(count, 60), 60.0f);
 		float width = e * (float)WinApp::window_width;
 		float posX = WinApp::window_width * 1.5f - width;
 		guideSprites[nextSprite]->SetPosition({ posX,  WinApp::window_height * 0.4f, 0.0f });
 		guideSprites[nextSprite]->Update();
+	}
+	else
+	{
+		float e = Easing::OutQuart((float)min(count, 60), 60.0f);
+		float width = e * (float)WinApp::window_width;
+		float posX = -WinApp::window_width * 0.5f + width;
+		guideSprites[nextSprite]->SetPosition({ posX,  WinApp::window_height * 0.4f, 0.0f });
+		guideSprites[nextSprite]->Update();
+	}
+
+	if (nextSprite < maxSpriteNum - 1 && count >= 30)
+	{
+		float e = Easing::OutQuart((float)min(count - 30, 30), 30.0f);
+		float width = e * (float)WinApp::window_width;
+		float posX = WinApp::window_width * 2.0f - 120.0f - width;
+		rightAllowSprite->SetPosition({ posX,  WinApp::window_height * 0.4f, 0.0f });
+		rightAllowSprite->Update();
+	}
+
+	if (nextSprite > 0 && count >= 30)
+	{
+		float e = Easing::OutQuart((float)min(count - 30, 30), 30.0f);
+		float width = e * (float)WinApp::window_width;
+		float posX = 120.0f - WinApp::window_width + width;
+		leftAllowSprite->SetPosition({ posX,  WinApp::window_height * 0.4f, 0.0f });
+		leftAllowSprite->Update();
+	}
+
+	if (nextSprite >= maxSpriteNum - 1 && count >= 30)
+	{
+		float e = Easing::OutQuart((float)min(count - 30, 30), 30.0f);
+		float height = e * (float)WinApp::window_height;
+		float posY = WinApp::window_height * 2.0f - 120.0f - height;
+		startSprite->SetPosition({ WinApp::window_width * 0.5f,  posY, 0.0f });
+		startSprite->Update();
+	}
+
+	if (count >= 60)
+	{
+		count = 0;
+		currentSprite = nextSprite;
+		guideState = GuideState::DISPLAYVIEW;
+		return;
 	}
 
 	count++;
@@ -100,10 +148,89 @@ void Guide::DisplayIn()
 
 void Guide::DisplayView()
 {
+	if (currentSprite < maxSpriteNum - 1 && RightAllowPush())
+	{
+		count = 0;
+		nextSprite = currentSprite + 1;
+		guideState = GuideState::DISPLAYOUT;
+		return;
+	}
+
+	if (currentSprite > 0 && LeftAllowPush())
+	{
+		count = 0;
+		nextSprite = currentSprite - 1;
+		guideState = GuideState::DISPLAYOUT;
+		return;
+	}
+
+	if (currentSprite >= maxSpriteNum - 1 && StartPush())
+	{
+		count = 0;
+		nextSprite = currentSprite + 1;
+		guideState = GuideState::DISPLAYOUT;
+		return;
+	}
 }
 
 void Guide::DisplayOut()
 {
+	if (currentSprite < nextSprite)
+	{
+		float e = Easing::OutQuart((float)min(count, 60), 60.0f);
+		float width = e * (float)WinApp::window_width;
+		float posX = WinApp::window_width * 0.5f - width;
+		guideSprites[currentSprite]->SetPosition({ posX,  WinApp::window_height * 0.4f, 0.0f });
+		guideSprites[currentSprite]->Update();
+	}
+	else
+	{
+		float e = Easing::OutQuart((float)min(count, 60), 60.0f);
+		float width = e * (float)WinApp::window_width;
+		float posX = WinApp::window_width * 0.5f + width;
+		guideSprites[currentSprite]->SetPosition({ posX,  WinApp::window_height * 0.4f, 0.0f });
+		guideSprites[currentSprite]->Update();
+	}
+
+	if (currentSprite < maxSpriteNum - 1)
+	{
+		float e = Easing::OutQuart((float)min(count, 30), 30.0f);
+		float width = e * (float)WinApp::window_width;
+		float posX = WinApp::window_width - 120.0f + width;
+		rightAllowSprite->SetPosition({ posX,  WinApp::window_height * 0.4f, 0.0f });
+		rightAllowSprite->Update();
+	}
+
+	if (currentSprite > 0)
+	{
+		float e = Easing::OutQuart((float)min(count, 30), 30.0f);
+		float width = e * (float)WinApp::window_width;
+		float posX = 120.0f - width;
+		leftAllowSprite->SetPosition({ posX,  WinApp::window_height * 0.4f, 0.0f });
+		leftAllowSprite->Update();
+	}
+
+	if (currentSprite >= maxSpriteNum - 1)
+	{
+		float e = Easing::OutQuart((float)min(count, 30), 30.0f);
+		float height = e * (float)WinApp::window_height;
+		float posY = WinApp::window_height - 120.0f + height;
+		startSprite->SetPosition({ WinApp::window_width / 2.0f,  posY, 0.0f });
+		startSprite->Update();
+	}
+
+	if (count >= 60)
+	{
+		count = 0;
+		guideState = GuideState::DISPLAYIN;
+		if (nextSprite >= maxSpriteNum)
+		{
+			endFlag = true;
+		}
+		return;
+	}
+
+	count++;
 }
 
 bool Guide::RightAllowPush()

@@ -80,6 +80,7 @@ private://ƒGƒ“ƒWƒ“
 	Timer* timer = nullptr;
 	Score* score = nullptr;
 	Fade* fade = nullptr;
+	Fade* lightFade = nullptr;
 
 	InsObj* insObj{};
 

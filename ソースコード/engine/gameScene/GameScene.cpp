@@ -68,8 +68,12 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
+	lightFade = new Fade(spriteCommon, 2);
+	lightFade->SetFadeColor({ 0.0f, 0.0f, 0.0f, 0.5f });
+	lightFade->SetFadeState(Fade::FadeState::FADE);
 
 	guide = new Guide(spriteCommon, { 2,2,2 }, 2, 2);
+	guide->SetInput(input);
 	guide->Initialize();
 	sceneState = SceneState::TITLE;
 }
@@ -96,7 +100,20 @@ void GameScene::Update()
 
 		break;
 	case GameScene::GUIDE:
+
 		guide->Update();
+
+		if (lightFade->GetFadeState() == Fade::FadeState::FADE &&
+			guide->GetEndFlag())
+		{
+			lightFade->SetFadeState(Fade::FadeState::FADEIN);
+		}
+
+		if (lightFade->GetFadeState() == Fade::FadeState::NONEFADE)
+		{
+			sceneState = SceneState::GAMEPLAY;
+		}
+
 		break;
 	case GameScene::GAMEPLAY:
 		particleManager->Update();
@@ -109,7 +126,7 @@ void GameScene::Update()
 	default:
 		break;
 	}
-	
+	lightFade->Update();
 	fade->Update();
 }
 
@@ -135,6 +152,8 @@ void GameScene::Draw()
 
 		score->Draw();
 
+		lightFade->Draw();
+
 		guide->Draw();
 
 		break;
@@ -153,11 +172,13 @@ void GameScene::Draw()
 
 		score->Draw();
 
+		lightFade->Draw();
+
 		break;
 	default:
 		break;
 	}
-
+	
 	fade->Draw();
 }
 
@@ -173,5 +194,6 @@ void GameScene::Delete()
 	delete timer;
 	delete score;
 	delete fade;
+	delete lightFade;
 }
 
