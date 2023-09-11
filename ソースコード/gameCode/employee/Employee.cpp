@@ -9,10 +9,12 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	spCom = spCom_;
 	input = input_;
 
+	spCom->LoadTexture(AnimationFront, L"Resources/sprite/humanWalk.png");
+	spCom->LoadTexture(AnimationBack, L"Resources/sprite/humanWalkBack.png");
+	spCom->LoadTexture(AnimationRight, L"Resources/sprite/humanWalkRight.png");
+	spCom->LoadTexture(AnimationLeft, L"Resources/sprite/humanWalkLeft.png");
+	spCom->LoadTexture(AnimationLiftMove, L"Resources/sprite/humanLiftMove.png");
 	spCom->LoadTexture(SpriteFront, L"Resources/sprite/human.png");
-	spCom->LoadTexture(SpriteBack, L"Resources/sprite/humanBack.png");
-	spCom->LoadTexture(SpriteRight, L"Resources/sprite/humanRight.png");
-	spCom->LoadTexture(SpriteLeft, L"Resources/sprite/humanLeft.png");
 	spCom->LoadTexture(SpriteDead, L"Resources/sprite/deadBody.png");
 	spCom->LoadTexture(SpriteStressUI, L"Resources/sprite/stressUI.png");
 	spCom->LoadTexture(SpriteStressBar, L"Resources/sprite/stressBar.png");
@@ -27,7 +29,7 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 		{
 			employeeS[i][j] = new EmployeeS();
 
-			employeeS[i][j]->sprite_ = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteBack, { 0.5,0.5 }, false, false);
+			AnimationInitialize(i, j, AnimationBack);
 			employeeS[i][j]->stressBar_1 = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteStressBar, { 0.0,0.0 }, false, false);
 			employeeS[i][j]->stressBar_2 = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteStressUI, { 0.5,0.5 }, false, false);
 
@@ -42,8 +44,8 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 			employeeS[i][j]->tablePos_.y -= 25.f;
 
 			employeeS[i][j]->pos_ = doorWay->GetAttendingWorkPos();
-			employeeS[i][j]->sprite_->SetPosition(employeeS[i][j]->pos_);
-			employeeS[i][j]->sprite_->SetSize({ 60,60 });
+			employeeS[i][j]->animationSprite->SetPosition({ employeeS[i][j]->pos_.x, employeeS[i][j]->pos_.y });
+			employeeS[i][j]->animationSprite->SetSize({60.0f, 60.0f});
 			if (i == 0 && j == 0)
 			{
 				employeeS[i][j]->status_ = AttendingWork;
@@ -113,8 +115,8 @@ void Employee::Update()
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			employeeS[i][j]->sprite_->SetPosition(employeeS[i][j]->pos_);
-			employeeS[i][j]->sprite_->Update();
+			employeeS[i][j]->animationSprite->SetPosition({ employeeS[i][j]->pos_.x, employeeS[i][j]->pos_.y });
+			employeeS[i][j]->animationSprite->Update();
 
 			XMFLOAT3 temp = { employeeS[i][j]->pos_.x,employeeS[i][j]->pos_.y - 40.f,employeeS[i][j]->pos_.z };
 			employeeS[i][j]->stressBar_1->SetPosition(temp - XMFLOAT3{ 31.0f, 6.5f, 0.0f });
@@ -149,7 +151,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 		pos.y = mousePos.y;
 		employeeS[i][j]->pos_.x = mousePos.x;
 		employeeS[i][j]->pos_.y = mousePos.y;
-		employeeS[i][j]->sprite_->SetPosition(employeeS[i][j]->pos_);
+		employeeS[i][j]->animationSprite->SetPosition({ employeeS[i][j]->pos_.x, employeeS[i][j]->pos_.y });
 		employee->SetPosition(pos);
 		CatchEmployeeGrab(i, j);
 
@@ -162,8 +164,8 @@ void Employee::EmployeeSUpdate(int i, int j)
 			{
 
 				employeeS[i][j]->pos_.y = employeeS[i][j]->tablePos_.y;
-				employeeS[i][j]->sprite_ = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteRight, { 0.5,0.5 }, false, false);
-				employeeS[i][j]->sprite_->SetSize({ 60,60 });
+				AnimationInitialize(i, j, AnimationRight);
+				employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
 
 			}
 		}
@@ -174,8 +176,8 @@ void Employee::EmployeeSUpdate(int i, int j)
 			{
 				employeeS[i][j]->pos_.x = employeeS[i][j]->tablePos_.x;
 				employeeS[i][j]->status_ = Work;
-				employeeS[i][j]->sprite_ = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteFront, { 0.5,0.5 }, false, false);
-				employeeS[i][j]->sprite_->SetSize({ 60,60 });
+				AnimationInitialize(i, j, AnimationFront);
+				employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
 			}
 		}
 
@@ -184,6 +186,9 @@ void Employee::EmployeeSUpdate(int i, int j)
 	case Employee::Work:
 		employeeS[i][j]->pos_ = table->GetPos(i, j);
 		employeeS[i][j]->pos_.y -= 25.f;
+
+		AnimationInitialize(i, j, SpriteFront, 1, false, { 0 });
+		employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
 		
 		StressMove(i, j);
 		CatchEmployeeWork(i, j);
@@ -247,7 +252,7 @@ void Employee::Draw()
 		{
 			if (employeeS[i][j]->status_ != LeavingWork)
 			{
-				employeeS[i][j]->sprite_->Draw();
+				employeeS[i][j]->animationSprite->Draw();
 				employeeS[i][j]->stressBar_1->Draw();
 				employeeS[i][j]->stressBar_2->Draw();
 			}
@@ -270,8 +275,8 @@ void Employee::ReturnEmployee(int i, int j)
 	{
 		employeeS[i][j]->time = resetTime;
 		employeeS[i][j]->pos_ = doorWay->GetAttendingWorkPos();
-		employeeS[i][j]->sprite_ = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteBack, { 0.5,0.5 }, false, false);
-		employeeS[i][j]->sprite_->SetSize({ 60,60 });
+		AnimationInitialize(i, j, AnimationBack);
+		employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
 		employeeS[i][j]->addstress = 1;
 
 		employeeS[i][j]->addMove = RndCreate::sGetRandInt(3, 7);
@@ -320,8 +325,8 @@ void Employee::StressMove(int i, int j)
 	}
 	else
 	{
-		employeeS[i][j]->sprite_ = Sprite::Create(spCom, SpriteDead, { 0.5,0.5 }, false, false);
-		employeeS[i][j]->sprite_->SetSize({ 60,60 });
+		AnimationInitialize(i, j, SpriteDead, 1, false, {0});
+		employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
 
 		employeeS[i][j]->addMove = 3.f;
 		employeeS[i][j]->status_ = Dead;
@@ -353,6 +358,8 @@ void Employee::CatchEmployeeWork(int i, int j)
 
 		if (isHit && input->TriggerMouseLeft())
 		{
+			AnimationInitialize(i, j, AnimationLiftMove);
+			employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
 			employeeS[i][j]->status_ = Grab;
 		}
 
@@ -400,6 +407,8 @@ void Employee::CatchEmployeeGrab(int i, int j)
 				isHit = Collision::HitBox(temp_1, 48, temp_2);
 				if (isHit)
 				{
+					AnimationInitialize(i, j, SpriteFront, 1, false, { 0 });
+					employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
 					employeeS[i][j]->addMove = 3.f;
 					employeeS[i][j]->status_ = BeltConveyor;
 					employeeS[i][j]->aliveFlag = false;
@@ -420,6 +429,8 @@ void Employee::CatchEmployeeGrab(int i, int j)
 					isHit = Collision::HitBox(temp_1, 48, temp_2);
 					if (isHit)
 					{
+						AnimationInitialize(i, j, SpriteFront, 1, false, { 0 });
+						employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
 						employeeS[i][j]->addMove = 3.f;
 						employeeS[i][j]->status_ = BeltConveyor;
 						employeeS[i][j]->aliveFlag = true;
@@ -447,4 +458,13 @@ void Employee::CatchEmployeeGrab(int i, int j)
 	{
 		status = Work;
 	}
+}
+
+void Employee::AnimationInitialize(int i, int j, int texNumber, int texNum, bool flag, std::vector<int> numbers)
+{
+	employeeS[i][j]->animationSprite = new Animation2D(spCom, texNumber, { 48.0f, 48.0f }, 2);
+	employeeS[i][j]->animationSprite->SetAnchorPoint({ 0.5f, 0.5f });
+	employeeS[i][j]->animationSprite->SetAnimationFlame(30.0f);
+	employeeS[i][j]->animationSprite->SetLoopFlag(true);
+	employeeS[i][j]->animationSprite->SetSpriteNumbers({ 0,1 });
 }

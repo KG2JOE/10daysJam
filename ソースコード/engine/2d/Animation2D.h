@@ -20,7 +20,7 @@ private:
 	//アンカーポイント
 	XMFLOAT2 anchorPoint;
 	//サイズ
-	float size;
+	XMFLOAT2 size;
 	//アニメーション切り替えまでのフレーム数
 	int animationFlame;
 	//汎用フレームカウント
@@ -73,7 +73,7 @@ public:
 	/// サイズの設定
 	/// </summary>
 	/// <param name="size">サイズ</param>
-	void SetSize(float size) { this->size = size; }
+	void SetSize(XMFLOAT2 size) { this->size = size; }
 	/// <summary>
 	/// アニメーション切り替えまでのフレーム数の設定
 	/// </summary>

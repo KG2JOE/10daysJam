@@ -3,10 +3,13 @@
 #include "Sprite.h"
 #include"Input.h"
 #include<DirectXMath.h>
+#include <vector>
 
 #include"Table.h"
 
 #include "Doorway.h"
+
+#include "Animation2D.h"
 
 
 class Employee
@@ -41,10 +44,12 @@ public:
 
 	enum SpriteStatus
 	{
-		SpriteFront = 50,
-		SpriteBack,
-		SpriteRight,
-		SpriteLeft,
+		AnimationFront = 50,
+		AnimationBack,
+		AnimationRight,
+		AnimationLeft,
+		AnimationLiftMove,
+		SpriteFront,
 		SpriteDead,
 		SpriteStressUI,
 		SpriteStressBar,
@@ -54,7 +59,7 @@ private:
 
 	struct EmployeeS
 	{
-		Sprite* sprite_{};
+		Animation2D* animationSprite{};
 		Sprite* stressBar_1{};
 		Sprite* stressBar_2{};
 		int stressValue = 0;
@@ -98,6 +103,8 @@ public:
 	bool GetCatchFlag() { return catchFlag; }
 
 	void SetPlayTime(int time) { this->playTime = time; }
+
+	void AnimationInitialize(int i, int j, int texNumber, int texNum = 2, bool flag = true, std::vector<int> numbers = {0, 1});
 
 private:
 	SpriteCommon* spCom{};
