@@ -16,7 +16,6 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	InsObj::SetCamera(camera);
 
 
-	// カメラ注視点をセット
 	camera->SetTarget({ 0, 0, 00 });
 	camera->SetDistance(3.0f);
 	camera->SetEye({ 0, 10, 0 });
@@ -81,6 +80,14 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
+	lightFade = new Fade(spriteCommon, 2);
+	lightFade->SetFadeColor({ 0.0f, 0.0f, 0.0f, 0.5f });
+	lightFade->SetFadeState(Fade::FadeState::FADE);
+
+	guide = new Guide(spriteCommon, { 2,2,2 }, 2, 2);
+	guide->SetInput(input);
+	guide->Initialize();
+	sceneState = SceneState::TITLE;
 	sceneState = SceneState::GAMEPLAY;
 
 	ShowCursor(FALSE);
@@ -105,11 +112,25 @@ void GameScene::Update()
 		if (fade->GetFadeState() == Fade::FadeState::FADE)
 		{
 			fade->SetFadeState(Fade::FadeState::FADEIN);
-			sceneState = SceneState::GAMEPLAY;
+			sceneState = SceneState::GUIDE;
 		}
 
 		break;
 	case GameScene::GUIDE:
+
+		guide->Update();
+
+		if (lightFade->GetFadeState() == Fade::FadeState::FADE &&
+			guide->GetEndFlag())
+		{
+			lightFade->SetFadeState(Fade::FadeState::FADEIN);
+		}
+
+		if (lightFade->GetFadeState() == Fade::FadeState::NONEFADE)
+		{
+			sceneState = SceneState::GAMEPLAY;
+		}
+
 		break;
 	case GameScene::GAMEPLAY:
 		if (input->PushMouseLeft())
@@ -122,17 +143,24 @@ void GameScene::Update()
 
 		}
 		timer->Update();
+
 		employee->SetPlayTime(timer->GetCurrentTime());
+
 		employee->Update();
+
 		particleManager->Update();
 		score->SetScore(employee->GetScore());
+
 		score->Update();
+
 		break;
 	case GameScene::RESULT:
 		break;
 	default:
 		break;
 	}
+
+	lightFade->Update();
 
 	fade->Update();
 	hand->SetPosition({ (float)input->GetMousePoint().x,(float)input->GetMousePoint().y,0 });
@@ -188,8 +216,6 @@ void GameScene::DrawDbTxt()
 		sprintf_s(text2, "BeltConveyor:%d", employee->GetStatus());
 		debTxt->Print(text2, 0, 128, 1);
 	}
-
-
 	
 }
 
@@ -211,9 +237,15 @@ void GameScene::Draw()
 		break;
 	case GameScene::GUIDE:
 
+		employee->Draw();
+
 		timer->Draw();
 
 		score->Draw();
+
+		lightFade->Draw();
+
+		guide->Draw();
 
 		break;
 	case GameScene::GAMEPLAY:
@@ -221,24 +253,26 @@ void GameScene::Draw()
 		employee->Draw();
 
 		timer->Draw();
+		
+		particleManager->Draw();
 		score->Draw();
 		/*particleManager->Draw();
 
 		timer->Draw();
-	
 
-		score->Draw();*/
+		score->Draw();
 
 	//DrawDbTxt();
 	debTxt->DrawAll();
 
-	// ４．描画コマンドここまで
 		break;
 	case GameScene::RESULT:
 
 		timer->Draw();
 
 		score->Draw();
+
+		lightFade->Draw();
 
 		break;
 	default:
@@ -263,5 +297,6 @@ void GameScene::Delete()
 	delete timer;
 	delete score;
 	delete fade;
+	delete lightFade;
 }
 
