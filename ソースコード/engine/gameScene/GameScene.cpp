@@ -28,8 +28,10 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	
 	employee = new Employee();
 	employee->Ins(spriteCommon, input);
-
+	
 	spriteCommon->LoadTexture(5, L"Resources/sprite/debugfont.png");
+	spriteCommon->LoadTexture(70, L"Resources/sprite/hand.png");
+	spriteCommon->LoadTexture(71, L"Resources/sprite/handLift.png");
 	//spriteCommon->LoadTexture(0, L"Resources/sprite/drawNumber.png");
 
 	spCom->initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
@@ -45,7 +47,7 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 
 	debTxt = new DebugText;
 	debTxt->Initialize(spriteCommon, 5);
-
+	hand = Sprite::Create(spriteCommon, 70, { 0.5f,0.5f });
 
 
 }
@@ -79,14 +81,17 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
-	sceneState = SceneState::TITLE;
+	sceneState = SceneState::GAMEPLAY;
+
+	ShowCursor(FALSE);
 }
 
 void GameScene::Update()
 {
 	
 	input->Update();
-
+	
+	
 	switch (sceneState)
 	{
 	case GameScene::TITLE:
@@ -107,11 +112,20 @@ void GameScene::Update()
 	case GameScene::GUIDE:
 		break;
 	case GameScene::GAMEPLAY:
+		if (input->PushMouseLeft())
+		{
+			hand = Sprite::Create(spriteCommon, 71, { 0.5f,0.5f });
+		}
+		else
+		{
+			hand = Sprite::Create(spriteCommon, 70, { 0.5f,0.5f });
+
+		}
 		timer->Update();
 		employee->SetPlayTime(timer->GetCurrentTime());
 		employee->Update();
 		particleManager->Update();
-		score->AddScore(1);
+		score->SetScore(employee->GetScore());
 		score->Update();
 		break;
 	case GameScene::RESULT:
@@ -121,7 +135,8 @@ void GameScene::Update()
 	}
 
 	fade->Update();
-
+	hand->SetPosition({ (float)input->GetMousePoint().x,(float)input->GetMousePoint().y,0 });
+	hand->Update();
 }
 
 void GameScene::DrawDbTxt()
@@ -206,6 +221,7 @@ void GameScene::Draw()
 		employee->Draw();
 
 		timer->Draw();
+		score->Draw();
 		/*particleManager->Draw();
 
 		timer->Draw();
@@ -228,6 +244,7 @@ void GameScene::Draw()
 	default:
 		break;
 	}
+	hand->Draw();
 
 	fade->Draw();
 }

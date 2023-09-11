@@ -78,6 +78,8 @@ private://ƒGƒ“ƒWƒ“
 
 	Employee* employee{};
 
+	Sprite* hand{};
+
 	//test
 	Sprite* titleSprite = nullptr;
 

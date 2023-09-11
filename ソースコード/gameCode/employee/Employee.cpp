@@ -76,7 +76,10 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 
 void Employee::Update()
 {
-
+	if (input->PushKey(DIK_P))
+	{
+		Score = -1000;
+	}
 	mousePos.x = (float)input->GetMousePoint().x;
 	mousePos.y = (float)input->GetMousePoint().y;
 
@@ -135,7 +138,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 	case Employee::Stress:
 		break;
 	case Employee::Incinerator:
-		Score = Score - 200;
+		Score = Score - 1000;
 		employeeS[i][j]->status_ = NONE;
 		break;
 	case Employee::Dead:
@@ -181,7 +184,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 	case Employee::Work:
 		employeeS[i][j]->pos_ = table->GetPos(i, j);
 		employeeS[i][j]->pos_.y -= 25.f;
-		Score++;
+		
 		StressMove(i, j);
 		CatchEmployeeWork(i, j);
 
@@ -313,6 +316,7 @@ void Employee::StressMove(int i, int j)
 	if (employeeS[i][j]->stressValue < employeeS[i][j]->maxStress)
 	{
 		employeeS[i][j]->stressValue += employeeS[i][j]->addstress;
+		Score++;
 	}
 	else
 	{
