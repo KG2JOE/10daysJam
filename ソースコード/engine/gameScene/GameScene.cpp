@@ -27,11 +27,10 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	
 	employee = new Employee();
 	employee->Ins(spriteCommon, input);
+	employee->Update();
 	
-	spriteCommon->LoadTexture(5, L"Resources/sprite/debugfont.png");
 	spriteCommon->LoadTexture(70, L"Resources/sprite/hand.png");
 	spriteCommon->LoadTexture(71, L"Resources/sprite/handLift.png");
-	//spriteCommon->LoadTexture(0, L"Resources/sprite/drawNumber.png");
 
 	spCom->initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	
@@ -45,7 +44,7 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	audio->SetVolume("ice1.wav", s);
 
 	debTxt = new DebugText;
-	debTxt->Initialize(spriteCommon, 5);
+	debTxt->Initialize(spriteCommon, 0);
 	hand = Sprite::Create(spriteCommon, 70, { 0.5f,0.5f });
 
 
@@ -80,6 +79,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
+
 	lightFade = new Fade(spriteCommon, 2);
 	lightFade->SetFadeColor({ 0.0f, 0.0f, 0.0f, 0.5f });
 	lightFade->SetFadeState(Fade::FadeState::FADE);
@@ -87,6 +87,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	guide = new Guide(spriteCommon, { 2,2,2 }, 2, 2);
 	guide->SetInput(input);
 	guide->Initialize();
+
 	sceneState = SceneState::TITLE;
 	
 	ShowCursor(FALSE);
@@ -132,6 +133,7 @@ void GameScene::Update()
 
 		break;
 	case GameScene::GAMEPLAY:
+
 		if (input->PushMouseLeft())
 		{
 			hand = Sprite::Create(spriteCommon, 71, { 0.5f,0.5f });
@@ -141,6 +143,7 @@ void GameScene::Update()
 			hand = Sprite::Create(spriteCommon, 70, { 0.5f,0.5f });
 
 		}
+
 		timer->Update();
 
 		employee->SetPlayTime(timer->GetCurrentTime());
@@ -148,6 +151,7 @@ void GameScene::Update()
 		employee->Update();
 
 		particleManager->Update();
+
 		score->SetScore(employee->GetScore());
 
 		score->Update();

@@ -358,14 +358,14 @@ void Employee::CatchEmployeeWork(int i, int j)
 
 		if (isHit && input->TriggerMouseLeft())
 		{
-			AnimationInitialize(i, j, AnimationLiftMove);
-			employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
+			if (!(employeeS[i][j]->stressValue >= employeeS[i][j]->maxStress))
+			{
+				AnimationInitialize(i, j, AnimationLiftMove);
+				employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
+			}
 			employeeS[i][j]->status_ = Grab;
 		}
-
 	}
-
-
 }
 
 void Employee::CatchEmployeeGrab(int i, int j)

@@ -238,7 +238,7 @@ bool Guide::RightAllowPush()
 	if (rightAllowSprite->GetPosition().x - rightAllowSprite->GetSize().x / 2.0f <= input->GetMousePoint().x &&
 		rightAllowSprite->GetPosition().x + rightAllowSprite->GetSize().x / 2.0f >= input->GetMousePoint().x &&
 		rightAllowSprite->GetPosition().y - rightAllowSprite->GetSize().y / 2.0f <= input->GetMousePoint().y &&
-		rightAllowSprite->GetPosition().y - rightAllowSprite->GetSize().y / 2.0f <= input->GetMousePoint().y)
+		rightAllowSprite->GetPosition().y + rightAllowSprite->GetSize().y / 2.0f >= input->GetMousePoint().y)
 	{
 		return input->TriggerMouseLeft();
 	}
@@ -251,7 +251,7 @@ bool Guide::LeftAllowPush()
 	if (leftAllowSprite->GetPosition().x - leftAllowSprite->GetSize().x / 2.0f <= input->GetMousePoint().x &&
 		leftAllowSprite->GetPosition().x + leftAllowSprite->GetSize().x / 2.0f >= input->GetMousePoint().x &&
 		leftAllowSprite->GetPosition().y - leftAllowSprite->GetSize().y / 2.0f <= input->GetMousePoint().y &&
-		leftAllowSprite->GetPosition().y - leftAllowSprite->GetSize().y / 2.0f <= input->GetMousePoint().y)
+		leftAllowSprite->GetPosition().y + leftAllowSprite->GetSize().y / 2.0f >= input->GetMousePoint().y)
 	{
 		return input->TriggerMouseLeft();
 	}
@@ -264,7 +264,7 @@ bool Guide::StartPush()
 	if (startSprite->GetPosition().x - startSprite->GetSize().x / 2.0f <= input->GetMousePoint().x &&
 		startSprite->GetPosition().x + startSprite->GetSize().x / 2.0f >= input->GetMousePoint().x &&
 		startSprite->GetPosition().y - startSprite->GetSize().y / 2.0f <= input->GetMousePoint().y &&
-		startSprite->GetPosition().y - startSprite->GetSize().y / 2.0f <= input->GetMousePoint().y)
+		startSprite->GetPosition().y + startSprite->GetSize().y / 2.0f >= input->GetMousePoint().y)
 	{
 		return input->TriggerMouseLeft();
 	}
