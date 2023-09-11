@@ -16,7 +16,7 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	InsObj::SetCamera(camera);
 
 
-	// ƒJƒƒ‰’Ž‹“_‚ðƒZƒbƒg
+	// ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	camera->SetTarget({ 0, 0, 00 });
 	camera->SetDistance(3.0f);
 	camera->SetEye({ 0, 10, 0 });
@@ -79,6 +79,13 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
+	lightFade = new Fade(spriteCommon, 2);
+	lightFade->SetFadeColor({ 0.0f, 0.0f, 0.0f, 0.5f });
+	lightFade->SetFadeState(Fade::FadeState::FADE);
+
+	guide = new Guide(spriteCommon, { 2,2,2 }, 2, 2);
+	guide->SetInput(input);
+	guide->Initialize();
 	sceneState = SceneState::TITLE;
 }
 
@@ -100,25 +107,48 @@ void GameScene::Update()
 		if (fade->GetFadeState() == Fade::FadeState::FADE)
 		{
 			fade->SetFadeState(Fade::FadeState::FADEIN);
-			sceneState = SceneState::GAMEPLAY;
+			sceneState = SceneState::GUIDE;
 		}
 
 		break;
 	case GameScene::GUIDE:
+
+		guide->Update();
+
+		if (lightFade->GetFadeState() == Fade::FadeState::FADE &&
+			guide->GetEndFlag())
+		{
+			lightFade->SetFadeState(Fade::FadeState::FADEIN);
+		}
+
+		if (lightFade->GetFadeState() == Fade::FadeState::NONEFADE)
+		{
+			sceneState = SceneState::GAMEPLAY;
+		}
+
 		break;
 	case GameScene::GAMEPLAY:
+
 		timer->Update();
+
 		employee->SetPlayTime(timer->GetCurrentTime());
+
 		employee->Update();
+
 		particleManager->Update();
+
 		score->AddScore(1);
+
 		score->Update();
+
 		break;
 	case GameScene::RESULT:
 		break;
 	default:
 		break;
 	}
+
+	lightFade->Update();
 
 	fade->Update();
 
@@ -200,23 +230,27 @@ void GameScene::Draw()
 
 		score->Draw();
 
+		lightFade->Draw();
+
+		guide->Draw();
+
 		break;
 	case GameScene::GAMEPLAY:
 
 		employee->Draw();
 
 		timer->Draw();
-		/*particleManager->Draw();
+		
+		particleManager->Draw();
 
 		timer->Draw();
-	
 
-		score->Draw();*/
+		score->Draw();
 
 	//DrawDbTxt();
 	debTxt->DrawAll();
 
-	// ‚SD•`‰æƒRƒ}ƒ“ƒh‚±‚±‚Ü‚Å
+	// ï¿½Sï¿½Dï¿½`ï¿½ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
 		break;
 	case GameScene::RESULT:
 
@@ -224,11 +258,13 @@ void GameScene::Draw()
 
 		score->Draw();
 
+		lightFade->Draw();
+
 		break;
 	default:
 		break;
 	}
-
+	
 	fade->Draw();
 }
 
@@ -246,5 +282,6 @@ void GameScene::Delete()
 	delete timer;
 	delete score;
 	delete fade;
+	delete lightFade;
 }
 

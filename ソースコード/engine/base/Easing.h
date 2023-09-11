@@ -2,7 +2,7 @@ struct Easing
 {
 private:
     template <class Ty = double>
-    static constexpr Ty Pai{ static_cast<Ty>(3.141592653589793) };
+    static constexpr Ty Pai{ static_cast<Ty>(3.141592653589793) }; // ‰~Žü—¦
 
     template<typename Ty>
     static constexpr Ty _0 = static_cast<Ty>(0);
