@@ -464,7 +464,7 @@ void Employee::AnimationInitialize(int i, int j, int texNumber, int texNum, bool
 {
 	employeeS[i][j]->animationSprite = new Animation2D(spCom, texNumber, { 48.0f, 48.0f }, 2);
 	employeeS[i][j]->animationSprite->SetAnchorPoint({ 0.5f, 0.5f });
-	employeeS[i][j]->animationSprite->SetAnimationFlame(30.0f);
+	employeeS[i][j]->animationSprite->SetAnimationFlame(15.0f);
 	employeeS[i][j]->animationSprite->SetLoopFlag(true);
 	employeeS[i][j]->animationSprite->SetSpriteNumbers({ 0,1 });
 }
