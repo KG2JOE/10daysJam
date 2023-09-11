@@ -88,8 +88,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	guide->SetInput(input);
 	guide->Initialize();
 	sceneState = SceneState::TITLE;
-	sceneState = SceneState::GAMEPLAY;
-
+	
 	ShowCursor(FALSE);
 }
 
@@ -256,8 +255,7 @@ void GameScene::Draw()
 		
 		particleManager->Draw();
 		score->Draw();
-		/*particleManager->Draw();
-
+		
 		timer->Draw();
 
 		score->Draw();
