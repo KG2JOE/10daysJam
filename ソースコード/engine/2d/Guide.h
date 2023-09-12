@@ -15,6 +15,15 @@ public:
 		DISPLAYOUT, //パネルが画面外に出ていく状態
 	};
 
+	enum SpriteTexNumber
+	{
+		GUIDE1 = 10,
+		GUIDE2,
+		GUIDE3,
+		ALLOW,
+		START,
+	};
+
 private:
 	//マウス入力取得用
 	Input* input = nullptr;
@@ -47,7 +56,7 @@ public:
 	/// <param name="guideTexNumbers">操作説明のテクスチャナンバー</param>
 	/// <param name="allowTexNumber">矢印のテクスチャナンバー</param>
 	/// <param name="startTexNumber">スタートボタンのテクスチャナンバー</param>
-	Guide(SpriteCommon* spriteCommon, std::vector<int> guideTexNumbers, int allowTexNumber, int startTexNumber);
+	Guide(SpriteCommon* spriteCommon);
 	/// <summary>
 	/// デストラクタ
 	/// </summary>

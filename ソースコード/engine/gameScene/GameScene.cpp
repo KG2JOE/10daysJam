@@ -24,6 +24,7 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	spriteCommon->LoadTexture(1, L"Resources/sprite/drawNumber.png");
 	spriteCommon->LoadTexture(2, L"Resources/sprite/white1x1.png");
 	spriteCommon->LoadTexture(3, L"Resources/sprite/titleBack.png");
+	spriteCommon->LoadTexture(4, L"Resources/sprite/number.png");
 	
 	employee = new Employee();
 	employee->Ins(spriteCommon, input);
@@ -65,13 +66,13 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	particleManager = ParticleManager2d::Create();
 	particleManager->SetSpriteCommon(spriteCommon);
 
-	timer = new Timer(spriteCommon, 1);
+	timer = new Timer(spriteCommon, 4);
 	timer->SetLimitTime(120);
 	timer->SetPosition({ 100.0f, 100.0f });
 	timer->SetSize(1.0f);
 	timer->Initialize();
 
-	score = new Score(spriteCommon, 1);
+	score = new Score(spriteCommon, 4);
 	score->SetScore(0);
 	score->SetPosition({ 100.0f, 100.0f });
 	score->SetSize(2.0f);
@@ -84,7 +85,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	lightFade->SetFadeColor({ 0.0f, 0.0f, 0.0f, 0.5f });
 	lightFade->SetFadeState(Fade::FadeState::FADE);
 
-	guide = new Guide(spriteCommon, { 2,2,2 }, 2, 2);
+	guide = new Guide(spriteCommon);
 	guide->SetInput(input);
 	guide->Initialize();
 
