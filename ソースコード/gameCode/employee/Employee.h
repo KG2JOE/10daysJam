@@ -62,6 +62,8 @@ private:
 		Animation2D* animationSprite{};
 		Sprite* stressBar_1{};
 		Sprite* stressBar_2{};
+		int stressTime = 1;
+		int oldStressTime = 1;
 		int stressValue = 0;
 		int addstress = 1;
 		int maxStress = 300;

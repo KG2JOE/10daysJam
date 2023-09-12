@@ -76,7 +76,7 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 	catchFlag = 0;
 	nowEmployeeCount = 0;
 	maxEmployeeCount = 5;
-	Score = 500;
+	Score = 1000;
 }
 
 void Employee::Update()
@@ -151,6 +151,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 		employeeS[i][j]->status_ = NONE;
 		break;
 	case Employee::Dead:
+		Score -= 10;
 		CatchEmployeeWork(i, j);
 		break;
 	case Employee::Grab:
@@ -182,6 +183,36 @@ void Employee::EmployeeSUpdate(int i, int j)
 			if (employeeS[i][j]->tablePos_.x <= employeeS[i][j]->pos_.x)
 			{
 				employeeS[i][j]->pos_.x = employeeS[i][j]->tablePos_.x;
+
+				if (employeeS[i][j]->addMove == 3)
+				{
+					employeeS[i][j]->stressTime = 3;
+					employeeS[i][j]->oldStressTime = employeeS[i][j]->stressTime;
+				}
+				else if (employeeS[i][j]->addMove == 4)
+				{
+					employeeS[i][j]->stressTime = 3;
+					employeeS[i][j]->oldStressTime = employeeS[i][j]->stressTime;
+				}
+				else if (employeeS[i][j]->addMove == 5)
+				{
+					employeeS[i][j]->stressTime = 2;
+					employeeS[i][j]->oldStressTime = employeeS[i][j]->stressTime;
+				}
+				else if (employeeS[i][j]->addMove == 6)
+				{
+					employeeS[i][j]->stressTime = 1;
+					employeeS[i][j]->oldStressTime = employeeS[i][j]->stressTime;
+				}
+				else if (employeeS[i][j]->addMove == 7)
+				{
+					employeeS[i][j]->stressTime = 0;
+					employeeS[i][j]->oldStressTime = employeeS[i][j]->stressTime;
+				}
+
+
+
+
 				employeeS[i][j]->status_ = Work;
 				AnimationInitialize(i, j, AnimationFront);
 				employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
@@ -225,7 +256,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 
 				}
 			}
-			else if (employeeS[i][j]->pos_.x == doorWay->GetDeadConveyorPos(2).x)
+			else if (employeeS[i][j]->pos_.x >= doorWay->GetDeadConveyorPos(2).x)
 			{
 				employeeS[i][j]->pos_.x = doorWay->GetDeadConveyorPos(2).x;
 				Move(i, j, Front);
@@ -273,6 +304,22 @@ void Employee::Draw()
 void Employee::Delete()
 {
 
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			
+			delete employeeS[i][j]->animationSprite;
+			delete employeeS[i][j]->stressBar_1;
+			delete employeeS[i][j]->stressBar_2;
+			delete employeeS[i][j];
+		}
+	}
+	table->Delete();
+	doorWay->Delete();
+
+	delete table;
+	delete doorWay;
 }
 
 void Employee::ReturnEmployee(int i, int j)
@@ -287,6 +334,7 @@ void Employee::ReturnEmployee(int i, int j)
 		employeeS[i][j]->addstress = 1;
 
 		employeeS[i][j]->addMove = RndCreate::sGetRandInt(3, 7);
+
 
 		employeeS[i][j]->stressValue = RndCreate::sGetRandInt(0, 20);
 		employeeS[i][j]->maxStress = RndCreate::sGetRandInt(300, 400);
@@ -327,7 +375,16 @@ void Employee::StressMove(int i, int j)
 
 	if (employeeS[i][j]->stressValue < employeeS[i][j]->maxStress)
 	{
-		employeeS[i][j]->stressValue += employeeS[i][j]->addstress;
+		if (employeeS[i][j]->stressTime > 0)
+		{
+			employeeS[i][j]->stressTime--;
+		}
+		else
+		{
+
+			employeeS[i][j]->stressValue += employeeS[i][j]->addstress;
+			employeeS[i][j]->stressTime = employeeS[i][j]->oldStressTime;
+		}
 		Score++;
 	}
 	else
@@ -469,6 +526,11 @@ void Employee::CatchEmployeeGrab(int i, int j)
 
 void Employee::AnimationInitialize(int i, int j, int texNumber, int texNum, bool flag, std::vector<int> numbers)
 {
+	if (employeeS[i][j]->animationSprite != nullptr)
+	{
+		delete employeeS[i][j]->animationSprite;
+		employeeS[i][j]->animationSprite = nullptr;
+	}
 	employeeS[i][j]->animationSprite = new Animation2D(spCom, texNumber, { 48.0f, 48.0f }, 2);
 	employeeS[i][j]->animationSprite->SetAnchorPoint({ 0.5f, 0.5f });
 	employeeS[i][j]->animationSprite->SetAnimationFlame(15.0f);
