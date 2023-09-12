@@ -22,6 +22,7 @@ void Table::Ins(SpriteCommon* spCom_)
 			table[i][j]->SetSize({80,60});
 			table[i][j]->SetPosition(pos[i][j]);
 			table[i][j]->SetTexLeftTop({ 0.0f,0.3f });
+			table[i][j]->Update();
 		}
 	}
 

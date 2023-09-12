@@ -27,7 +27,7 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	
 	employee = new Employee();
 	employee->Ins(spriteCommon, input);
-	employee->Update();
+	//employee->Update();
 	
 	spriteCommon->LoadTexture(70, L"Resources/sprite/hand.png");
 	spriteCommon->LoadTexture(71, L"Resources/sprite/handLift.png");
@@ -76,7 +76,8 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	score->SetPosition({ 100.0f, 100.0f });
 	score->SetSize(2.0f);
 	score->Initialize();
-
+	score->SetScore(employee->GetScore());
+	score->Update();
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
 

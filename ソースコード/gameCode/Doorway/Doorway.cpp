@@ -4,19 +4,24 @@ void Doorway::Ins(SpriteCommon* spCom_)
 {
 	assert(spCom_);
 	spCom = spCom_;
-
-	spCom->LoadTexture(incinerator, L"Resources/sprite/Furnace.png");
+	
+	spCom->LoadTexture(incinerator, L"Resources/sprite/FurnaceBack.png");
+	spCom->LoadTexture(incinerator_2, L"Resources/sprite/FurnaceFront.png");
 	spCom->LoadTexture(beltConveyor_1, L"Resources/sprite/beltConveyor.png");
 	spCom->LoadTexture(beltConveyor_2, L"Resources/sprite/beltConveyor.png");
+	spCom->LoadTexture(beltConveyor_3, L"Resources/sprite/beltConveyorBent.png");
 	spCom->LoadTexture(bg, L"Resources/sprite/bg.png");
 
 	incineratorPos = { 1200,128,0 };
 
 	incineratorSprite = Sprite::Create(spCom, incinerator, { 0.5,0.5 }, false, false);
+	incineratorSprite_2 = Sprite::Create(spCom, incinerator_2, {0.5,0.5}, false, false);
 	bgSprite = Sprite::Create(spCom, bg, { 0,0 }, false, false);
 	incineratorSprite->SetPosition(incineratorPos);
 	incineratorSprite->Update();
 
+	incineratorSprite_2->SetPosition(incineratorPos);
+	incineratorSprite_2->Update();
 
 	deadConveyorPos[0] = { 1200,152,0 };
 	deadConveyorPos[1] = { 1200,197,0 };
@@ -37,10 +42,16 @@ void Doorway::Ins(SpriteCommon* spCom_)
 	}
 	for (int i = 0; i < 6; i++)
 	{
-		if (i <= 2)
+		if (i < 2)
 		{
 			deadConveyorPos[i] = { 1200,incineratorPos.y + distance_1 + (distance_2 * i),0 };
 			deadConveyorSprite[i] = Sprite::Create(spCom, beltConveyor_1, { 0.5,0.5 }, false, false);
+
+		}
+		else if (i == 2)
+		{
+			deadConveyorPos[i] = { 1200,incineratorPos.y + distance_1 + (distance_2 * i),0 };
+			deadConveyorSprite[i] = Sprite::Create(spCom, beltConveyor_3, { 0.5,0.5 }, false, false);
 
 		}
 		else
@@ -66,7 +77,10 @@ void Doorway::DrawIncinerator()
 
 void Doorway::Draw()
 {
+
 	bgSprite->Draw();
+	incineratorSprite_2->Draw();
+
 	for (int i = 0; i < 6; i++)
 	{
 		deadConveyorSprite[i]->Draw();
