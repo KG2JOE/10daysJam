@@ -33,19 +33,15 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 			employeeS[i][j]->stressBar_1 = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteStressBar, { 0.0,0.0 }, false, false);
 			employeeS[i][j]->stressBar_2 = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteStressUI, { 0.5,0.5 }, false, false);
 
-			XMFLOAT3 temp = { employeeS[i][j]->pos_.x,employeeS[i][j]->pos_.y,employeeS[i][j]->pos_.z };
 
-			employeeS[i][j]->stressBar_1->SetPosition(temp - XMFLOAT3{31.0f, 6.5f, 0.0f});
-			employeeS[i][j]->stressBar_2->SetPosition(temp);
-			employeeS[i][j]->stressBar_1->Update();
-			employeeS[i][j]->stressBar_2->Update();
+
 
 			employeeS[i][j]->tablePos_ = table->GetPos(i, j);
 			employeeS[i][j]->tablePos_.y -= 25.f;
 
 			employeeS[i][j]->pos_ = doorWay->GetAttendingWorkPos();
 			employeeS[i][j]->animationSprite->SetPosition({ employeeS[i][j]->pos_.x, employeeS[i][j]->pos_.y });
-			employeeS[i][j]->animationSprite->SetSize({60.0f, 60.0f});
+			employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
 			if (i == 0 && j == 0)
 			{
 				employeeS[i][j]->status_ = AttendingWork;
@@ -56,6 +52,13 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 				employeeS[i][j]->status_ = LeavingWork;
 				employeeS[i][j]->time += (i * 60 + j * 30);
 			}
+			employeeS[i][j]->animationSprite->Update();
+			XMFLOAT3 temp = { employeeS[i][j]->pos_.x,employeeS[i][j]->pos_.y,employeeS[i][j]->pos_.z };
+
+			employeeS[i][j]->stressBar_1->SetPosition(temp - XMFLOAT3{ 31.0f, 6.5f, 0.0f });
+			employeeS[i][j]->stressBar_2->SetPosition(temp);
+			employeeS[i][j]->stressBar_1->Update();
+			employeeS[i][j]->stressBar_2->Update();
 		}
 	}
 
@@ -122,7 +125,7 @@ void Employee::Update()
 			employeeS[i][j]->stressBar_1->SetPosition(temp - XMFLOAT3{ 31.0f, 6.5f, 0.0f });
 			employeeS[i][j]->stressBar_2->SetPosition(temp);
 			float size = (float)employeeS[i][j]->stressValue / employeeS[i][j]->maxStress * 62.0f;
-			employeeS[i][j]->stressBar_1->SetSize({size, 13.0f});
+			employeeS[i][j]->stressBar_1->SetSize({ size, 13.0f });
 			employeeS[i][j]->stressBar_1->Update();
 			employeeS[i][j]->stressBar_2->Update();
 		}
@@ -141,6 +144,10 @@ void Employee::EmployeeSUpdate(int i, int j)
 		break;
 	case Employee::Incinerator:
 		Score = Score - 1000;
+		if (Score <= 0)
+		{
+			Score = 0;
+		}
 		employeeS[i][j]->status_ = NONE;
 		break;
 	case Employee::Dead:
@@ -189,7 +196,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 
 		AnimationInitialize(i, j, SpriteFront, 1, false, { 0 });
 		employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
-		
+
 		StressMove(i, j);
 		CatchEmployeeWork(i, j);
 
@@ -325,7 +332,7 @@ void Employee::StressMove(int i, int j)
 	}
 	else
 	{
-		AnimationInitialize(i, j, SpriteDead, 1, false, {0});
+		AnimationInitialize(i, j, SpriteDead, 1, false, { 0 });
 		employeeS[i][j]->animationSprite->SetSize({ 60.0f, 60.0f });
 
 		employeeS[i][j]->addMove = 3.f;

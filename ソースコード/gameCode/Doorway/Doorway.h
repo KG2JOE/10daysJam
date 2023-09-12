@@ -16,11 +16,13 @@ public:
 	enum
 	{
 		incinerator = 20,
+		incinerator_2,
 		beltConveyor_1,
 		beltConveyor_2,
+		beltConveyor_3,
 		bg,
 	};
-
+	
 	void Ins(SpriteCommon* spCom_);
 
 	void Update();
@@ -49,6 +51,7 @@ private:
 
 
 	Sprite* incineratorSprite{};
+	Sprite* incineratorSprite_2{};
 	XMFLOAT3 incineratorPos{};
 
 	Sprite* deadConveyorSprite[6]{};
