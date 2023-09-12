@@ -68,14 +68,14 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 
 	timer = new Timer(spriteCommon, 4);
 	timer->SetLimitTime(120);
-	timer->SetPosition({ 100.0f, 100.0f });
+	timer->SetPosition({ 200.0f, 130.0f });
 	timer->SetSize(1.0f);
 	timer->Initialize();
 
 	score = new Score(spriteCommon, 4);
 	score->SetScore(0);
-	score->SetPosition({ 100.0f, 100.0f });
-	score->SetSize(2.0f);
+	score->SetPosition({ 700.0f, 150.0f });
+	score->SetSize(1.0f);
 	score->Initialize();
 	score->SetScore(employee->GetScore());
 	score->Update();
@@ -138,14 +138,28 @@ void GameScene::Update()
 
 		if (input->PushMouseLeft())
 		{
+			if (hand != nullptr)
+			{
+				delete hand;
+				hand = nullptr;
+			}
 			hand = Sprite::Create(spriteCommon, 71, { 0.5f,0.5f });
 		}
 		else
 		{
+			if (hand != nullptr)
+			{
+				delete hand;
+				hand = nullptr;
+			}
 			hand = Sprite::Create(spriteCommon, 70, { 0.5f,0.5f });
 
 		}
 
+		if (timer->GetLimitFlag() || employee->GetScore() <= 0)
+		{
+			sceneState = SceneState::TITLE;
+		}
 		timer->Update();
 
 		employee->SetPlayTime(timer->GetCurrentTime());
@@ -158,6 +172,7 @@ void GameScene::Update()
 
 		score->Update();
 
+		
 		break;
 	case GameScene::RESULT:
 		break;
@@ -290,14 +305,14 @@ void GameScene::Draw()
 void GameScene::Delete()
 {
 	audio->Finalize();
-
+	employee->Delete();
 	delete employee;
 	delete debTxt;
 	delete camera;
 	
 	delete spriteCommon;
 	delete particleManager;
-
+	delete hand;
 	delete timer;
 	delete score;
 	delete fade;

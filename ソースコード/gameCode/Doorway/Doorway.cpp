@@ -93,5 +93,18 @@ void Doorway::Draw()
 
 void Doorway::Delete()
 {
+	
+	delete incineratorSprite;
 
+	delete bgSprite;
+	delete incineratorSprite_2;
+
+	for (int i = 0; i < 6; i++)
+	{
+		delete deadConveyorSprite[i];
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		delete aliveConveyorSprite[i];
+	}
 }
