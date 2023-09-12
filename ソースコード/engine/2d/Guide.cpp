@@ -2,31 +2,34 @@
 #include "WinApp.h"
 #include "Easing.h"
 
-Guide::Guide(SpriteCommon* spriteCommon, std::vector<int> guideTexNumbers, int allowTexNumber, int startTexNumber)
+Guide::Guide(SpriteCommon* spriteCommon)
 {
-	for (int i = 0; i < guideTexNumbers.size(); i++)
+	spriteCommon->LoadTexture(SpriteTexNumber::GUIDE1, L"Resources/sprite/white1x1.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::GUIDE2, L"Resources/sprite/white1x1.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::GUIDE3, L"Resources/sprite/white1x1.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::ALLOW, L"Resources/sprite/allow.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::START, L"Resources/sprite/start.png");
+
+	for (int i = 0; i < 3; i++)
 	{
-		guideSprites.push_back(Sprite::Create(spriteCommon, guideTexNumbers[i]));
+		guideSprites.push_back(Sprite::Create(spriteCommon, GUIDE1 + i));
 		guideSprites[i]->SetPosition({ WinApp::window_width * 1.5f, WinApp::window_height * 0.4f, 0.0f });
 		guideSprites[i]->SetSize({ 800, 450 });
 		guideSprites[i]->Update();
 	}
 
-	rightAllowSprite = Sprite::Create(spriteCommon, allowTexNumber);
+	rightAllowSprite = Sprite::Create(spriteCommon, ALLOW);
 	rightAllowSprite->SetPosition({ WinApp::window_width * 2.0f - 120.0f, WinApp::window_height * 0.4f, 0.0f });
-	rightAllowSprite->SetSize({ 100.0f, 300.0f });
 	rightAllowSprite->Update();
-	leftAllowSprite = Sprite::Create(spriteCommon, allowTexNumber);
+	leftAllowSprite = Sprite::Create(spriteCommon, ALLOW);
 	leftAllowSprite->SetPosition({ 120.0f - WinApp::window_width, WinApp::window_height * 0.4f, 0.0f });
-	leftAllowSprite->SetSize({ 100.0f, 300.0f });
 	leftAllowSprite->SetIsFlipX(true);
 	leftAllowSprite->Update();
-	startSprite = Sprite::Create(spriteCommon, startTexNumber);
+	startSprite = Sprite::Create(spriteCommon, START);
 	startSprite->SetPosition({ WinApp::window_width * 0.5f, WinApp::window_height * 2.0f - 120.0f, 0.0f });
-	startSprite->SetSize({ 400.0f, 100.0f });
 	startSprite->Update();
 	guideState = GuideState::DISPLAYIN;
-	maxSpriteNum = guideTexNumbers.size();
+	maxSpriteNum = 3;
 	currentSprite = -1;
 	nextSprite = 0;
 	endFlag = false;

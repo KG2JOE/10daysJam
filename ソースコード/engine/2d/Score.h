@@ -3,9 +3,9 @@
 #include "XMFLOAT_Helper.h"
 
 //画像の数字一つ分の横幅
-#define TexWidth 34.0f
+#define TexWidth 50.0f
 //画像の数字一つ分の縦幅
-#define TexHeight 64.0f
+#define TexHeight 63.0f
 //最大桁数
 #define MaxSprite 10
 
@@ -18,6 +18,8 @@ private:
 	XMFLOAT2 position;
 	//サイズ
 	float size;
+	//透明度
+	float alpha;
 	//現在のスコア
 	int currentScore;
 	//0で右詰め表示するかどうか
@@ -95,4 +97,9 @@ public:
 	/// </summary>
 	/// <returns>現在のスコア</returns>
 	int GetScore() { return currentScore; }
+	/// <summary>
+	/// 透明度の設定
+	/// </summary>
+	/// <param name="alpha">透明度</param>
+	void SetAlpha(float alpha) { this->alpha = alpha; }
 };

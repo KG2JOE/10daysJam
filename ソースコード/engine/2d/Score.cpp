@@ -9,6 +9,7 @@ Score::Score(SpriteCommon* spriteCommon, int texNumber)
 
 	position = { 0.0f, 0.0f };
 	size = 1.0f;
+	alpha = 1.0f;
 	currentScore = 0;
 	printZeroFlag = false;
 
@@ -36,6 +37,7 @@ void Score::Initialize()
 	{
 		sprites[i]->SetPosition({ position.x + (MaxSprite - 1 - i) * TexWidth * size, position.y, 0.0f });
 		sprites[i]->SetSize(XMFLOAT2{ TexWidth, TexHeight } *size);
+		sprites[i]->SetColor({ 1.0f, 1.0f, 1.0f, alpha });
 	}
 
 	SetCurrentScore();
@@ -71,6 +73,7 @@ void Score::SetCurrentScore()
 		num += placeNum;
 		sprites[i]->SetTexLeftTop({ placeNum / (int)(std::pow(digit, i)) * TexWidth, 0.0f });
 		sprites[i]->SetTexSize({ TexWidth, TexHeight });
+		sprites[i]->SetColor({ 1.0f, 1.0f, 1.0f, alpha });
 		sprites[i]->Update();
 	}
 }
