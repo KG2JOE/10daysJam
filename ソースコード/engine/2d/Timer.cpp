@@ -25,7 +25,7 @@ Timer::Timer(SpriteCommon* spriteCommon, int texNumber)
 	}
 
 	colon->SetPosition({ position.x + 2 * TexWidth * size, position.y, 0.0f });
-	colon->SetTexLeftTop({ 10 * TexWidth, 0.0f });
+	colon->SetTexLeftTop({ 10.0f * TexWidth, 0.0f });
 	colon->SetTexSize({ TexWidth, TexHeight });
 	colon->SetSize(XMFLOAT2{ TexWidth, TexHeight } *size);
 	colon->Update();
@@ -88,7 +88,7 @@ void Timer::Draw()
 		sprites[i]->Draw();
 	}
 
-	//colon->Draw();
+	colon->Draw();
 }
 
 void Timer::SetCurrentTime()

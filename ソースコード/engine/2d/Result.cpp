@@ -6,9 +6,9 @@
 Result::Result(SpriteCommon* spriteCommon, int texNumber)
 {
 	this->spriteCommon = spriteCommon;
-	spriteCommon->LoadTexture(SpriteTexNumber::RESULTWORD, L"Resources/sprite/debugfont.png");
-	spriteCommon->LoadTexture(SpriteTexNumber::RANKWORD, L"Resources/sprite/debugfont.png");
-	spriteCommon->LoadTexture(SpriteTexNumber::RANKTEX, L"Resources/sprite/debugfont.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::RESULTWORD, L"Resources/sprite/resultWord.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::RANKWORD, L"Resources/sprite/rankWord.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::RANKTEX, L"Resources/sprite/rank.png");
 	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKC, L"Resources/sprite/debugfont.png");
 	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKB, L"Resources/sprite/debugfont.png");
 	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKA, L"Resources/sprite/debugfont.png");
