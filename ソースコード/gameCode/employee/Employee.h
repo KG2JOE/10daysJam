@@ -11,6 +11,7 @@
 
 #include "Animation2D.h"
 
+#include"Audio.h"
 
 class Employee
 {
@@ -73,11 +74,13 @@ private:
 		bool aliveFlag = true;
 		int time = 60;
 		float addMove = 3.f;
+	
+		Audio* audio{};
 	};
 
 public:
 	//初期化
-	void Ins(SpriteCommon* spCom , Input* input_);
+	void Ins(SpriteCommon* spCom , Input* input_, Audio* audio_);
 	//更新
 	void Update();
 	//社員一人一人の更新
@@ -109,6 +112,7 @@ public:
 	void AnimationInitialize(int i, int j, int texNumber, int texNum = 2, bool flag = true, std::vector<int> numbers = {0, 1});
 
 private:
+	
 	SpriteCommon* spCom{};
 	Input* input{};
 	Sprite* employee{};

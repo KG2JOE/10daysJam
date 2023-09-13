@@ -26,8 +26,34 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	spriteCommon->LoadTexture(3, L"Resources/sprite/titleBack.png");
 	spriteCommon->LoadTexture(4, L"Resources/sprite/number.png");
 	
+	audio->Initialize();
+	//タイトル
+	audio->LoadWave("click_.wav");//SE
+	audio->LoadWave("Dianthus_.wav");//BGM
+
+	//ゲーム
+	audio->LoadWave("taikin_.wav");//退勤SE
+	audio->LoadWave("tukamu_.wav");//マウス
+	audio->LoadWave("neppa_.wav");//焼却炉
+	audio->LoadWave("Working_City.wav");//BGM
+	audio->LoadWave("15347_.wav");//叫び声
+
+	//リザルト
+	audio->LoadWave("Re-sounds_.wav");//BGM
+
+	float s = 0.05f;
+	s = 0.1f;
+	audio->SetVolume("click_.wav", s);
+	audio->SetVolume("Dianthus_.wav", s);
+	audio->SetVolume("taikin_.wav", s);
+	audio->SetVolume("tukamu_.wav", s);
+	audio->SetVolume("neppa_.wav", s);
+	audio->SetVolume("Working_City.wav", s);
+	audio->SetVolume("15347_.wav", s);
+	audio->SetVolume("Re-sounds_.wav", s);
+
 	employee = new Employee();
-	employee->Ins(spriteCommon, input);
+	employee->Ins(spriteCommon, input, audio);
 	//employee->Update();
 	
 	spriteCommon->LoadTexture(70, L"Resources/sprite/hand.png");
@@ -35,15 +61,10 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 
 	spCom->initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	
-	audio->Initialize();
-	audio->LoadWave("thunder.wav");
-	audio->LoadWave("ice1.wav");
-	audio->LoadWave("BGM4.wav");
-	float s = 0.05f;
-	audio->SetVolume("BGM4.wav", s);
-	s = 0.1f;
-	audio->SetVolume("ice1.wav", s);
-
+	
+	audio->PlayWave("Dianthus_.wav",true);
+	
+	
 	debTxt = new DebugText;
 	debTxt->Initialize(spriteCommon, 0);
 	hand = Sprite::Create(spriteCommon, 70, { 0.5f,0.5f });
@@ -109,16 +130,25 @@ void GameScene::Update()
 			input->TriggerMouseLeft())
 		{
 			fade->SetFadeState(Fade::FadeState::FADEOUT);
+			audio->PlayWave("click_.wav", false);
+
 		}
 
 		if (fade->GetFadeState() == Fade::FadeState::FADE)
 		{
 			fade->SetFadeState(Fade::FadeState::FADEIN);
 			sceneState = SceneState::GUIDE;
+
+			audio->PlayWave("Working_City.wav", true);
+			audio->Stop("Dianthus_.wav");
+
+
 		}
 
 		break;
 	case GameScene::GUIDE:
+
+		audio->PlayWave("click_.wav", false);
 
 		guide->Update();
 
@@ -138,6 +168,8 @@ void GameScene::Update()
 
 		if (input->PushMouseLeft())
 		{
+			audio->PlayWave("tukamu_.wav",false);//マウス
+
 			if (hand != nullptr)
 			{
 				delete hand;
@@ -147,6 +179,7 @@ void GameScene::Update()
 		}
 		else
 		{
+			audio->Stop("tukamu_.wav");//マウス
 			if (hand != nullptr)
 			{
 				delete hand;

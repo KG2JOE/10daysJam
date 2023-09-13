@@ -2,13 +2,16 @@
 #include "collision.h"
 #include"RandCreate.h"
 #include "XMFLOAT_Helper.h"
-void Employee::Ins(SpriteCommon* spCom_, Input* input_)
+
+void Employee::Ins(SpriteCommon* spCom_, Input* input_, Audio* audio_)
 {
 	assert(spCom_);
 	assert(input_);
+	assert(audio_);
 	spCom = spCom_;
 	input = input_;
-
+	
+	
 	spCom->LoadTexture(AnimationFront, L"Resources/sprite/humanWalk.png");
 	spCom->LoadTexture(AnimationBack, L"Resources/sprite/humanWalkBack.png");
 	spCom->LoadTexture(AnimationRight, L"Resources/sprite/humanWalkRight.png");
@@ -28,6 +31,8 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_)
 		for (int j = 0; j < 4; j++)
 		{
 			employeeS[i][j] = new EmployeeS();
+
+			employeeS[i][j]->audio = audio_;
 
 			AnimationInitialize(i, j, AnimationBack);
 			employeeS[i][j]->stressBar_1 = Sprite::Create(spCom, (UINT)SpriteStatus::SpriteStressBar, { 0.0,0.0 }, false, false);
@@ -147,7 +152,10 @@ void Employee::EmployeeSUpdate(int i, int j)
 		if (Score <= 0)
 		{
 			Score = 0;
+			
 		}
+		employeeS[i][j]->audio->PlayWave("neppa_.wav",false);//”R‚â‚·
+		employeeS[i][j]->audio->PlayWave("15347_.wav", false);//‹©‚Ñ
 		employeeS[i][j]->status_ = NONE;
 		break;
 	case Employee::Dead:
@@ -242,6 +250,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 			Move(i, j, Right);
 			if (employeeS[i][j]->pos_.x > 1300)
 			{
+				employeeS[i][j]->audio->PlayWave("taikin_.wav",false);
 				employeeS[i][j]->status_ = LeavingWork;
 			}
 		}
