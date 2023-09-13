@@ -9,7 +9,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	WinApp* winApp = nullptr;
 
 	winApp = new WinApp();
-	winApp->Initialize(L"test");
+	winApp->Initialize(L"4021_WELCOME BLACK");
 
 	MSG msg{};  // メッセージ
 #pragma endregion WindowsAPI初期化
