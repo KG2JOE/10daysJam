@@ -25,6 +25,7 @@ public:
 		beltConveyorSideAnimation,
 		beltConveyorBentAnimation,
 		bg,
+		alive,
 	};
 	
 	void Ins(SpriteCommon* spCom_);
@@ -52,6 +53,8 @@ private:
 	XMFLOAT3 leavingWorkPos{};
 
 	Sprite* bgSprite{};
+
+	Sprite* aliveSprite{};
 
 
 	Sprite* incineratorSprite{};

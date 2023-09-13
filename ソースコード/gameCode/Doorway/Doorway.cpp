@@ -14,12 +14,16 @@ void Doorway::Ins(SpriteCommon* spCom_)
 	spCom->LoadTexture(beltConveyorSideAnimation, L"Resources/sprite/beltConveyorMoveSide.png");
 	spCom->LoadTexture(beltConveyorBentAnimation, L"Resources/sprite/beltConveyorBentMove.png");
 	spCom->LoadTexture(bg, L"Resources/sprite/bg.png");
+	spCom->LoadTexture(alive, L"Resources/sprite/alive.png");
 
 	incineratorPos = { 1200,128,0 };
 
 	incineratorSprite = Sprite::Create(spCom, incinerator, { 0.5,0.5 }, false, false);
 	incineratorSprite_2 = Sprite::Create(spCom, incinerator_2, {0.5,0.5}, false, false);
 	bgSprite = Sprite::Create(spCom, bg, { 0,0 }, false, false);
+	aliveSprite = Sprite::Create(spCom, alive);
+	aliveSprite->SetPosition({1150.0f, 600.0f, 0.0f});
+	aliveSprite->Update();
 	incineratorSprite->SetPosition(incineratorPos);
 	incineratorSprite->Update();
 
@@ -120,6 +124,7 @@ void Doorway::DrawIncinerator()
 void Doorway::Draw()
 {
 	bgSprite->Draw();
+	aliveSprite->Draw();
 	incineratorSprite_2->Draw();
 
 	for (int i = 0; i < 6; i++)
@@ -138,6 +143,7 @@ void Doorway::Delete()
 	delete incineratorSprite;
 
 	delete bgSprite;
+	delete aliveSprite;
 	delete incineratorSprite_2;
 
 	for (int i = 0; i < 6; i++)

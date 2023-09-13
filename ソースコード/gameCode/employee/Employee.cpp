@@ -2,6 +2,7 @@
 #include "collision.h"
 #include"RandCreate.h"
 #include "XMFLOAT_Helper.h"
+#include "ParticleManager2d.h"
 
 void Employee::Ins(SpriteCommon* spCom_, Input* input_, Audio* audio_)
 {
@@ -21,6 +22,7 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_, Audio* audio_)
 	spCom->LoadTexture(SpriteDead, L"Resources/sprite/deadBody.png");
 	spCom->LoadTexture(SpriteStressUI, L"Resources/sprite/stressUI.png");
 	spCom->LoadTexture(SpriteStressBar, L"Resources/sprite/stressBar.png");
+	spCom->LoadTexture(Sweat, L"Resources/sprite/sweat.png");
 	table = new Table();
 	table->Ins(spCom);
 	doorWay = new Doorway();

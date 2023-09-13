@@ -54,6 +54,7 @@ public:
 		SpriteDead,
 		SpriteStressUI,
 		SpriteStressBar,
+		Sweat
 	};
 
 private:
