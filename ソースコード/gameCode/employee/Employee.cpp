@@ -130,7 +130,8 @@ void Employee::Update()
 			employeeS[i][j]->stressBar_2->Update();
 		}
 	}
-	//employee->Update();
+
+	doorWay->Update();
 }
 
 void Employee::EmployeeSUpdate(int i, int j)
