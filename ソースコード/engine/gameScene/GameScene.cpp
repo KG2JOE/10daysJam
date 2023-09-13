@@ -279,6 +279,9 @@ void GameScene::Update()
 			clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
 			clickSprite->Update();
 			sceneState = SceneState::TITLE;
+
+			audio->PlayWave("Dianthus_.wav", true);
+			audio->Stop("Working_City.wav"); 
 		}
 
 		break;
