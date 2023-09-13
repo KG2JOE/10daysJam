@@ -155,6 +155,8 @@ void Employee::EmployeeSUpdate(int i, int j)
 			Score = 0;
 			
 		}
+		employeeS[i][j]->audio->Stop("neppa_.wav");//”R‚â‚·
+		employeeS[i][j]->audio->Stop("15347_.wav");//‹©‚Ñ
 		employeeS[i][j]->audio->PlayWave("neppa_.wav",false);//”R‚â‚·
 		employeeS[i][j]->audio->PlayWave("15347_.wav", false);//‹©‚Ñ
 		employeeS[i][j]->status_ = NONE;
@@ -251,6 +253,7 @@ void Employee::EmployeeSUpdate(int i, int j)
 			Move(i, j, Right);
 			if (employeeS[i][j]->pos_.x > 1300)
 			{
+				employeeS[i][j]->audio->Stop("taikin_.wav");
 				employeeS[i][j]->audio->PlayWave("taikin_.wav",false);
 				employeeS[i][j]->status_ = LeavingWork;
 			}
