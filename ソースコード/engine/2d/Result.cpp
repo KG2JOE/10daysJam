@@ -61,9 +61,13 @@ void Result::Initialize(int scoreNum)
 		{
 			break;
 		}
+		else if (i >= ranking.size() - 1)
+		{
+			rank++;
+		}
 	}
 
-	rank = (rankingNum - rank - 1);
+	rank = (rankingNum - rank);
 
 	rankSprite->SetPosition({ WinApp::window_width * 0.6f, WinApp::window_height * 0.6f, 0.0f });
 	rankSprite->SetTexLeftTop({ rank * RankTexWidth, 0.0f });

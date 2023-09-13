@@ -154,10 +154,10 @@ void Employee::EmployeeSUpdate(int i, int j)
 			Score = 0;
 			
 		}
-		employeeS[i][j]->audio->Stop("neppa_.wav");//”R‚â‚·
-		employeeS[i][j]->audio->Stop("15347_.wav");//‹©‚Ñ
-		employeeS[i][j]->audio->PlayWave("neppa_.wav",false);//”R‚â‚·
-		employeeS[i][j]->audio->PlayWave("15347_.wav", false);//‹©‚Ñ
+		employeeS[i][j]->audio->Stop("neppa_.wav");//ï¿½Rï¿½â‚·
+		employeeS[i][j]->audio->Stop("15347_.wav");//ï¿½ï¿½ï¿½ï¿½
+		employeeS[i][j]->audio->PlayWave("neppa_.wav",false);//ï¿½Rï¿½â‚·
+		employeeS[i][j]->audio->PlayWave("15347_.wav", false);//ï¿½ï¿½ï¿½ï¿½
 		employeeS[i][j]->status_ = NONE;
 		break;
 	case Employee::Dead:
