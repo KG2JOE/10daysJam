@@ -41,7 +41,7 @@ void Result::Initialize(int scoreNum)
 	resultWordSprite->SetPosition({ WinApp::window_width * 1.5f, WinApp::window_height * 0.1f, 0.0f });
 	resultWordSprite->Update();
 
-	score->SetPosition({ WinApp::window_width * 0.5f, WinApp::window_height * 0.3f });
+	score->SetPosition({ WinApp::window_width * 0.2f, WinApp::window_height * 0.3f });
 	score->SetAlpha(0.0f);
 	score->SetScore(0);
 	score->Initialize();
@@ -60,9 +60,9 @@ void Result::Initialize(int scoreNum)
 		}
 	}
 
-	rank = (rankingNum - rank + 1);
+	rank = (rankingNum - rank - 1);
 
-	rankSprite->SetPosition({ WinApp::window_width * 0.7f, WinApp::window_height * 0.6f, 0.0f });
+	rankSprite->SetPosition({ WinApp::window_width * 0.6f, WinApp::window_height * 0.6f, 0.0f });
 	rankSprite->SetTexLeftTop({ rank * RankTexWidth, 0.0f });
 	rankSprite->SetTexSize({ RankTexWidth, RankTexHeight });
 	rankSprite->SetSize({ RankTexWidth, RankTexHeight });
@@ -94,7 +94,7 @@ void Result::Update()
 	case Result::SCORE:
 		ScoreUpdate();
 		break;
-	case Result::RANKTEX:
+	case Result::RANK:
 		RankUpdate();
 		break;
 	case Result::COMMENT:
@@ -111,7 +111,7 @@ void Result::Draw()
 	score->Draw();
 	rankWordSprite->Draw();
 	rankSprite->Draw();
-	commentSprite->Draw();
+	//commentSprite->Draw();
 }
 
 void Result::ScoreUpdate()
@@ -159,7 +159,7 @@ void Result::RankUpdate()
 		rankSprite->SetSize({ RankTexWidth + (1.0f - e) * RankTexWidth * 2.0f,
 			RankTexHeight + (1.0f - e) * RankTexHeight * 2.0f });
 		rankSprite->SetColor({ 1.0f, 1.0f, 1.0f, e });
-		rankSprite->SetRotation(e * 30.0f);
+		rankSprite->SetRotation(e * 10.0f);
 		rankSprite->Update();
 	}
 
@@ -169,7 +169,7 @@ void Result::RankUpdate()
 		rankWordSprite->Update();
 		rankSprite->SetSize({ RankTexWidth, RankTexHeight });
 		rankSprite->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
-		rankSprite->SetRotation(30.0f);
+		rankSprite->SetRotation(10.0f);
 		rankSprite->Update();
 		count = 0;
 		resultState = ResultState::COMMENT;
@@ -192,7 +192,7 @@ void Result::CommentUpdate()
 		commentSprite->SetPosition({ WinApp::window_width * 0.5f, WinApp::window_height * 0.8f, 0.0f });
 		commentSprite->Update();
 		count = 0;
-		resultState = ResultState::SCORE;
+		resultState = ResultState::END;
 		endFlag = true;
 		return;
 	}
