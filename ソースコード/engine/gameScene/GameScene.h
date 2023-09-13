@@ -20,6 +20,7 @@
 #include "Score.h"
 #include "Fade.h"
 #include "Guide.h"
+#include "Result.h"
 
 #include"InstancingObject3d.h"
 
@@ -82,8 +83,11 @@ private://ƒGƒ“ƒWƒ“
 	Sprite* hand{};
 
 	//test
+	int count;
 	Sprite* titleSprite = nullptr;
+	Sprite* clickSprite = nullptr;
 	Guide* guide = nullptr;
+	Result* result = nullptr;
 
 	ParticleManager2d* particleManager = nullptr;
 	Timer* timer = nullptr;
