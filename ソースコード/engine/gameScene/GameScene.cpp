@@ -1,4 +1,6 @@
 #include "GameScene.h"
+#include "Easing.h"
+#include "XMFLOAT_Helper.h"
 
 void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* input_)
 {
@@ -25,6 +27,7 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	spriteCommon->LoadTexture(2, L"Resources/sprite/white1x1.png");
 	spriteCommon->LoadTexture(3, L"Resources/sprite/titleBack.png");
 	spriteCommon->LoadTexture(4, L"Resources/sprite/number.png");
+	spriteCommon->LoadTexture(5, L"Resources/sprite/click.png");
 	
 	audio->Initialize();
 	//ƒ^ƒCƒgƒ‹
@@ -82,7 +85,12 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	assert(input_);
 	EngineIns(winApp_, dxCommon_, input_);
 
+	count = 0;
 	titleSprite = Sprite::Create(spriteCommon, 3, {0.0f, 0.0f});
+	clickSprite = Sprite::Create(spriteCommon, 5);
+	clickSprite->SetPosition({ WinApp::window_width * 0.5f, WinApp::window_height * 0.7f, 0.0f });
+	clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
+	clickSprite->Update();
 
 	particleManager = ParticleManager2d::Create();
 	particleManager->SetSpriteCommon(spriteCommon);
@@ -94,12 +102,11 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	timer->Initialize();
 
 	score = new Score(spriteCommon, 4);
-	score->SetScore(0);
-	score->SetPosition({ 700.0f, 150.0f });
+	score->SetScore(employee->GetScore());
+	score->SetPosition({ 600.0f, 150.0f });
 	score->SetSize(1.0f);
 	score->Initialize();
-	score->SetScore(employee->GetScore());
-	score->Update();
+
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
 
@@ -110,6 +117,9 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	guide = new Guide(spriteCommon);
 	guide->SetInput(input);
 	guide->Initialize();
+
+	result = new Result(spriteCommon, 4);
+	result->SetRanking({ 0 });
 
 	sceneState = SceneState::TITLE;
 	
@@ -126,6 +136,17 @@ void GameScene::Update()
 	{
 	case GameScene::TITLE:
 
+		if (fade->GetFadeState() == Fade::FadeState::NONEFADE)
+		{
+			float e = Easing::OutQuart((float)(count % 60 <= 30 ? count % 60 : 60 - count % 60), 30.0f);
+			clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, e });
+			clickSprite->SetSize({ 1280.0f + e * 160.0f, 720.0f + e * 90.0f });
+			clickSprite->Update();
+			if (input->TriggerMouseLeft())
+			{
+				fade->SetFadeState(Fade::FadeState::FADEOUT);
+			}
+		}
 		if (fade->GetFadeState() == Fade::FadeState::NONEFADE &&
 			input->TriggerMouseLeft())
 		{
@@ -134,9 +155,17 @@ void GameScene::Update()
 
 		}
 
+		count++;
+
 		if (fade->GetFadeState() == Fade::FadeState::FADE)
 		{
+			count = 0;
 			fade->SetFadeState(Fade::FadeState::FADEIN);
+			guide->Initialize();
+			timer->Initialize();
+			employee->Ins(spriteCommon, input);
+			score->SetScore(employee->GetScore());
+			score->Initialize();
 			sceneState = SceneState::GUIDE;
 
 			audio->PlayWave("Working_City.wav", true);
@@ -158,8 +187,11 @@ void GameScene::Update()
 			lightFade->SetFadeState(Fade::FadeState::FADEIN);
 		}
 
+		count++;
+
 		if (lightFade->GetFadeState() == Fade::FadeState::NONEFADE)
 		{
+			count = 0;
 			sceneState = SceneState::GAMEPLAY;
 		}
 
@@ -189,10 +221,6 @@ void GameScene::Update()
 
 		}
 
-		if (timer->GetLimitFlag() || employee->GetScore() <= 0)
-		{
-			sceneState = SceneState::TITLE;
-		}
 		timer->Update();
 
 		employee->SetPlayTime(timer->GetCurrentTime());
@@ -201,13 +229,52 @@ void GameScene::Update()
 
 		particleManager->Update();
 
-		score->SetScore(employee->GetScore());
+		score->SetScore(max(employee->GetScore(), 0));
 
 		score->Update();
 
-		
+		count++;
+
+		if (timer->GetLimitFlag() || employee->GetScore() <= 0)
+		{
+			count = 0;
+			clickSprite->SetPosition({ WinApp::window_width * 0.5f, WinApp::window_height * 0.7f, 0.0f });
+			clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
+			clickSprite->Update();
+			lightFade->SetFadeState(Fade::FadeState::FADEOUT);
+			result->Initialize(max(employee->GetScore(), 0));
+			sceneState = SceneState::RESULT;
+		}
+
 		break;
 	case GameScene::RESULT:
+
+		if (lightFade->GetFadeState() == Fade::FadeState::FADE)
+		{
+			result->Update();
+		}
+
+		if (result->GetEndFlag())
+		{
+			float e = Easing::OutQuart((float)(count % 60 <= 30 ? count % 60 : 60 - count % 60), 30.0f);
+			clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, e });
+			clickSprite->SetSize({ 1280.0f + e * 160.0f, 720.0f + e * 90.0f });
+			clickSprite->Update();
+			if (input->TriggerMouseLeft())
+			{
+				fade->SetFadeState(Fade::FadeState::FADEOUT);
+			}
+		}
+
+		count++;
+
+		if (fade->GetFadeState() == Fade::FadeState::FADE)
+		{
+			count = 0;
+			fade->SetFadeState(Fade::FadeState::FADEIN);
+			sceneState = SceneState::TITLE;
+		}
+
 		break;
 	default:
 		break;
@@ -287,6 +354,8 @@ void GameScene::Draw()
 
 		titleSprite->Draw();
 
+		clickSprite->Draw();
+
 		break;
 	case GameScene::GUIDE:
 
@@ -304,10 +373,9 @@ void GameScene::Draw()
 	case GameScene::GAMEPLAY:
 
 		employee->Draw();
-
-		timer->Draw();
 		
 		particleManager->Draw();
+		
 		score->Draw();
 		
 		timer->Draw();
@@ -320,11 +388,17 @@ void GameScene::Draw()
 		break;
 	case GameScene::RESULT:
 
+		employee->Draw();
+
 		timer->Draw();
 
 		score->Draw();
 
 		lightFade->Draw();
+
+		result->Draw();
+
+		clickSprite->Draw();
 
 		break;
 	default:

@@ -10,6 +10,9 @@ void Doorway::Ins(SpriteCommon* spCom_)
 	spCom->LoadTexture(beltConveyor_1, L"Resources/sprite/beltConveyor.png");
 	spCom->LoadTexture(beltConveyor_2, L"Resources/sprite/beltConveyor.png");
 	spCom->LoadTexture(beltConveyor_3, L"Resources/sprite/beltConveyorBent.png");
+	spCom->LoadTexture(beltConveyorAnimation, L"Resources/sprite/beltConveyorMove.png");
+	spCom->LoadTexture(beltConveyorSideAnimation, L"Resources/sprite/beltConveyorMoveSide.png");
+	spCom->LoadTexture(beltConveyorBentAnimation, L"Resources/sprite/beltConveyorBentMove.png");
 	spCom->LoadTexture(bg, L"Resources/sprite/bg.png");
 
 	incineratorPos = { 1200,128,0 };
@@ -39,6 +42,14 @@ void Doorway::Ins(SpriteCommon* spCom_)
 		aliveConveyorSprite[i]->SetRotation(90);
 		aliveConveyorSprite[i]->SetPosition(aliveConveyorPos[i]);
 		aliveConveyorSprite[i]->Update();
+
+		aliveConveyor[i] = new Animation2D(spCom, beltConveyorSideAnimation, {48.0f, 48.0f}, 5);
+		aliveConveyor[i]->SetAnchorPoint({ 0.5f, 0.5f });
+		aliveConveyor[i]->SetPosition({ aliveConveyorPos[i].x, aliveConveyorPos[i].y });
+		aliveConveyor[i]->SetAnimationFlame(10);
+		aliveConveyor[i]->SetSpriteNumbers({ 0,1,2,3,4 });
+		aliveConveyor[i]->SetLoopFlag(true);
+		aliveConveyor[i]->Initialize();
 	}
 	for (int i = 0; i < 6; i++)
 	{
@@ -46,6 +57,14 @@ void Doorway::Ins(SpriteCommon* spCom_)
 		{
 			deadConveyorPos[i] = { 1200,incineratorPos.y + distance_1 + (distance_2 * i),0 };
 			deadConveyorSprite[i] = Sprite::Create(spCom, beltConveyor_1, { 0.5,0.5 }, false, false);
+			
+			deadConveyor[i] = new Animation2D(spCom, beltConveyorAnimation, { 48.0f, 48.0f }, 5);
+			deadConveyor[i]->SetAnchorPoint({ 0.5f, 0.5f });
+			deadConveyor[i]->SetPosition({ deadConveyorPos[i].x, deadConveyorPos[i].y });
+			deadConveyor[i]->SetAnimationFlame(10);
+			deadConveyor[i]->SetSpriteNumbers({ 0,1,2,3,4 });
+			deadConveyor[i]->SetLoopFlag(true);
+			deadConveyor[i]->Initialize();
 
 		}
 		else if (i == 2)
@@ -53,12 +72,27 @@ void Doorway::Ins(SpriteCommon* spCom_)
 			deadConveyorPos[i] = { 1200,incineratorPos.y + distance_1 + (distance_2 * i),0 };
 			deadConveyorSprite[i] = Sprite::Create(spCom, beltConveyor_3, { 0.5,0.5 }, false, false);
 
+			deadConveyor[i] = new Animation2D(spCom, beltConveyorBentAnimation, { 48.0f, 48.0f }, 5);
+			deadConveyor[i]->SetAnchorPoint({ 0.5f, 0.5f });
+			deadConveyor[i]->SetPosition({ deadConveyorPos[i].x, deadConveyorPos[i].y });
+			deadConveyor[i]->SetAnimationFlame(10);
+			deadConveyor[i]->SetSpriteNumbers({ 0,1,2,3,4 });
+			deadConveyor[i]->SetLoopFlag(true);
+			deadConveyor[i]->Initialize();
 		}
 		else
 		{
 			deadConveyorPos[i] = { 1200.f - (distance_2 * (i - 2)),incineratorPos.y + distance_1 + (distance_2 * 2),0 };
 			deadConveyorSprite[i] = Sprite::Create(spCom, beltConveyor_1, { 0.5,0.5 }, false, false);
 			deadConveyorSprite[i]->SetRotation(90);
+
+			deadConveyor[i] = new Animation2D(spCom, beltConveyorSideAnimation, { 48.0f, 48.0f }, 5);
+			deadConveyor[i]->SetAnchorPoint({ 0.5f, 0.5f });
+			deadConveyor[i]->SetPosition({ deadConveyorPos[i].x, deadConveyorPos[i].y });
+			deadConveyor[i]->SetAnimationFlame(10);
+			deadConveyor[i]->SetSpriteNumbers({ 0,1,2,3,4 });
+			deadConveyor[i]->SetLoopFlag(true);
+			deadConveyor[i]->Initialize();
 		}
 		deadConveyorSprite[i]->SetPosition(deadConveyorPos[i]);
 		deadConveyorSprite[i]->Update();
@@ -68,6 +102,14 @@ void Doorway::Ins(SpriteCommon* spCom_)
 
 void Doorway::Update()
 {
+	for (int i = 0; i < 6; i++)
+	{
+		deadConveyor[i]->Update();
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		aliveConveyor[i]->Update();
+	}
 }
 
 void Doorway::DrawIncinerator()
@@ -77,17 +119,16 @@ void Doorway::DrawIncinerator()
 
 void Doorway::Draw()
 {
-
 	bgSprite->Draw();
 	incineratorSprite_2->Draw();
 
 	for (int i = 0; i < 6; i++)
 	{
-		deadConveyorSprite[i]->Draw();
+		deadConveyor[i]->Draw();
 	}
 	for (int i = 0; i < 5; i++)
 	{
-		aliveConveyorSprite[i]->Draw();
+		aliveConveyor[i]->Draw();
 	}
 }
 

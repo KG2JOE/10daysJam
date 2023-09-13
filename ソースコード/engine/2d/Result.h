@@ -5,8 +5,8 @@
 #include "Sprite.h"
 #include "Score.h"
 
-#define RankTexWidth 20.0f
-#define RankTexHeight 20.0f
+#define RankTexWidth 92.0f
+#define RankTexHeight 129.0f
 
 class Result
 {
@@ -16,11 +16,12 @@ public:
 		SCORE,
 		RANK,
 		COMMENT,
+		END,
 	};
 
 	enum SpriteTexNumber
 	{
-		RESULTWORD = 20,
+		RESULTWORD = 40,
 		RANKWORD,
 		RANKTEX,
 		COMMENTRANKC,
