@@ -28,16 +28,16 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	spriteCommon->LoadTexture(3, L"Resources/sprite/titleBack.png");
 	spriteCommon->LoadTexture(4, L"Resources/sprite/number.png");
 	spriteCommon->LoadTexture(5, L"Resources/sprite/click.png");
-	
+
 	employee = new Employee();
 	employee->Ins(spriteCommon, input);
 	//employee->Update();
-	
+
 	spriteCommon->LoadTexture(70, L"Resources/sprite/hand.png");
 	spriteCommon->LoadTexture(71, L"Resources/sprite/handLift.png");
 
 	spCom->initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
-	
+
 	audio->Initialize();
 	audio->LoadWave("thunder.wav");
 	audio->LoadWave("ice1.wav");
@@ -65,7 +65,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	EngineIns(winApp_, dxCommon_, input_);
 
 	count = 0;
-	titleSprite = Sprite::Create(spriteCommon, 3, {0.0f, 0.0f});
+	titleSprite = Sprite::Create(spriteCommon, 3, { 0.0f, 0.0f });
 	clickSprite = Sprite::Create(spriteCommon, 5);
 	clickSprite->SetPosition({ WinApp::window_width * 0.5f, WinApp::window_height * 0.7f, 0.0f });
 	clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
@@ -101,47 +101,49 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	result->SetRanking({ 0 });
 
 	sceneState = SceneState::TITLE;
-	
+
 	ShowCursor(FALSE);
 }
 
 void GameScene::Update()
 {
-	
+
 	input->Update();
-	
-	
+
+
 	switch (sceneState)
 	{
 	case GameScene::TITLE:
 
-		if (fade->GetFadeState() == Fade::FadeState::NONEFADE)
+	{
+		float eaing = Easing::OutQuart((float)(count % 60 <= 30 ? count % 60 : 60 - count % 60), 30.0f);
+		clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, eaing });
+		clickSprite->SetSize({ 1280.0f + eaing * 160.0f, 720.0f + eaing * 90.0f });
+		clickSprite->Update();
+	}
+
+	if (fade->GetFadeState() == Fade::FadeState::NONEFADE)
+	{
+		if (input->TriggerMouseLeft())
 		{
-			float e = Easing::OutQuart((float)(count % 60 <= 30 ? count % 60 : 60 - count % 60), 30.0f);
-			clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, e });
-			clickSprite->SetSize({ 1280.0f + e * 160.0f, 720.0f + e * 90.0f });
-			clickSprite->Update();
-			if (input->TriggerMouseLeft())
-			{
-				fade->SetFadeState(Fade::FadeState::FADEOUT);
-			}
+			fade->SetFadeState(Fade::FadeState::FADEOUT);
 		}
+	}
+	count++;
 
-		count++;
+	if (fade->GetFadeState() == Fade::FadeState::FADE)
+	{
+		count = 0;
+		fade->SetFadeState(Fade::FadeState::FADEIN);
+		guide->Initialize();
+		timer->Initialize();
+		employee->Ins(spriteCommon, input);
+		score->SetScore(employee->GetScore());
+		score->Initialize();
+		sceneState = SceneState::GUIDE;
+	}
 
-		if (fade->GetFadeState() == Fade::FadeState::FADE)
-		{
-			count = 0;
-			fade->SetFadeState(Fade::FadeState::FADEIN);
-			guide->Initialize();
-			timer->Initialize();
-			employee->Ins(spriteCommon, input);
-			score->SetScore(employee->GetScore());
-			score->Initialize();
-			sceneState = SceneState::GUIDE;
-		}
-
-		break;
+	break;
 	case GameScene::GUIDE:
 
 		guide->Update();
@@ -200,11 +202,18 @@ void GameScene::Update()
 		if (timer->GetLimitFlag() || employee->GetScore() <= 0)
 		{
 			count = 0;
-			clickSprite->SetPosition({ WinApp::window_width * 0.5f, WinApp::window_height * 0.7f, 0.0f });
 			clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
 			clickSprite->Update();
 			lightFade->SetFadeState(Fade::FadeState::FADEOUT);
 			result->Initialize(max(employee->GetScore(), 0));
+
+			if (hand != nullptr)
+			{
+				delete hand;
+				hand = nullptr;
+			}
+			hand = Sprite::Create(spriteCommon, 70, { 0.5f,0.5f });
+
 			sceneState = SceneState::RESULT;
 		}
 
@@ -222,6 +231,7 @@ void GameScene::Update()
 			clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, e });
 			clickSprite->SetSize({ 1280.0f + e * 160.0f, 720.0f + e * 90.0f });
 			clickSprite->Update();
+
 			if (input->TriggerMouseLeft())
 			{
 				fade->SetFadeState(Fade::FadeState::FADEOUT);
@@ -234,6 +244,8 @@ void GameScene::Update()
 		{
 			count = 0;
 			fade->SetFadeState(Fade::FadeState::FADEIN);
+			clickSprite->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
+			clickSprite->Update();
 			sceneState = SceneState::TITLE;
 		}
 
@@ -251,7 +263,7 @@ void GameScene::Update()
 
 void GameScene::DrawDbTxt()
 {
-	
+
 	char text2[256];
 	char text1[256];
 	sprintf_s(text1, "GetCatchFlag:%d", employee->GetCatchFlag());
@@ -298,7 +310,7 @@ void GameScene::DrawDbTxt()
 		sprintf_s(text2, "BeltConveyor:%d", employee->GetStatus());
 		debTxt->Print(text2, 0, 128, 1);
 	}
-	
+
 }
 
 
@@ -335,17 +347,17 @@ void GameScene::Draw()
 	case GameScene::GAMEPLAY:
 
 		employee->Draw();
-		
+
 		particleManager->Draw();
-		
+
 		score->Draw();
-		
+
 		timer->Draw();
 
 		score->Draw();
 
-	//DrawDbTxt();
-	debTxt->DrawAll();
+		//DrawDbTxt();
+		debTxt->DrawAll();
 
 		break;
 	case GameScene::RESULT:
@@ -378,7 +390,7 @@ void GameScene::Delete()
 	delete employee;
 	delete debTxt;
 	delete camera;
-	
+
 	delete spriteCommon;
 	delete particleManager;
 	delete hand;
