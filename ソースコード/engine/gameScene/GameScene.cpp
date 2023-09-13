@@ -69,8 +69,6 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	debTxt = new DebugText;
 	debTxt->Initialize(spriteCommon, 0);
 	hand = Sprite::Create(spriteCommon, 70, { 0.5f,0.5f });
-
-
 }
 
 

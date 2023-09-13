@@ -9,10 +9,13 @@ Result::Result(SpriteCommon* spriteCommon, int texNumber)
 	spriteCommon->LoadTexture(SpriteTexNumber::RESULTWORD, L"Resources/sprite/resultWord.png");
 	spriteCommon->LoadTexture(SpriteTexNumber::RANKWORD, L"Resources/sprite/rankWord.png");
 	spriteCommon->LoadTexture(SpriteTexNumber::RANKTEX, L"Resources/sprite/rank.png");
-	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKC, L"Resources/sprite/debugfont.png");
-	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKB, L"Resources/sprite/debugfont.png");
-	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKA, L"Resources/sprite/debugfont.png");
-	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKS, L"Resources/sprite/debugfont.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKF, L"Resources/sprite/commentF.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKE, L"Resources/sprite/commentE.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKD, L"Resources/sprite/commentD.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKC, L"Resources/sprite/commentC.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKB, L"Resources/sprite/commentB.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKA, L"Resources/sprite/commentA.png");
+	spriteCommon->LoadTexture(SpriteTexNumber::COMMENTRANKS, L"Resources/sprite/commentS.png");
 
 	resultWordSprite = Sprite::Create(this->spriteCommon, RESULTWORD);
 	rankWordSprite = Sprite::Create(this->spriteCommon, RANKWORD);
@@ -46,7 +49,7 @@ void Result::Initialize(int scoreNum)
 	score->SetScore(0);
 	score->Initialize();
 
-	rankWordSprite->SetPosition({ WinApp::window_width * 1.4f, WinApp::window_height * 0.5f, 0.0f });
+	rankWordSprite->SetPosition({ WinApp::window_width * 1.4f, WinApp::window_height * 0.8f, 0.0f });
 	rankWordSprite->Update();
 
 	int rank = 0;
@@ -77,8 +80,14 @@ void Result::Initialize(int scoreNum)
 		commentSprite = Sprite::Create(spriteCommon, COMMENTRANKB);
 	else if (rank == 3)
 		commentSprite = Sprite::Create(spriteCommon, COMMENTRANKC);
+	else if (rank == 4)
+		commentSprite = Sprite::Create(spriteCommon, COMMENTRANKD);
+	else if (rank == 5)
+		commentSprite = Sprite::Create(spriteCommon, COMMENTRANKE);
+	else if (rank == 6)
+		commentSprite = Sprite::Create(spriteCommon, COMMENTRANKF);
 
-	commentSprite->SetPosition({ WinApp::window_width * 1.5f, WinApp::window_height * 0.8f, 0.0f });
+	commentSprite->SetPosition({ WinApp::window_width * 1.8f, WinApp::window_height * 0.7f, 0.0f });
 	commentSprite->Update();
 
 	resultState = ResultState::SCORE;
@@ -111,7 +120,7 @@ void Result::Draw()
 	score->Draw();
 	rankWordSprite->Draw();
 	rankSprite->Draw();
-	//commentSprite->Draw();
+	commentSprite->Draw();
 }
 
 void Result::ScoreUpdate()
@@ -183,13 +192,15 @@ void Result::CommentUpdate()
 {
 	float e = Easing::OutQuart((float)min(count, 30), 30.0f);
 	float width = e * WinApp::window_width;
-	float posX = WinApp::window_width * 1.5f - width;
-	commentSprite->SetPosition({ posX, WinApp::window_height * 0.8f, 0.0f });
+	float posX = WinApp::window_width * 1.8f - width;
+	commentSprite->SetPosition({ posX, WinApp::window_height * 0.7f, 0.0f });
+	commentSprite->SetRotation(-20.0f * e);
 	commentSprite->Update();
 
 	if (count >= 30)
 	{
-		commentSprite->SetPosition({ WinApp::window_width * 0.5f, WinApp::window_height * 0.8f, 0.0f });
+		commentSprite->SetPosition({ WinApp::window_width * 0.8f, WinApp::window_height * 0.7f, 0.0f });
+		commentSprite->SetRotation(-20.0f);
 		commentSprite->Update();
 		count = 0;
 		resultState = ResultState::END;

@@ -21,7 +21,6 @@ void Employee::Ins(SpriteCommon* spCom_, Input* input_, Audio* audio_)
 	spCom->LoadTexture(SpriteDead, L"Resources/sprite/deadBody.png");
 	spCom->LoadTexture(SpriteStressUI, L"Resources/sprite/stressUI.png");
 	spCom->LoadTexture(SpriteStressBar, L"Resources/sprite/stressBar.png");
-	//spCom->LoadTexture(NONE, L"Resources/sprite/human.png");
 	table = new Table();
 	table->Ins(spCom);
 	doorWay = new Doorway();
