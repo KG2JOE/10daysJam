@@ -73,12 +73,11 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	timer->Initialize();
 
 	score = new Score(spriteCommon, 4);
-	score->SetScore(0);
-	score->SetPosition({ 700.0f, 150.0f });
+	score->SetScore(employee->GetScore());
+	score->SetPosition({ 600.0f, 150.0f });
 	score->SetSize(1.0f);
 	score->Initialize();
-	score->SetScore(employee->GetScore());
-	score->Update();
+
 	fade = new Fade(spriteCommon, 2);
 	fade->SetFadeState(Fade::FadeState::FADEIN);
 

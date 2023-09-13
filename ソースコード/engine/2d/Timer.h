@@ -3,9 +3,9 @@
 #include "XMFLOAT_Helper.h"
 
 //‰æ‘œ‚Ì”šˆê‚Â•ª‚Ì‰¡•
-#define TexWidth 50.0f 
+#define TexWidth 52.0f 
 //‰æ‘œ‚Ì”šˆê‚Â•ª‚Ìc•
-#define TexHeight 63.0f
+#define TexHeight 65.0f
 
 class Timer
 {
