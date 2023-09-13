@@ -178,7 +178,7 @@ void Fade::Update()
 		{
 			for (int y = 0; y < HeightNum; y++)
 			{
-				float alpha = fadeColor.w * max(count - (x + y) * 5.0f, 0.0f) / 30.0f;
+				float alpha = fadeColor.w * min((max(count - (x + y) * 5.0f, 0.0f) / 30.0f), 1.0f);
 				sprites[x][y]->SetColor({ fadeColor.x, fadeColor.y, fadeColor.z, alpha });
 				sprites[x][y]->Update();
 			}

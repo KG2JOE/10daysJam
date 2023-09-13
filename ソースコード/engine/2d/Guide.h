@@ -17,9 +17,10 @@ public:
 
 	enum SpriteTexNumber
 	{
-		GUIDE1 = 10,
+		GUIDE1 = 30,
 		GUIDE2,
 		GUIDE3,
+		GUIDE4,
 		ALLOW,
 		START,
 	};

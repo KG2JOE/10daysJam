@@ -1,6 +1,7 @@
 #pragma once
 #include "SpriteCommon.h"
 #include "Sprite.h"
+#include "Animation2D.h"
 
 #include<DirectXMath.h>
 
@@ -20,6 +21,9 @@ public:
 		beltConveyor_1,
 		beltConveyor_2,
 		beltConveyor_3,
+		beltConveyorAnimation,
+		beltConveyorSideAnimation,
+		beltConveyorBentAnimation,
 		bg,
 	};
 	
@@ -59,6 +63,9 @@ private:
 
 	Sprite* aliveConveyorSprite[5]{};
 	XMFLOAT3 aliveConveyorPos[5]{};
+
+	Animation2D* deadConveyor[6];
+	Animation2D* aliveConveyor[5];
 
 	float distance_1 = 102.f;
 	float distance_2 = 45.f;
