@@ -115,7 +115,7 @@ void GameScene::Initialize(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inp
 	guide->Initialize();
 
 	result = new Result(spriteCommon, 4);
-	result->SetRanking({ 0 });
+	result->SetRanking({ 1, 10000, 20000, 30000, 40000, 48000 });
 
 	sceneState = SceneState::TITLE;
 
