@@ -172,8 +172,12 @@ void GameScene::Update()
 		break;
 	case GameScene::GUIDE:
 
-		audio->PlayWave("click_.wav", false);
-
+		
+		if (input->TriggerMouseLeft())
+		{
+			audio->Stop("click_.wav");
+			audio->PlayWave("click_.wav", false);
+		}
 		guide->Update();
 
 		if (lightFade->GetFadeState() == Fade::FadeState::FADE &&
