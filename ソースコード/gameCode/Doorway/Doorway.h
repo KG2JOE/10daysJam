@@ -18,9 +18,6 @@ public:
 	{
 		incinerator = 20,
 		incinerator_2,
-		beltConveyor_1,
-		beltConveyor_2,
-		beltConveyor_3,
 		beltConveyorAnimation,
 		beltConveyorSideAnimation,
 		beltConveyorBentAnimation,
@@ -61,14 +58,11 @@ private:
 	Sprite* incineratorSprite_2{};
 	XMFLOAT3 incineratorPos{};
 
-	Sprite* deadConveyorSprite[6]{};
+	Animation2D* deadConveyor[6];
 	XMFLOAT3 deadConveyorPos[6]{};
 
-	Sprite* aliveConveyorSprite[5]{};
-	XMFLOAT3 aliveConveyorPos[5]{};
-
-	Animation2D* deadConveyor[6];
 	Animation2D* aliveConveyor[5];
+	XMFLOAT3 aliveConveyorPos[5]{};
 
 	float distance_1 = 102.f;
 	float distance_2 = 45.f;

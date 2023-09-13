@@ -23,7 +23,6 @@ void GameScene::EngineIns(WinApp* winApp_, DirectXCommon* dxCommon_, Input* inpu
 	camera->SetEye({ 0, 10, 0 });
 	spriteCommon->initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	spriteCommon->LoadTexture(0, L"Resources/sprite/debugfont.png");
-	spriteCommon->LoadTexture(1, L"Resources/sprite/drawNumber.png");
 	spriteCommon->LoadTexture(2, L"Resources/sprite/white1x1.png");
 	spriteCommon->LoadTexture(3, L"Resources/sprite/titleBack.png");
 	spriteCommon->LoadTexture(4, L"Resources/sprite/number.png");
