@@ -145,15 +145,10 @@ void GameScene::Update()
 			if (input->TriggerMouseLeft())
 			{
 				fade->SetFadeState(Fade::FadeState::FADEOUT);
+				audio->PlayWave("click_.wav", false);
 			}
 		}
-		if (fade->GetFadeState() == Fade::FadeState::NONEFADE &&
-			input->TriggerMouseLeft())
-		{
-			fade->SetFadeState(Fade::FadeState::FADEOUT);
-			audio->PlayWave("click_.wav", false);
-
-		}
+		
 
 		count++;
 
@@ -163,7 +158,7 @@ void GameScene::Update()
 			fade->SetFadeState(Fade::FadeState::FADEIN);
 			guide->Initialize();
 			timer->Initialize();
-			employee->Ins(spriteCommon, input);
+			employee->Ins(spriteCommon, input, audio);
 			score->SetScore(employee->GetScore());
 			score->Initialize();
 			sceneState = SceneState::GUIDE;
